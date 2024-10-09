@@ -4,6 +4,7 @@ author: "Ottavia M. Epifania & Friends"
 format: 
   revealjs: 
     theme: mytheme.scss
+    logo: "www/psicostat.jpg"
 background-opacity: "0.45"
 title-slide-attributes: 
    data-background-image: "https://psicostat.github.io/shine-bright/gbu.jpg"
@@ -16,6 +17,8 @@ server: shiny
 ```{r, setup, include=FALSE}
 library(knitr)
 library(shiny)
+library(ggplot2)
+library(tidyverse)
 IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
   y <- c + (e - c) * exp(a * (theta - b)) / (1 + exp(a * (theta - b)))
   y[is.na(y)] = 1
@@ -50,14 +53,22 @@ set.seed(999)
 
 ## The 2-Parameter Logistic Model
 
-$$P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)])}$$
+Item Response Function: 
 
+$$P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)])}$$
+<br>
+
+Item Information Function: 
 
 
 $$IIF_i = a_i^2P(\theta, b_i, a_i)[1-P(\theta, b_i, a_i)]$$
 
+<br>
+
+Test Information Function: 
 
 $$TIF = \sum_{i = 1}^{||B||} IIF_i$$
+
 
 
 
@@ -343,5 +354,38 @@ Until the termination criterion $|TIF^* - TIF^{k+1}| \geq |TIF^* - TIF^{k}|$ is 
       - Frank $\rightarrow$ Forwardly searches considering the whole latent trait 		
 
 
+## Results 
 
+```{r}
+load("gbu-comparison.RData")
+item_comparison$iter = 1:100
+ic_long = pivot_longer(item_comparison, cols = !iter)
+
+
+
+ic = ic_long %>%  
+  group_by(name) %>%  
+  summarise(min = min(value), max = max(value), mean = mean(value), median = mean(value), 
+            sd = sd(value))
+ggplot(ic, 
+       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 3) + ylim(0,6) + 
+  geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), width = .2)+ 
+  geom_point(aes(x = name, y = min), shape = 1) + geom_point(aes(x = name, y = max), shape = 15) + 
+  geom_point(aes(x = name, y = median), shape = 4, size = 3) + 
+  scale_color_manual(values = c("royalblue","red",  "seagreen")) + 
+  ylab("Item") + theme_light() + 
+  theme(axis.text = element_text(size = 25), 
+        axis.title.x = element_blank(), 
+        legend.position = "none")
+
+```
+
+
+## When $||Q_{ILA}|| = ||Q_{Frank}||$
+
+```{r}
+library(patchwork)
+equal_IF = as.numeric(rownames(item_comparison[item_comparison$nfrank == item_comparison$nila, ]))
+wrap_plots(g[equal_IF])
+```
 

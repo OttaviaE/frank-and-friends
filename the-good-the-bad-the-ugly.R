@@ -564,6 +564,8 @@ for (i in 1:length(myfrank)) {
   item_comparison[i, "nila"] = nrow(myila[[i]]$end)
   item_select[i, "iila"] = paste(rownames(myila[[i]]$end)[order(rownames(myila[[i]]$end), decreasing = T)], collapse = " ")
 }
+# I saved the enrivorment till here 
+
 x = item_select[1,-3]
 
 
@@ -614,6 +616,35 @@ for (i in 1:length(myfrank)) {
 library(patchwork)
 wrap_plots(g[equal])
 g[[1]]
+
+item_comparison$iter = 1:100
+ic_long = pivot_longer(item_comparison, cols = !iter)
+
+ggplot(ic_long, 
+       aes(x = name, y = value)) + geom_boxplot()
+
+
+ic = ic_long %>%  
+  group_by(name) %>%  
+  summarise(min = min(value), max = max(value), mean = mean(value), median = mean(value), 
+            sd = sd(value))
+
+ggplot(ic, 
+       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 3) + ylim(0,6) + 
+  geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), width = .2)+ 
+  geom_point(aes(x = name, y = min), shape = 1) + geom_point(aes(x = name, y = max), shape = 15) + 
+  geom_point(aes(x = name, y = median), shape = 4, size = 3) + 
+  scale_color_manual(values = c("royalblue","red",  "seagreen")) + 
+  ylab("Item") + theme_light() + 
+  theme(axis.text = element_text(size = 25), 
+        axis.title.x = element_blank(), 
+        legend.position = "none")
+
+
+apply(item_comparison,2, min)apply(item_comparisiteron,2, min)
+apply(item_comparison,2, max)
+apply(item_comparison,2, median)
+apply(item_comparison,2, mean)
 
 
 # calcolo la distanza media per ogni iteraione di frank e ila da bruto 
