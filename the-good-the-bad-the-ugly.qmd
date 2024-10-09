@@ -9,17 +9,273 @@ title-slide-attributes:
    data-background-image: "https://psicostat.github.io/shine-bright/gbu.jpg"
    data-background-size: 350px, cover
    data-background-position: 50% 5%, center
+server: shiny
 ---
 
 
 ```{r, setup, include=FALSE}
 library(knitr)
+library(shiny)
+IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
+  y <- c + (e - c) * exp(a * (theta - b)) / (1 + exp(a * (theta - b)))
+  y[is.na(y)] = 1
+  return(y)
+}
 
+i_info <- function(b, a=1,c=0, theta = seq(-5,5,length.out=1000)){
+ 
+P <- NULL 
+Q <- NULL
+Ii <- NULL
+for(i in 1:1000){
+  P[i] <- 1/(1+ exp (-a*(theta[i] - b)))
+  Q[i]= 1-P[i]
+  Ii[i] =(a*Q[i]*(P[i]-c)^2)/(P[i]*((1-c)^2)) # (3PL)
+   }
+return(Ii)
+}
+# Function to get all item information
+item_info <- function(b,a=1, c= 0){
+item <- NULL
+  for(i in 1:length(b)){
+  item[[i]] <- i_info(b[i],a[i])
+  }
+return(item)
+}
+
+set.seed(999)
 ```
 
 
-## Item Locating Algotihm -- ILA
+
+## The 2-Parameter Logistic Model
+
+$$P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)])}$$
+
+
+
+$$IIF_i = a_i^2P(\theta, b_i, a_i)[1-P(\theta, b_i, a_i)]$$
+
+
+$$TIF = \sum_{i = 1}^{||B||} IIF_i$$
+
+
+
+## Intuitively 
+
+```{r}
+#| panel: sidebar
+tags$style(HTML(".js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {background: royalblue}"))
+tags$style(HTML(".js-irs-1 .irs-single, .js-irs-1 .irs-bar-edge, .js-irs-1 .irs-bar {background: magenta}"))
+tags$style(HTML(".js-irs-2 .irs-single, .js-irs-2 .irs-bar-edge, .js-irs-2 .irs-bar {background: seagreen}"))
+tags$style(HTML(".js-irs-3 .irs-single, .js-irs-3 .irs-bar-edge, .js-irs-3 .irs-bar {background: royalblue}"))
+tags$style(HTML(".js-irs-4 .irs-single, .js-irs-3 .irs-bar-edge, .js-irs-4 .irs-bar {background: magenta}"))
+tags$style(HTML(".js-irs-5 .irs-single, .js-irs-5 .irs-bar-edge, .js-irs-5 .irs-bar {background: seagreen}"))
+
+
+ sliderInput("b1", "b1",
+                  min = -3, max = 3,
+                  value = 0, step = 0.1)
+sliderInput("b2", "b2",
+                  min = -3, max = 3,
+                  value = 0, step = 0.1)
+sliderInput("b3", "b3",
+                  min = -3, max = 3,
+                  value = 0, step = 0.1)
+
+sliderInput("a1", "a1",
+                  min = 0.20, max = 3,
+                  value = 1, step = 0.1)
+sliderInput("a2", "a2",
+                  min = 0, max = 3,
+                  value = 0.70, step = 0.1)
+sliderInput("a3", "a3",
+                  min = 0, max = 3,
+                  value = 1.90, step = 0.1)
+checkboxInput("showTif", "Show Test Information Function", value = FALSE)
+
+```
+
+```{r}
+#| panel: fill
+
+
+plotOutput("plot", height = "300px")
+
+plotOutput("tif", height = "300px")
+```
+
+
+
+```{r}
+#| context: server
+ output$plot <- renderPlot({
+   theta <- theta <- seq(-7, 7, .001)
+  par(mar = c(5,7,4,2) + 0.1)
+  b = c(input$b1, input$b2, input$b3)
+  a = c(input$a1, input$a2, input$a3)
+
+ 
+ plot(theta, IRT(theta, b = input$b1, a = input$a1), 
+                 type = "l", lwd = 2, lty = 2,
+     col = "royalblue", main = "Item Characteristics Curves - ICCs", 
+     ylab = expression(paste("P(", x[p][i],  "= 1|", theta[p], ", ", b[i], ", ", a[i], ")")), 
+     xlab = expression(theta), 
+     cex.lab = 2.4, 
+     cex.main = 3, 
+     cex.text=2, cex.axis=1.5)
+ 
+segments(min(theta)-3, 0.5, 
+         input$b1, 0.5, 
+         col = "gray56", lty = 3, lwd = 1.3)
+segments(input$b1, -0.5, 
+         input$b1, 0.5, 
+         col = "royalblue", lty = 3, lwd = 1.3)
+ 
+lines(theta, IRT(theta, b=input$b2,
+                 a=input$a2),
+       type = "l", lwd = 2, lty = 2,
+     col = "magenta")
+ lines(theta, IRT(theta, b=input$b3,
+                 a=input$a3),
+       type = "l", lwd = 2, lty = 2,
+     col = "seagreen")
+ segments(min(theta)-3, 0.5, 
+         input$b2, 0.5, 
+         col = "gray56", lty = 3, lwd = 1.3)
+segments(input$b2, -0.5, 
+         input$b2, 0.5, 
+         col = "magenta", lty = 3, lwd = 1.3)
+ segments(min(theta)-3, 0.5, 
+         input$b3, 0.5, 
+         col = "gray56", lty = 3, lwd = 1.3)
+segments(input$b3, -0.5, 
+         input$b3, 0.5, 
+         col = "seagreen", lty = 3, lwd = 1.3)
+  })
+
+output$tif <- renderPlot({
+ 
+   theta <- theta <- seq(-7, 7, .001)
+  par(mar = c(5,7,4,2) + 0.1)
+  b = c(input$b1, input$b2, input$b3)
+  a = c(input$a1, input$a2, input$a3)
+c <- item_info(b,a)
+Theta <- matrix(seq(-4,4, length.out=1000))
+check <- data.frame(Theta,
+                    item_info = c[[1]],
+                    item_info2 = c[[2]],
+                    item_info3 = c[[3]])
+d <- do.call('cbind',c)
+sum_info1 <- rowSums(d)
+d1 <- do.call('cbind',c)
+sum_info2 <- rowSums(d1)
+plot(check$Theta, check$item_info, cex.lab= 2, main = "Item Information Functions - IIFs",
+      cex.lab = 2.4, 
+     cex.main = 3, 
+     cex.text=2, cex.axis=1.5,
+        xlab = expression(theta), ylab = expression(paste("IIF"[i])),
+ type = "l", lwd =2,
+      col = "royalblue", ylim = c(0,1))
+ lines(check$Theta, check$item_info2, lwd =2,
+       col = "magenta", lty = 4)
+ lines(check$Theta, check$item_info3, lwd =2,
+       col = "seagreen", lty = 2)
+ 
+ 
+checkTif <- data.frame(Theta, sum_info1, sum_info2)
+
+if (input$showTif == TRUE) {
+  plot(checkTif$Theta, checkTif$sum_info2,
+       type = "l", lwd =2,
+     col = "black", ylim = c(0, 2),
+       xlab = expression(theta), 
+     ylab = expression(paste("I(", theta, ")")), 
+     cex.axis=1.5, main = "IIFs and Test Information Functions",  
+     cex.lab = 2.4, 
+     cex.main = 3, 
+     cex.text=2)
+  lines(check$Theta, check$item_info, lwd =2,
+       col = "royalblue", lty = 4)
+   lines(check$Theta, check$item_info2, lwd =2,
+       col = "magenta", lty = 4)
+ lines(check$Theta, check$item_info3, lwd =2,
+       col = "seagreen", lty = 2)
+}
+
+
+
+ 
+})
+```
+
+
+
+## Some premises 
+
+::: {.callout-note}
+## Key concept
+
+<font size = "4">
+**TIF target** ($\mathbf{TIF}^*$) describing the desired characteristics of a test
+</font>
+:::
+
+::: {.callout-tip}
+## The aim of the algorithms
+
+<font size = "4">
+*Minimize the distance* between $\mathbf{TIF}^*$ and that of the short test forms (STFs) 
+</font>
+:::
+
+
+::: {.callout-warning}
+## Their differences
+
+<font size = "4">
+The method for selecting and including the items in $Q \subset B$ from the item bank
+</font>
+:::
+
+
+
+
+::: {.callout-important}
+## Mean TIF
+
+<font size = "4">
+TIF is considered as mean TIF $\rightarrow$ as the number of items increases, the TIF increases
+</font>
+:::
+
+
+## Bruto (tu quoque?!)
 ### The bad
+
+<font size = "5">
+
+$Q_m \subset B = 2^{||B||}-2$ STFs of different lengths considering different item combination can be developed from $B$. That's what Bruto does
+
+
+
+1. $\mathbf{TIF}^{Q_m} =  \frac{\sum_{i \in Q_m} IIF_i}{||Q_m||}$
+2. $\overline{\Delta}_{\mathbf{TIF}^{Q_m}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q_m}|)$
+
+$Q_{bruto} = \arg \min_{Q_m \subset B} \overline{\Delta}_{\mathbf{TIF}^{Q_m}}$
+</font>
+
+
+```{r}
+#| fig-align: center
+#| out-width: "50%"
+knitr::include_graphics("www/eeato.jpg")
+```
+
+
+
+## Item Locating Algorithm -- ILA
+### The ugly
 
 :::: {.columns}
 
@@ -46,8 +302,11 @@ $TIF^k = \frac{\sum_{i\in Q^k} IIF_i}{||Q^k||}$, where $||Q^k||$ denotes the car
 
 ```{r}
 #| fig-align: center
-knitr::include_graphics("img/ila.png")
+#| out-width: "200%"
+knitr::include_graphics("www/ila.png")
 ```
+
+
 
 ::: 
 
@@ -56,28 +315,33 @@ knitr::include_graphics("img/ila.png")
 ## Frank[^1]
 ### The good
 
+At $k = 0$, $Q^0 = \emptyset$. For $k \geq 1$, iterate 
 
-[^1]: **FRANK**ly I didnt' know how to name it
-
-
-
-## Bruto 
-### The bad
+1. $Q^{k+1} = Q^k \cup \arg \min |TIF^* - IIF_{i \in B \setminus Q^k}|$
 
 
-## Bullets
+2. $TIF_{i \in B\setminus Q^{k+1}}^{k+1} = \frac{IIF_{i \in Q^{k+1}} + IIF_{i \in B \setminus Q^{k+1}}}{||Q^{k+1}|| + 1}$
 
-When you click the **Render** button a document will be generated that includes:
+Until the termination criterion $|TIF^* - TIF^{k+1}| \geq |TIF^* - TIF^{k}|$ is true $\rightarrow$ $Q_{frank} = Q^{k+1}$
 
--   Content authored with markdown
--   Output from executable code
+[^1]: <font size="3"><font size="6">**FRANK**</font>ly I didnt' know how to name it</font>
 
-## Code
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Simulation time
 
-```{r}
-1 + 1
-```
+1. Generate an item bank $B$ of $6$ items: 
+			- Difficulty parameters: $\mathcal{U}(-3, 3)$
+			- Discrimination parameters:  $\mathcal{U}(.90, 2.0)$
+		 
+2. Random item selections of lengths $l$ from $B$ ($M_l = 3.34 \pm 1.13$) + modification parameters $\mathcal{U}(-0.20, 0.20)$ $\rightarrow$ $\mathbf{TIF}^*$ 
+		
+3. Considering $\mathbf{TIF}^*$ at Step 2 and item parameters at Step 1:
+
+      - Bruto  $\rightarrow$ Systematically tests
+      
+      - ILA  $\rightarrow$ Forwardly searches considering a single $\theta$
+      - Frank $\rightarrow$ Forwardly searches considering the whole latent trait 		
+
+
 
 

@@ -337,9 +337,161 @@ Ottavia M. Epifania &amp; Friends
 </div>
 
 </section>
-<section id="item-locating-algotihm-ila" class="slide level2">
-<h2>Item Locating Algotihm – ILA</h2>
+<section id="the-2-parameter-logistic-model" class="slide level2">
+<h2>The 2-Parameter Logistic Model</h2>
+<p><span class="math display">\[P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)])}\]</span></p>
+<p><span class="math display">\[IIF_i = a_i^2P(\theta, b_i, a_i)[1-P(\theta, b_i, a_i)]\]</span></p>
+<p><span class="math display">\[TIF = \sum_{i = 1}^{||B||} IIF_i\]</span></p>
+</section>
+<section id="intuitively" class="slide level2">
+<h2>Intuitively</h2>
+<div class="layout-sidebar layout-sidebar-left">
+<div class="cell panel-sidebar">
+<div class="cell-output-display">
+<style>.js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {background: royalblue}</style>
+</div>
+<div class="cell-output-display">
+<style>.js-irs-1 .irs-single, .js-irs-1 .irs-bar-edge, .js-irs-1 .irs-bar {background: magenta}</style>
+</div>
+<div class="cell-output-display">
+<style>.js-irs-2 .irs-single, .js-irs-2 .irs-bar-edge, .js-irs-2 .irs-bar {background: seagreen}</style>
+</div>
+<div class="cell-output-display">
+<style>.js-irs-3 .irs-single, .js-irs-3 .irs-bar-edge, .js-irs-3 .irs-bar {background: royalblue}</style>
+</div>
+<div class="cell-output-display">
+<style>.js-irs-4 .irs-single, .js-irs-3 .irs-bar-edge, .js-irs-4 .irs-bar {background: magenta}</style>
+</div>
+<div class="cell-output-display">
+<style>.js-irs-5 .irs-single, .js-irs-5 .irs-bar-edge, .js-irs-5 .irs-bar {background: seagreen}</style>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="b1-label" for="b1">b1</label>
+<input class="js-range-slider" id="b1" data-skin="shiny" data-min="-3" data-max="3" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="b2-label" for="b2">b2</label>
+<input class="js-range-slider" id="b2" data-skin="shiny" data-min="-3" data-max="3" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="b3-label" for="b3">b3</label>
+<input class="js-range-slider" id="b3" data-skin="shiny" data-min="-3" data-max="3" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="a1-label" for="a1">a1</label>
+<input class="js-range-slider" id="a1" data-skin="shiny" data-min="0.2" data-max="3" data-from="1" data-step="0.1" data-grid="true" data-grid-num="9.33333333333333" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="a2-label" for="a2">a2</label>
+<input class="js-range-slider" id="a2" data-skin="shiny" data-min="0" data-max="3" data-from="0.7" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="a3-label" for="a3">a3</label>
+<input class="js-range-slider" id="a3" data-skin="shiny" data-min="0" data-max="3" data-from="1.9" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<div class="checkbox">
+<label>
+<input id="showTif" type="checkbox" class="shiny-input-checkbox">
+<span>Show Test Information Function</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="cell panel-fill">
+<div class="cell-output-display">
+<div class="shiny-plot-output html-fill-item" id="plot" style="width:100%;height:300px;"></div>
+</div>
+<div class="cell-output-display">
+<div class="shiny-plot-output html-fill-item" id="tif" style="width:100%;height:300px;"></div>
+</div>
+</div>
+</div>
+</section>
+<section id="some-premises" class="slide level2">
+<h2>Some premises</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Key concept</strong></p>
+</div>
+<div class="callout-content">
+<p><font size="4"> <strong>TIF target</strong> (<span class="math inline">\(\mathbf{TIF}^*\)</span>) describing the desired characteristics of a test </font></p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The aim of the algorithms</strong></p>
+</div>
+<div class="callout-content">
+<p><font size="4"> <em>Minimize the distance</em> between <span class="math inline">\(\mathbf{TIF}^*\)</span> and that of the short test forms (STFs) </font></p>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Their differences</strong></p>
+</div>
+<div class="callout-content">
+<p><font size="4"> The method for selecting and including the items in <span class="math inline">\(Q \subset B\)</span> from the item bank </font></p>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Mean TIF</strong></p>
+</div>
+<div class="callout-content">
+<p><font size="4"> TIF is considered as mean TIF <span class="math inline">\(\rightarrow\)</span> as the number of items increases, the TIF increases </font></p>
+</div>
+</div>
+</div>
+</section>
+<section id="bruto-tu-quoque" class="slide level2">
+<h2>Bruto (tu quoque?!)</h2>
 <h3 id="the-bad">The bad</h3>
+<p><font size="5"></font></p><font size="5">
+<p><span class="math inline">\(Q_m \subset B = 2^{||B||}-2\)</span> STFs of different lengths considering different item combination can be developed from <span class="math inline">\(B\)</span>. That’s what Bruto does</p>
+<ol type="1">
+<li><span class="math inline">\(\mathbf{TIF}^{Q_m} =  \frac{\sum_{i \in Q_m} IIF_i}{||Q_m||}\)</span></li>
+<li><span class="math inline">\(\overline{\Delta}_{\mathbf{TIF}^{Q_m}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q_m}|)\)</span></li>
+</ol>
+</font><p><font size="5"><span class="math inline">\(Q_{bruto} = \arg \min_{Q_m \subset B} \overline{\Delta}_{\mathbf{TIF}^{Q_m}}\)</span> </font></p>
+
+<img data-src="www/eeato.jpg" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
+<section id="item-locating-algorithm-ila" class="slide level2">
+<h2>Item Locating Algorithm – ILA</h2>
+<h3 id="the-ugly">The ugly</h3>
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><font size="4"> <span class="math inline">\(B\)</span>: Item bank</font></p><font size="4">
@@ -352,7 +504,7 @@ Ottavia M. Epifania &amp; Friends
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/ila.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="www/ila.png" class="quarto-figure quarto-figure-center" style="width:200.0%"></p>
 </figure>
 </div>
 </div>
@@ -362,27 +514,197 @@ Ottavia M. Epifania &amp; Friends
 <section id="frank1" class="slide level2">
 <h2>Frank<sup>1</sup></h2>
 <h3 id="the-good">The good</h3>
-<aside><ol class="aside-footnotes"><li id="fn1"><p><strong>FRANK</strong>ly I didnt’ know how to name it</p></li></ol></aside></section>
-<section id="bruto" class="slide level2">
-<h2>Bruto</h2>
-<h3 id="the-bad-1">The bad</h3>
-</section>
-<section id="bullets" class="slide level2">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<p>At <span class="math inline">\(k = 0\)</span>, <span class="math inline">\(Q^0 = \emptyset\)</span>. For <span class="math inline">\(k \geq 1\)</span>, iterate</p>
+<ol type="1">
+<li><p><span class="math inline">\(Q^{k+1} = Q^k \cup \arg \min |TIF^* - IIF_{i \in B \setminus Q^k}|\)</span></p></li>
+<li><p><span class="math inline">\(TIF_{i \in B\setminus Q^{k+1}}^{k+1} = \frac{IIF_{i \in Q^{k+1}} + IIF_{i \in B \setminus Q^{k+1}}}{||Q^{k+1}|| + 1}\)</span></p></li>
+</ol>
+<p>Until the termination criterion <span class="math inline">\(|TIF^* - TIF^{k+1}| \geq |TIF^* - TIF^{k}|\)</span> is true <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(Q_{frank} = Q^{k+1}\)</span></p>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><font size="3"><font size="6"><strong>FRANK</strong></font>ly I didnt’ know how to name it</font></p></li></ol></aside></section>
+<section id="simulation-time" class="slide level2">
+<h2>Simulation time</h2>
+<ol type="1">
+<li><p>Generate an item bank <span class="math inline">\(B\)</span> of <span class="math inline">\(6\)</span> items: - Difficulty parameters: <span class="math inline">\(\mathcal{U}(-3, 3)\)</span> - Discrimination parameters: <span class="math inline">\(\mathcal{U}(.90, 2.0)\)</span></p></li>
+<li><p>Random item selections of lengths <span class="math inline">\(l\)</span> from <span class="math inline">\(B\)</span> (<span class="math inline">\(M_l = 3.34 \pm 1.13\)</span>) + modification parameters <span class="math inline">\(\mathcal{U}(-0.20, 0.20)\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(\mathbf{TIF}^*\)</span></p></li>
+<li><p>Considering <span class="math inline">\(\mathbf{TIF}^*\)</span> at Step 2 and item parameters at Step 1:</p>
 <ul>
-<li>Content authored with markdown</li>
-<li>Output from executable code</li>
-</ul>
-</section>
-<section id="code" class="slide level2">
-<h2>Code</h2>
-<p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+<li><p>Bruto <span class="math inline">\(\rightarrow\)</span> Systematically tests</p></li>
+<li><p>ILA <span class="math inline">\(\rightarrow\)</span> Forwardly searches considering a single <span class="math inline">\(\theta\)</span></p></li>
+<li><p>Frank <span class="math inline">\(\rightarrow\)</span> Forwardly searches considering the whole latent trait</p></li>
+</ul></li>
+</ol>
+<p>
+<script type="application/shiny-prerendered" data-context="server-start">
+library(knitr)
+library(shiny)
+IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
+  y <- c + (e - c) * exp(a * (theta - b)) / (1 + exp(a * (theta - b)))
+  y[is.na(y)] = 1
+  return(y)
+}
+
+i_info <- function(b, a=1,c=0, theta = seq(-5,5,length.out=1000)){
+ 
+P <- NULL 
+Q <- NULL
+Ii <- NULL
+for(i in 1:1000){
+  P[i] <- 1/(1+ exp (-a*(theta[i] - b)))
+  Q[i]= 1-P[i]
+  Ii[i] =(a*Q[i]*(P[i]-c)^2)/(P[i]*((1-c)^2)) # (3PL)
+   }
+return(Ii)
+}
+# Function to get all item information
+item_info <- function(b,a=1, c= 0){
+item <- NULL
+  for(i in 1:length(b)){
+  item[[i]] <- i_info(b[i],a[i])
+  }
+return(item)
+}
+
+set.seed(999)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+ output$plot <- renderPlot({
+   theta <- theta <- seq(-7, 7, .001)
+  par(mar = c(5,7,4,2) + 0.1)
+  b = c(input$b1, input$b2, input$b3)
+  a = c(input$a1, input$a2, input$a3)
+
+ 
+ plot(theta, IRT(theta, b = input$b1, a = input$a1), 
+                 type = "l", lwd = 2, lty = 2,
+     col = "royalblue", main = "Item Characteristics Curves - ICCs", 
+     ylab = expression(paste("P(", x[p][i],  "= 1|", theta[p], ", ", b[i], ", ", a[i], ")")), 
+     xlab = expression(theta), 
+     cex.lab = 2.4, 
+     cex.main = 3, 
+     cex.text=2, cex.axis=1.5)
+ 
+segments(min(theta)-3, 0.5, 
+         input$b1, 0.5, 
+         col = "gray56", lty = 3, lwd = 1.3)
+segments(input$b1, -0.5, 
+         input$b1, 0.5, 
+         col = "royalblue", lty = 3, lwd = 1.3)
+ 
+lines(theta, IRT(theta, b=input$b2,
+                 a=input$a2),
+       type = "l", lwd = 2, lty = 2,
+     col = "magenta")
+ lines(theta, IRT(theta, b=input$b3,
+                 a=input$a3),
+       type = "l", lwd = 2, lty = 2,
+     col = "seagreen")
+ segments(min(theta)-3, 0.5, 
+         input$b2, 0.5, 
+         col = "gray56", lty = 3, lwd = 1.3)
+segments(input$b2, -0.5, 
+         input$b2, 0.5, 
+         col = "magenta", lty = 3, lwd = 1.3)
+ segments(min(theta)-3, 0.5, 
+         input$b3, 0.5, 
+         col = "gray56", lty = 3, lwd = 1.3)
+segments(input$b3, -0.5, 
+         input$b3, 0.5, 
+         col = "seagreen", lty = 3, lwd = 1.3)
+  })
+
+output$tif <- renderPlot({
+ 
+   theta <- theta <- seq(-7, 7, .001)
+  par(mar = c(5,7,4,2) + 0.1)
+  b = c(input$b1, input$b2, input$b3)
+  a = c(input$a1, input$a2, input$a3)
+c <- item_info(b,a)
+Theta <- matrix(seq(-4,4, length.out=1000))
+check <- data.frame(Theta,
+                    item_info = c[[1]],
+                    item_info2 = c[[2]],
+                    item_info3 = c[[3]])
+d <- do.call('cbind',c)
+sum_info1 <- rowSums(d)
+d1 <- do.call('cbind',c)
+sum_info2 <- rowSums(d1)
+plot(check$Theta, check$item_info, cex.lab= 2, main = "Item Information Functions - IIFs",
+      cex.lab = 2.4, 
+     cex.main = 3, 
+     cex.text=2, cex.axis=1.5,
+        xlab = expression(theta), ylab = expression(paste("IIF"[i])),
+ type = "l", lwd =2,
+      col = "royalblue", ylim = c(0,1))
+ lines(check$Theta, check$item_info2, lwd =2,
+       col = "magenta", lty = 4)
+ lines(check$Theta, check$item_info3, lwd =2,
+       col = "seagreen", lty = 2)
+ 
+ 
+checkTif <- data.frame(Theta, sum_info1, sum_info2)
+
+if (input$showTif == TRUE) {
+  plot(checkTif$Theta, checkTif$sum_info2,
+       type = "l", lwd =2,
+     col = "black", ylim = c(0, 2),
+       xlab = expression(theta), 
+     ylab = expression(paste("I(", theta, ")")), 
+     cex.axis=1.5, main = "IIFs and Test Information Functions",  
+     cex.lab = 2.4, 
+     cex.main = 3, 
+     cex.text=2)
+  lines(check$Theta, check$item_info, lwd =2,
+       col = "royalblue", lty = 4)
+   lines(check$Theta, check$item_info2, lwd =2,
+       col = "magenta", lty = 4)
+ lines(check$Theta, check$item_info3, lwd =2,
+       col = "seagreen", lty = 2)
+}
+
+
+
+ 
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-extras">
+ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
+  quos <- rlang::enquos(...)
+  vars <- rlang::list2(...)
+  nm <- names(vars)
+  if (is.null(nm)) {
+    nm <- rep_len("", length(vars))
+  }
+  mapply(function(q, nm, val) {
+    # Infer name, if possible
+    if (nm == "") {
+      tryCatch({
+        nm <- rlang::as_name(q)
+      }, error = function(e) {
+        code <- paste(collapse = "\n", deparse(rlang::f_rhs(q)))
+        stop("ojs_define() could not create a name for the argument: ", code)
+      })
+    }
+    .session$output[[nm]] <- val
+    outputOptions(.session$output, nm, suspendWhenHidden = FALSE)
+    .session$sendCustomMessage("ojs-export", list(name = nm))
+    NULL
+  }, quos, nm, vars, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  invisible()
+}
+</script>
+</p>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.9.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]}},"value":[{"type":"character","attributes":{},"value":["base","bslib","cachem","cli","compiler","datasets","digest","evaluate","fastmap","graphics","grDevices","htmltools","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","magrittr","memoise","methods","mime","promises","R6","Rcpp","rlang","rmarkdown","rstudioapi","sass","shiny","stats","tools","utils","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["4.4.1","0.8.0","1.1.0","3.6.3","4.4.1","4.4.1","0.6.37","1.0.0","1.2.0","4.4.1","4.4.1","0.5.8.1","1.6.15","0.1.4","1.8.9","1.48","1.3.2","1.0.4","2.0.3","2.0.1","4.4.1","0.12","1.3.0","2.5.1","1.0.13","1.1.4","2.28","0.16.0","0.4.9","1.9.1","4.4.1","4.4.1","4.4.1","0.48","1.8-4","2.3.10"]}]}]}
+</script>
+<!--/html_preserve-->
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
