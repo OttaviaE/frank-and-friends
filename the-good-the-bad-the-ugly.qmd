@@ -1,0 +1,83 @@
+---
+title: "IRT procedures for shortening tests"
+author: "Ottavia M. Epifania & Friends"
+format: 
+  revealjs: 
+    theme: mytheme.scss
+background-opacity: "0.45"
+title-slide-attributes: 
+   data-background-image: "https://psicostat.github.io/shine-bright/gbu.jpg"
+   data-background-size: 350px, cover
+   data-background-position: 50% 5%, center
+---
+
+
+```{r, setup, include=FALSE}
+library(knitr)
+
+```
+
+
+## Item Locating Algotihm -- ILA
+### The bad
+
+:::: {.columns}
+
+
+::: {.column width="40%"}
+
+<font size="4">
+$B$: Item bank 
+			
+
+$Q^k \subset B \setminus Q^{k-1}$: Set of item indexes selected for inclusion in the STF up to iteration $k$ ($Q^0 = \emptyset$)
+			
+$\mathbf{TIF}^*$: TIF target 
+			
+		
+$TIF^k = \frac{\sum_{i\in Q^k} IIF_i}{||Q^k||}$, where $||Q^k||$ denotes the cardinality of $Q^k$, $\mathbf{TIF}^0 = (0, 0, \ldots, 0)$ 
+
+</font>
+
+:::
+
+::: {.column width="60%"}
+
+
+```{r}
+#| fig-align: center
+knitr::include_graphics("img/ila.png")
+```
+
+::: 
+
+::::
+
+## Frank[^1]
+### The good
+
+
+[^1]: **FRANK**ly I didnt' know how to name it
+
+
+
+## Bruto 
+### The bad
+
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+

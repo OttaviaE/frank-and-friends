@@ -1,0 +1,77 @@
+\documentclass[]{scrreprt}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{decision} = [diamond, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+% Title Page
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\pagestyle{empty}
+ILA
+
+	\begin{tikzpicture}[node distance=3cm]
+	
+	% Nodes
+	\node (start) [startstop] {Start, for $k \geq 1$};
+	\node (target) [process, below of=start] {$\theta_{target} = \arg\max |\mathbf{TIF}^* - \mathbf{TIF}^{k-1}|$};
+	\node (additem) [process, below of=target] {$Q^{k} = Q^{k-1} \cup \arg\min |\theta_{target} - b_i|$};
+	\node (update) [process, below of=additem] {$\mathbf{TIF}^{k} = \frac{\sum_{i \in Q^k} \mathbf{IIF}_i}{||Q^k||}$};
+	\node (check) [decision, right of=update, xshift=4cm] {$|\mathbf{TIF}^* - \mathbf{TIF}^k| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k-1}|$?};
+	\node (stop) [startstop, below of=check, yshift=-3.5cm] {Stop \& Return $Q_{ILA} = Q^{k-1}$};
+	
+	% Arrows
+	\draw [arrow] (start) -- (target);
+	\draw [arrow] (target) -- (additem);
+	\draw [arrow] (additem) -- (update);
+	\draw [arrow] (update) -- (check);
+	\draw [arrow] (check) -- node[anchor=east] {Yes} (stop);
+	\draw [arrow] (check.east) -- ++(1,0) -- ++(0,6) -- node[anchor=north] {No, $k = k +1$} (target.east);
+	
+\end{tikzpicture}
+
+
+\newpage
+
+FRANK 
+
+$B$ set of items of the item bank
+
+$Q^k \subset B \setminus Q^{k-1}$: Set of items included up to iteration k 
+
+$\mathbf{TIF}^*$: TIF Target 
+
+Termination criterion: 
+
+$|TIF^* - TIF^k| \geq |TIF^* - TIF^{k-1}|$ se è vero si ferma e prende la selezione in $Q^k$. Dettaglio non indifferente il cofnronto è fatto sulla media. cioè calcolo la distanza puntuale e poi faccio la media 
+
+Se è falso $k = k + 1$ (Livio io sta roba dei due punti non l'ho capita mettitela via)
+
+Start, $k = 0$, $Q^0 = \emptyset$
+
+$Q^k = Q^{k-1} \cup \arg \min |TIF^* - IIF_{i \in B \setminus Q^{k-1}}|$
+
+Per come funziona è impossibile che ci sia solo un item selezionato. Comunque ora testa il criterio di uscita e va avanti
+
+Per $k \geq 1$: 
+
+Adesso io ho un vettore colonna $IIF_{i \in Q^{k-1}}$ che è la iif per tutto il tratto latente $\theta$. Questo vettore colonna diventa una matrice di n righe quanti sono i livelli di theta e $i$ colonne quanti sono gli item considerati a $k-1$.
+
+Io adesso avrei bigono di creare una TIF temporanea dove vado ad aggiungere alle IIF degli item in $Q^k-1$ la IIF di ognuno degli item rimasti in B che non sono in $Q^{k-1}$ uno alla volta. Attenzione perché dovrebbe essere la TIF media, quindi la somma delle IIF divise per il numero $i$ di colonne di questa matrice. Dato il $k$ (l'iterazione), il denominatore è fisso, cambia l'item che viene aggiunto alla matrice. Va bhe sta robala capisco solo io. Teoricamente sarebbe: 
+
+$$TIF_{i \in B\setminus Q^{k-1}}^k = \frac{IIF_{i \in Q^{k-1}} + IIF_{i \in B \setminus Q^{k-1}}}{||Q^{k-1}|| + 1}$$ (+1 perché aggiungo questo item temporaneo) 
+
+Però così non va bene perché qui $TIF_{i \in B\setminus Q^{k-1}}^k$ non so se è chiaro che viene aggiunto un item alla volta. 
+
+Bon a sto punto l'item che devo aggiungere a Q è quello che permettte di minimizzare la distanza dalla tif target: 
+
+$Q^k = Q^{k-1} \cup \arg \min |TIF^* - TIF^k|$
+
+
+\end{document}          
