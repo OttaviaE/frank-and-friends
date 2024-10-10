@@ -70,12 +70,16 @@ Item Response Function:
 $$P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)]}$$
 <br>
 
+. . .
+
 Item Information Function: 
 
 
 $$IIF_i = a_i^2P(\theta, b_i, a_i)[1-P(\theta, b_i, a_i)]$$
 
 <br>
+
+. . .
 
 Test Information Function: 
 
