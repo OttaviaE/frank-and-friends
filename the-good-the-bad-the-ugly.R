@@ -261,6 +261,8 @@ frank = function(target, parameters) {
         token = TRUE
       } else if (dist_k[i] >= dist_k[i-1]) {
         token  = FALSE
+        tif_k = tif_k[,-ncol(tif_k)]
+        index_item = index_item[-length(index_item)]
       } else {
         token = TRUE
       }
@@ -604,9 +606,9 @@ for (i in 1:length(myfrank)) {
   g[[i]] = ggplot(temp, 
                   aes( x= theta, y = mean_tif, color = type)) + 
     geom_line(linewidth=1.2) + 
-    ggtitle(paste("frank= ", item_comparison[i, "nfrank"], 
-                  " ila=", item_comparison[i, "nila"], 
-                  paste("bruto = ", resBruto[[i]]$best_selections_summary$cat[1]))) + 
+    ggtitle(paste("frank=", item_comparison[i, "nfrank"], 
+                  "ila=", item_comparison[i, "nila"], 
+                  paste("bruto=", resBruto[[i]]$best_selections_summary$cat[1]))) + 
     scale_color_manual(values = c("royalblue","red",  "seagreen", "black"))  +
     theme(legend.position = "none") 
   #   print(g[[i]])
@@ -630,10 +632,11 @@ ic = ic_long %>%
             sd = sd(value))
 
 ggplot(ic, 
-       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 3) + ylim(0,6) + 
+       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 6) + ylim(0,6) + 
   geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), width = .2)+ 
-  geom_point(aes(x = name, y = min), shape = 1) + geom_point(aes(x = name, y = max), shape = 15) + 
-  geom_point(aes(x = name, y = median), shape = 4, size = 3) + 
+  geom_point(aes(x = name, y = min), shape = 19, size = 6) + geom_point(aes(x = name, y = max), 
+                                                                       shape = 15, size = 6) + 
+  geom_point(aes(x = name, y = median), shape = 4, size = 6) + 
   scale_color_manual(values = c("royalblue","red",  "seagreen")) + 
   ylab("Item") + theme_light() + 
   theme(axis.text = element_text(size = 25), 
@@ -694,6 +697,65 @@ for (i in 1:length(resBruto)) {
   colnames(tempBI) = paste(colnames(tempBI), i, sep = "_")
   allBI = cbind(allBI, tempBI)
 }
+
+allIlas$allIlas = target$theta
+longIlas = pivot_longer(allIlas, cols = !allIlas, names_to = "iter")
+allBrutos$allBrutos = target$theta
+longBrutos = pivot_longer(allBrutos, cols = !allBrutos, names_to = "iter")
+allFranks$allFranks = target$theta
+longFranks = pivot_longer(allFranks, cols = !allFranks, names_to = "iter")
+
+longIlas$iter = as.numeric(gsub("diff_target_ila_", "", longIlas$iter))
+longFranks$iter = as.numeric(gsub("diff_target_frank_", "", longFranks$iter))
+longBrutos$iter = as.numeric(gsub("diff_target_bruto_", "", longBrutos$iter))
+
+compIla = item_comparison[, c("iter", "nila")]
+colnames(compIla)[2] = "l_stf"
+compFrank = item_comparison[, c("iter", "nfrank")]
+colnames(compFrank)[2] = "l_stf"
+compBruto = item_comparison[, c("iter", "nbruto")]
+colnames(compBruto)[2] = "l_stf"
+
+longIlas = merge(longIlas, compIla, by = "iter")
+longIlas$algo = "ila"
+longFranks = merge(longFranks, compFrank, by = "iter")
+longFranks$algo = "frank"
+longBrutos = merge(longBrutos, compBruto, by = "iter")
+longBrutos$algo = "bruto"
+colnames(longBrutos)[2] = "theta"
+colnames(longIlas)[2] = "theta"
+colnames(longFranks)[2] = "theta"
+
+allalgo = rbind(longBrutos, longIlas, longFranks)
+
+ggplot(allalgo, 
+       aes(x = factor(l_stf), y = value, color = algo)) + geom_violin()
+
+ggplot(allalgo, 
+       aes(x = factor(l_stf), y = value, color = algo)) + geom_boxplot() + theme_light() +
+  ylab(expression(paste(TIF^"* - ", TIF[STF]))) +  xlab("Length STF") +
+  scale_color_manual(values = c("royalblue","red",  "seagreen")) +
+  theme(axis.title = element_text(size = 28), 
+        axis.text = element_text(size = 26), 
+        legend.position = "none")
+
+
+sum_algo = allalgo %>%  
+  group_by(algo, l_stf) %>%  
+  summarise(mean = mean(value), sd = sd(value), n()/100000)
+
+ggplot(sum_algo, 
+       aes(x = l_stf, y = mean, color = algo, 
+           shape = algo)) + geom_line(linewidth = 1.2) + geom_point(size = 4) + theme_light() +
+  ylab(expression(paste(TIF^"* - ", TIF[STF]))) +  xlab("Length STF") +
+  scale_color_manual(values = c("royalblue","red",  "seagreen")) +
+  theme(axis.title = element_text(size = 28), 
+        axis.text = element_text(size = 26), 
+        legend.position = "none") + 
+  scale_x_continuous(n.breaks = 6)
+
+
+
 allBrutos = allBrutos[,-1]
 allFranks = allFranks[,-1]
 allIlas = allIlas[,-1]
@@ -740,6 +802,42 @@ item_select[item_comparison$bf_inter == item_comparison$bi_inter, ]
 item_select[item_comparison$bi_inter == 0, ]
 
 
+item_comparison = item_comparison %>% 
+  mutate(filter = if_all(nfrank:nila,  `==`, nbruto))
+table(item_comparison$filter)
+
+item_equal = item_comparison[item_comparison$filter == "TRUE", ]
+select_equal = item_select[as.numeric(rownames(item_equal)),]
+
+select_equal1 = select_equal
+
+tempFrank = NULL
+tempIla = NULL
+
+for (i in 1:nrow(select_equal1)) {
+  tempFrank = unlist(strsplit(select_equal[i, "ifrank"], split = " "))
+  tempFrank = tempFrank[order(tempFrank, decreasing = F)]
+  tempFrank = paste(tempFrank, collapse = " ")
+  
+  tempIla = unlist(strsplit(select_equal[i, "iila"], split = " "))
+  tempIla = tempIla[order(tempIla, decreasing = F)]
+  tempIla = paste(tempIla, collapse = " ")
+  
+  select_equal1[i, "ifrank"] = tempFrank
+  select_equal1[i, "iila"] = tempIla
+}
+
+select_equal1 = select_equal1 %>% 
+  mutate(is_equal_all = if_all(items:ifrank, `==`, iila))
+
+table(select_equal1$is_equal_all)
+
+rownames(select_equal1[select_equal1$is_equal_all == TRUE, ])
+# faccio il grafico esatto diq aundo sono effettivamente tutte della stessa lunghezza
+all_equals = as.numeric(rownames(select_equal1[select_equal1$is_equal_all == FALSE, ])
+)
+wrap_plots(g[all_equals])
+
 
 mean_distances = data.frame(bruto = rowMeans(allBrutos), 
                             frank = rowMeans(allFranks), 
@@ -784,5 +882,16 @@ all_tifs = merge(all_tifs, tempFrank, by = "theta")
 all_tifs = merge(all_tifs, tempBruto, by = "theta")
 
 
+# cose prese dalla presentazione per psicostata 
 
 
+tif_k = myfrank[[1]]$tif
+tif_k1 = tif_k[,-ncol(tif_k)]
+head(tif_k1)
+
+myfrank[[1]]$chosen_items[-length(myfrank[[1]]$chosen_items)]
+
+myt = pivot_longer(tif_k, cols=!theta)
+
+ggplot(myt, 
+       aes(x = theta, y = value, color = name)) + geom_line()

@@ -5,13 +5,25 @@ format:
   revealjs: 
     theme: mytheme.scss
     logo: "www/psicostat.jpg"
+    footer: "Psicostat meeting"
 background-opacity: "0.45"
 title-slide-attributes: 
    data-background-image: "https://psicostat.github.io/shine-bright/gbu.jpg"
-   data-background-size: 350px, cover
-   data-background-position: 50% 5%, center
+   data-background-size: 450px, cover
+   data-background-position: 50% 15%, center
 server: shiny
 ---
+
+
+```{css include = FALSE}
+.reveal .slide-logo {
+  height: 100px !important;
+  width: 100px !important;
+  max-width: unset !important;
+  max-height: unset !important;
+}
+```
+
 
 
 ```{r, setup, include=FALSE}
@@ -55,7 +67,7 @@ set.seed(999)
 
 Item Response Function: 
 
-$$P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)])}$$
+$$P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)]}$$
 <br>
 
 Item Information Function: 
@@ -264,17 +276,16 @@ TIF is considered as mean TIF $\rightarrow$ as the number of items increases, th
 ## Bruto (tu quoque?!)
 ### The bad
 
-<font size = "5">
-
-$Q_m \subset B = 2^{||B||}-2$ STFs of different lengths considering different item combination can be developed from $B$. That's what Bruto does
 
 
+$\forall Q \in\mathcal{Q} = 2^B \setminus \{\emptyset, B\}$, 
 
-1. $\mathbf{TIF}^{Q_m} =  \frac{\sum_{i \in Q_m} IIF_i}{||Q_m||}$
-2. $\overline{\Delta}_{\mathbf{TIF}^{Q_m}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q_m}|)$
 
-$Q_{bruto} = \arg \min_{Q_m \subset B} \overline{\Delta}_{\mathbf{TIF}^{Q_m}}$
-</font>
+1. $\mathbf{TIF}^{Q} =  \frac{\sum_{i \in Q} IIF_i}{||Q||}$
+2. $\overline{\Delta}_{\mathbf{TIF}^{Q}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|)$
+
+$Q_{bruto} = \arg \min_{Q \in \mathcal{Q}} \overline{\Delta}_{\mathbf{TIF}^{Q}}$
+
 
 
 ```{r}
@@ -297,7 +308,7 @@ knitr::include_graphics("www/eeato.jpg")
 $B$: Item bank 
 			
 
-$Q^k \subset B \setminus Q^{k-1}$: Set of item indexes selected for inclusion in the STF up to iteration $k$ ($Q^0 = \emptyset$)
+$Q^k \subset B$: Set of item selected for inclusion in the STF up to iteration $k$ ($Q^0 = \emptyset$)
 			
 $\mathbf{TIF}^*$: TIF target 
 			
@@ -326,23 +337,37 @@ knitr::include_graphics("www/ila.png")
 ## Frank[^1]
 ### The good
 
-At $k = 0$, $Q^0 = \emptyset$. For $k \geq 1$, iterate 
-
-1. $Q^{k+1} = Q^k \cup \arg \min |TIF^* - IIF_{i \in B \setminus Q^k}|$
 
 
-2. $TIF_{i \in B\setminus Q^{k+1}}^{k+1} = \frac{IIF_{i \in Q^{k+1}} + IIF_{i \in B \setminus Q^{k+1}}}{||Q^{k+1}|| + 1}$
 
-Until the termination criterion $|TIF^* - TIF^{k+1}| \geq |TIF^* - TIF^{k}|$ is true $\rightarrow$ $Q_{frank} = Q^{k+1}$
+At $k =0$, $TIF^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, iterate
 
-[^1]: <font size="3"><font size="6">**FRANK**</font>ly I didnt' know how to name it</font>
+
+1. $A^k = B \setminus Q^k$
+
+2. $\forall i \in A^k$, $PIF_{i}^k = \frac{TIF^k + IIF_{i}}{||Q^k||+1}$
+
+3. $D = \arg \min_{i \in A^k} |TIF^* - PIF_i^k|$
+
+Termination criterion: $|TIF^* - PIF_D^{k}| \geq |TIF^* - TIF^{k-1}|$: 
+
+  - If false, $k = k + 1,$ $Q^{k+1} = Q^k \cup \{D\}$, restart from 1
+
+  - If true, stops, $Q_{Frank} = Q^k$
+
+
+[^1]: <font size="3"><font size="6">**FRANK**</font>ly I didn't know how to name it</font>
 
 
 ## Simulation time
 
+100 data frames
+
 1. Generate an item bank $B$ of $6$ items: 
-			- Difficulty parameters: $\mathcal{U}(-3, 3)$
-			- Discrimination parameters:  $\mathcal{U}(.90, 2.0)$
+        
+      - Difficulty parameters: $\mathcal{U}(-3, 3)$
+        
+      - Discrimination parameters:  $\mathcal{U}(.90, 2.0)$
 		 
 2. Random item selections of lengths $l$ from $B$ ($M_l = 3.34 \pm 1.13$) + modification parameters $\mathcal{U}(-0.20, 0.20)$ $\rightarrow$ $\mathbf{TIF}^*$ 
 		
@@ -354,12 +379,20 @@ Until the termination criterion $|TIF^* - TIF^{k+1}| \geq |TIF^* - TIF^{k}|$ is 
       - Frank $\rightarrow$ Forwardly searches considering the whole latent trait 		
 
 
+
+
 ## Results 
 
+::: {.panel-tabset}
+
+## So... 
+
 ```{r}
+
 load("gbu-comparison.RData")
-item_comparison$iter = 1:100
-ic_long = pivot_longer(item_comparison, cols = !iter)
+mycomparison = item_comparison[, c("nbruto", "nfrank", "nila")]
+mycomparison$iter = 1:100
+ic_long = pivot_longer(mycomparison, cols = !iter)
 
 
 
@@ -368,24 +401,105 @@ ic = ic_long %>%
   summarise(min = min(value), max = max(value), mean = mean(value), median = mean(value), 
             sd = sd(value))
 ggplot(ic, 
-       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 3) + ylim(0,6) + 
+       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 6) + ylim(0,6) + 
   geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), width = .2)+ 
-  geom_point(aes(x = name, y = min), shape = 1) + geom_point(aes(x = name, y = max), shape = 15) + 
-  geom_point(aes(x = name, y = median), shape = 4, size = 3) + 
+  geom_point(aes(x = name, y = min), shape = 19, size = 6) + geom_point(aes(x = name, y = max), 
+                                                                       shape = 15, size = 6) + 
+  geom_point(aes(x = name, y = median), shape = 4, size = 6) + 
   scale_color_manual(values = c("royalblue","red",  "seagreen")) + 
-  ylab("Item") + theme_light() + 
-  theme(axis.text = element_text(size = 25), 
+  ylab("Number of items") + theme_light() + 
+  theme(axis.text = element_text(size = 26),
+        axis.title.y = element_text(size = 28),
         axis.title.x = element_blank(), 
         legend.position = "none")
 
+
 ```
 
 
-## When $||Q_{ILA}|| = ||Q_{Frank}||$
+## In summary 
+
+
+```{r}
+ggplot(sum_algo, 
+       aes(x = l_stf, y = mean, color = algo, 
+           shape = algo)) + geom_line(linewidth = 1.2) + geom_point(size = 4) + theme_light() +
+  ylab(expression(paste(TIF^"* - ", TIF[STF]))) +  xlab("Length STF") +
+  scale_color_manual(values = c("royalblue","red",  "seagreen")) +
+  scale_x_continuous(n.breaks = 6)  + theme(axis.title = element_text(size = 28), 
+        axis.text = element_text(size = 26), 
+        legend.position = c(.7,.9), 
+        legend.title = element_blank(), 
+        legend.text = element_text(size = 24), 
+        legend.key.size = unit(2, "cm")) +
+  guides(color=guide_legend(ncol=3))
+
+```
+
+
+
+
+## Spill the tea
+
+```{r}
+ggplot(allalgo, 
+       aes(x = factor(l_stf), y = value, color = algo)) + geom_boxplot() + theme_light() +
+  ylab(expression(paste(TIF^"* - ", TIF[STF]))) +  xlab("Length STF") +
+  scale_color_manual(values = c("royalblue","red",  "seagreen")) +
+  theme(axis.title = element_text(size = 28), 
+        axis.text = element_text(size = 26), 
+        legend.position = c(.7,.9), 
+        legend.title = element_blank(), 
+        legend.text = element_text(size = 24), 
+        legend.key.size = unit(2, "cm")) +
+  guides(color=guide_legend(ncol=3))
+```
+
+
+:::
+
+
+## When $||Q_{ILA}|| = ||Q_{Frank}|| = ||Q_{Bruto}||$
+### But $Q_{Ila} \neq Q_{frank} \neq Q_{bruto}$
 
 ```{r}
 library(patchwork)
-equal_IF = as.numeric(rownames(item_comparison[item_comparison$nfrank == item_comparison$nila, ]))
-wrap_plots(g[equal_IF])
+all_equals = as.numeric(rownames(select_equal1[select_equal1$is_equal_all == FALSE, ])
+)
+wrap_plots(g[all_equals])
 ```
 
+## In the end 
+
+<br>
+
+Mathematically, we are at loss
+
+Psychologically? I don't know
+
+Do they work? Hopefully
+
+::: {.callout-tip}
+## Acknowfndabfjknc
+
+Pasquale Anselmi, Egidio Robusto, Livio Finos, Gianmarco Altoè
+
+
+:::
+
+
+</br>
+
+
+. . .
+
+::: {.callout-note}
+
+## This happened too
+
+Roses are red, violets are blue, 
+
+my computer broke down on these simulations, 
+
+and I broke down too
+:::

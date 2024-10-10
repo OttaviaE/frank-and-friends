@@ -325,7 +325,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="https://psicostat.github.io/shine-bright/gbu.jpg" data-background-position="50% 5%, center" data-background-size="350px, cover" class="quarto-title-block center">
+<section id="title-slide" data-background-image="https://psicostat.github.io/shine-bright/gbu.jpg" data-background-position="50% 15%, center" data-background-size="450px, cover" class="quarto-title-block center">
   <h1 class="title">IRT procedures for shortening tests</h1>
 
 <div class="quarto-title-authors">
@@ -340,7 +340,7 @@ Ottavia M. Epifania &amp; Friends
 <section id="the-2-parameter-logistic-model" class="slide level2">
 <h2>The 2-Parameter Logistic Model</h2>
 <p>Item Response Function:</p>
-<p><span class="math display">\[P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)])}\]</span> <br></p>
+<p><span class="math display">\[P(x_{pi} = 1|\theta_p, b_i, a_i) = \frac{\exp[a_i(\theta_p - b_i)])}{1 + \exp[a_i(\theta_p - b_i)]}\]</span> <br></p>
 <p>Item Information Function:</p>
 <p><span class="math display">\[IIF_i = a_i^2P(\theta, b_i, a_i)[1-P(\theta, b_i, a_i)]\]</span></p>
 <p><br></p>
@@ -484,13 +484,12 @@ Ottavia M. Epifania &amp; Friends
 <section id="bruto-tu-quoque" class="slide level2">
 <h2>Bruto (tu quoque?!)</h2>
 <h3 id="the-bad">The bad</h3>
-<p><font size="5"></font></p><font size="5">
-<p><span class="math inline">\(Q_m \subset B = 2^{||B||}-2\)</span> STFs of different lengths considering different item combination can be developed from <span class="math inline">\(B\)</span>. That’s what Bruto does</p>
+<p><span class="math inline">\(\forall Q \in\mathcal{Q} = 2^B \setminus \{\emptyset, B\}\)</span>,</p>
 <ol type="1">
-<li><span class="math inline">\(\mathbf{TIF}^{Q_m} =  \frac{\sum_{i \in Q_m} IIF_i}{||Q_m||}\)</span></li>
-<li><span class="math inline">\(\overline{\Delta}_{\mathbf{TIF}^{Q_m}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q_m}|)\)</span></li>
+<li><span class="math inline">\(\mathbf{TIF}^{Q} =  \frac{\sum_{i \in Q} IIF_i}{||Q||}\)</span></li>
+<li><span class="math inline">\(\overline{\Delta}_{\mathbf{TIF}^{Q}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|)\)</span></li>
 </ol>
-</font><p><font size="5"><span class="math inline">\(Q_{bruto} = \arg \min_{Q_m \subset B} \overline{\Delta}_{\mathbf{TIF}^{Q_m}}\)</span> </font></p>
+<p><span class="math inline">\(Q_{bruto} = \arg \min_{Q \in \mathcal{Q}} \overline{\Delta}_{\mathbf{TIF}^{Q}}\)</span></p>
 
 <img data-src="www/eeato.jpg" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
 <section id="item-locating-algorithm-ila" class="slide level2">
@@ -499,7 +498,7 @@ Ottavia M. Epifania &amp; Friends
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><font size="4"> <span class="math inline">\(B\)</span>: Item bank</font></p><font size="4">
-<p><span class="math inline">\(Q^k \subset B \setminus Q^{k-1}\)</span>: Set of item indexes selected for inclusion in the STF up to iteration <span class="math inline">\(k\)</span> (<span class="math inline">\(Q^0 = \emptyset\)</span>)</p>
+<p><span class="math inline">\(Q^k \subset B\)</span>: Set of item selected for inclusion in the STF up to iteration <span class="math inline">\(k\)</span> (<span class="math inline">\(Q^0 = \emptyset\)</span>)</p>
 <p><span class="math inline">\(\mathbf{TIF}^*\)</span>: TIF target</p>
 <p><span class="math inline">\(TIF^k = \frac{\sum_{i\in Q^k} IIF_i}{||Q^k||}\)</span>, where <span class="math inline">\(||Q^k||\)</span> denotes the cardinality of <span class="math inline">\(Q^k\)</span>, <span class="math inline">\(\mathbf{TIF}^0 = (0, 0, \ldots, 0)\)</span></p>
 </font><p><font size="4"></font></p>
@@ -518,17 +517,27 @@ Ottavia M. Epifania &amp; Friends
 <section id="frank1" class="slide level2">
 <h2>Frank<sup>1</sup></h2>
 <h3 id="the-good">The good</h3>
-<p>At <span class="math inline">\(k = 0\)</span>, <span class="math inline">\(Q^0 = \emptyset\)</span>. For <span class="math inline">\(k \geq 1\)</span>, iterate</p>
+<p>At <span class="math inline">\(k =0\)</span>, <span class="math inline">\(TIF^0 = (0, 0, \ldots, 0)\)</span>, <span class="math inline">\(Q^0 = \emptyset\)</span>, iterate</p>
 <ol type="1">
-<li><p><span class="math inline">\(Q^{k+1} = Q^k \cup \arg \min |TIF^* - IIF_{i \in B \setminus Q^k}|\)</span></p></li>
-<li><p><span class="math inline">\(TIF_{i \in B\setminus Q^{k+1}}^{k+1} = \frac{IIF_{i \in Q^{k+1}} + IIF_{i \in B \setminus Q^{k+1}}}{||Q^{k+1}|| + 1}\)</span></p></li>
+<li><p><span class="math inline">\(A^k = B \setminus Q^k\)</span></p></li>
+<li><p><span class="math inline">\(\forall i \in A^k\)</span>, <span class="math inline">\(PIF_{i}^k = \frac{TIF^k + IIF_{i}}{||Q^k||+1}\)</span></p></li>
+<li><p><span class="math inline">\(D = \arg \min_{i \in A^k} |TIF^* - PIF_i^k|\)</span></p></li>
 </ol>
-<p>Until the termination criterion <span class="math inline">\(|TIF^* - TIF^{k+1}| \geq |TIF^* - TIF^{k}|\)</span> is true <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(Q_{frank} = Q^{k+1}\)</span></p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p><font size="3"><font size="6"><strong>FRANK</strong></font>ly I didnt’ know how to name it</font></p></li></ol></aside></section>
+<p>Termination criterion: <span class="math inline">\(|TIF^* - PIF_D^{k}| \geq |TIF^* - TIF^{k-1}|\)</span>:</p>
+<ul>
+<li><p>If false, <span class="math inline">\(k = k + 1,\)</span> <span class="math inline">\(Q^{k+1} = Q^k \cup \{D\}\)</span>, restart from 1</p></li>
+<li><p>If true, stops, <span class="math inline">\(Q_{Frank} = Q^k\)</span></p></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><font size="3"><font size="6"><strong>FRANK</strong></font>ly I didn’t know how to name it</font></p></li></ol></aside></section>
 <section id="simulation-time" class="slide level2">
 <h2>Simulation time</h2>
+<p>100 data frames</p>
 <ol type="1">
-<li><p>Generate an item bank <span class="math inline">\(B\)</span> of <span class="math inline">\(6\)</span> items: - Difficulty parameters: <span class="math inline">\(\mathcal{U}(-3, 3)\)</span> - Discrimination parameters: <span class="math inline">\(\mathcal{U}(.90, 2.0)\)</span></p></li>
+<li><p>Generate an item bank <span class="math inline">\(B\)</span> of <span class="math inline">\(6\)</span> items:</p>
+<ul>
+<li><p>Difficulty parameters: <span class="math inline">\(\mathcal{U}(-3, 3)\)</span></p></li>
+<li><p>Discrimination parameters: <span class="math inline">\(\mathcal{U}(.90, 2.0)\)</span></p></li>
+</ul></li>
 <li><p>Random item selections of lengths <span class="math inline">\(l\)</span> from <span class="math inline">\(B\)</span> (<span class="math inline">\(M_l = 3.34 \pm 1.13\)</span>) + modification parameters <span class="math inline">\(\mathcal{U}(-0.20, 0.20)\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(\mathbf{TIF}^*\)</span></p></li>
 <li><p>Considering <span class="math inline">\(\mathbf{TIF}^*\)</span> at Step 2 and item parameters at Step 1:</p>
 <ul>
@@ -540,16 +549,83 @@ Ottavia M. Epifania &amp; Friends
 </section>
 <section id="results" class="slide level2">
 <h2>Results</h2>
-
-<img data-src="the-good-the-bad-the-ugly_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
-<section id="when-q_ila-q_frank" class="slide level2">
-<h2>When <span class="math inline">\(||Q_{ILA}|| = ||Q_{Frank}||\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">So…</a></li><li><a href="#tabset-1-2">In summary</a></li><li><a href="#tabset-1-3">Spill the tea</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="the-good-the-bad-the-ugly_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
 </figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="the-good-the-bad-the-ugly_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="the-good-the-bad-the-ugly_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="when-q_ila-q_frank-q_bruto" class="slide level2">
+<h2>When <span class="math inline">\(||Q_{ILA}|| = ||Q_{Frank}|| = ||Q_{Bruto}||\)</span></h2>
+<h3 id="but-q_ila-neq-q_frank-neq-q_bruto">But <span class="math inline">\(Q_{Ila} \neq Q_{frank} \neq Q_{bruto}\)</span></h3>
+
+<img data-src="the-good-the-bad-the-ugly_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="in-the-end" class="slide level2">
+<h2>In the end</h2>
+<p><br></p>
+<p>Mathematically, we are at loss</p>
+<p>Psychologically? I don’t know</p>
+<p>Do they work? Hopefully</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Acknowfndabfjknc</strong></p>
+</div>
+<div class="callout-content">
+<p>Pasquale Anselmi, Egidio Robusto, Livio Finos, Gianmarco Altoè</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Roses are red, violets are blue,</p>
+<p>my computer broke down on these simulations,</p>
+<p>and I broke down too</p>
 </div>
 </div>
 </div>
@@ -730,7 +806,8 @@ ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
 <div class="quarto-auto-generated-content">
 <p><img src="www/psicostat.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
-
+<p>Psicostat meeting</p>
+</div>
 </div>
 </div>
 </section>
