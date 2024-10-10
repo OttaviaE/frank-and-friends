@@ -9,8 +9,8 @@ format:
 background-opacity: "0.45"
 title-slide-attributes: 
    data-background-image: "https://psicostat.github.io/shine-bright/gbu.jpg"
-   data-background-size: 450px, cover
-   data-background-position: 50% 15%, center
+   data-background-size: 400px, cover
+   data-background-position: 50% 10%, center
 server: shiny
 ---
 
@@ -105,20 +105,20 @@ tags$style(HTML(".js-irs-5 .irs-single, .js-irs-5 .irs-bar-edge, .js-irs-5 .irs-
                   value = 0, step = 0.1)
 sliderInput("b2", "b2",
                   min = -3, max = 3,
-                  value = 0, step = 0.1)
+                  value = -1, step = 0.1)
 sliderInput("b3", "b3",
                   min = -3, max = 3,
-                  value = 0, step = 0.1)
+                  value = 1, step = 0.1)
 
 sliderInput("a1", "a1",
                   min = 0.20, max = 3,
                   value = 1, step = 0.1)
 sliderInput("a2", "a2",
                   min = 0, max = 3,
-                  value = 0.70, step = 0.1)
+                  value = 1, step = 0.1)
 sliderInput("a3", "a3",
                   min = 0, max = 3,
-                  value = 1.90, step = 0.1)
+                  value = 1, step = 0.1)
 checkboxInput("showTif", "Show Test Information Function", value = FALSE)
 
 ```
@@ -344,16 +344,16 @@ knitr::include_graphics("www/ila.png")
 
 
 
-At $k =0$, $TIF^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, iterate
+At $k =0$, $\mathbf{TIF}^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, iterate
 
 
 1. $A^k = B \setminus Q^k$
 
-2. $\forall i \in A^k$, $PIF_{i}^k = \frac{TIF^k + IIF_{i}}{||Q^k||+1}$
+2. $\forall i \in A^k$, $\mathbf{PIF}_{i}^k = \frac{\mathbf{TIF}^k + \mathbf{IIF}_{i}}{||Q^k||+1}$
 
-3. $D = \arg \min_{i \in A^k} |TIF^* - PIF_i^k|$
+3. $D = \arg \min_{i \in A^k} |\mathbf{TIF}^* - \mathbf{PIF}_i^k|$
 
-Termination criterion: $|TIF^* - PIF_D^{k}| \geq |TIF^* - TIF^{k-1}|$: 
+Termination criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k-1}|$: 
 
   - If false, $k = k + 1,$ $Q^{k+1} = Q^k \cup \{D\}$, restart from 1
 

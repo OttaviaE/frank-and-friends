@@ -325,7 +325,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="https://psicostat.github.io/shine-bright/gbu.jpg" data-background-position="50% 15%, center" data-background-size="450px, cover" class="quarto-title-block center">
+<section id="title-slide" data-background-image="https://psicostat.github.io/shine-bright/gbu.jpg" data-background-position="50% 10%, center" data-background-size="400px, cover" class="quarto-title-block center">
   <h1 class="title">IRT procedures for shortening tests</h1>
 
 <div class="quarto-title-authors">
@@ -382,13 +382,13 @@ Ottavia M. Epifania &amp; Friends
 <div class="cell-output-display">
 <div class="form-group shiny-input-container">
 <label class="control-label" id="b2-label" for="b2">b2</label>
-<input class="js-range-slider" id="b2" data-skin="shiny" data-min="-3" data-max="3" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+<input class="js-range-slider" id="b2" data-skin="shiny" data-min="-3" data-max="3" data-from="-1" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
 </div>
 </div>
 <div class="cell-output-display">
 <div class="form-group shiny-input-container">
 <label class="control-label" id="b3-label" for="b3">b3</label>
-<input class="js-range-slider" id="b3" data-skin="shiny" data-min="-3" data-max="3" data-from="0" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+<input class="js-range-slider" id="b3" data-skin="shiny" data-min="-3" data-max="3" data-from="1" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
 </div>
 </div>
 <div class="cell-output-display">
@@ -400,13 +400,13 @@ Ottavia M. Epifania &amp; Friends
 <div class="cell-output-display">
 <div class="form-group shiny-input-container">
 <label class="control-label" id="a2-label" for="a2">a2</label>
-<input class="js-range-slider" id="a2" data-skin="shiny" data-min="0" data-max="3" data-from="0.7" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+<input class="js-range-slider" id="a2" data-skin="shiny" data-min="0" data-max="3" data-from="1" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
 </div>
 </div>
 <div class="cell-output-display">
 <div class="form-group shiny-input-container">
 <label class="control-label" id="a3-label" for="a3">a3</label>
-<input class="js-range-slider" id="a3" data-skin="shiny" data-min="0" data-max="3" data-from="1.9" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
+<input class="js-range-slider" id="a3" data-skin="shiny" data-min="0" data-max="3" data-from="1" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
 </div>
 </div>
 <div class="cell-output-display">
@@ -521,13 +521,13 @@ Ottavia M. Epifania &amp; Friends
 <section id="frank1" class="slide level2">
 <h2>Frank<sup>1</sup></h2>
 <h3 id="the-good">The good</h3>
-<p>At <span class="math inline">\(k =0\)</span>, <span class="math inline">\(TIF^0 = (0, 0, \ldots, 0)\)</span>, <span class="math inline">\(Q^0 = \emptyset\)</span>, iterate</p>
+<p>At <span class="math inline">\(k =0\)</span>, <span class="math inline">\(\mathbf{TIF}^0 = (0, 0, \ldots, 0)\)</span>, <span class="math inline">\(Q^0 = \emptyset\)</span>, iterate</p>
 <ol type="1">
 <li><p><span class="math inline">\(A^k = B \setminus Q^k\)</span></p></li>
-<li><p><span class="math inline">\(\forall i \in A^k\)</span>, <span class="math inline">\(PIF_{i}^k = \frac{TIF^k + IIF_{i}}{||Q^k||+1}\)</span></p></li>
-<li><p><span class="math inline">\(D = \arg \min_{i \in A^k} |TIF^* - PIF_i^k|\)</span></p></li>
+<li><p><span class="math inline">\(\forall i \in A^k\)</span>, <span class="math inline">\(\mathbf{PIF}_{i}^k = \frac{\mathbf{TIF}^k + \mathbf{IIF}_{i}}{||Q^k||+1}\)</span></p></li>
+<li><p><span class="math inline">\(D = \arg \min_{i \in A^k} |\mathbf{TIF}^* - \mathbf{PIF}_i^k|\)</span></p></li>
 </ol>
-<p>Termination criterion: <span class="math inline">\(|TIF^* - PIF_D^{k}| \geq |TIF^* - TIF^{k-1}|\)</span>:</p>
+<p>Termination criterion: <span class="math inline">\(|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k-1}|\)</span>:</p>
 <ul>
 <li><p>If false, <span class="math inline">\(k = k + 1,\)</span> <span class="math inline">\(Q^{k+1} = Q^k \cup \{D\}\)</span>, restart from 1</p></li>
 <li><p>If true, stops, <span class="math inline">\(Q_{Frank} = Q^k\)</span></p></li>
