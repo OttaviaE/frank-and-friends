@@ -1,5 +1,5 @@
 ---
-title: "IRT procedures for shortening tests"
+title: "Item response theory procedures for shortening tests"
 author: "Ottavia M. Epifania & Friends"
 format: 
   revealjs: 
@@ -64,6 +64,8 @@ set.seed(999)
 
 
 ## The 2-Parameter Logistic Model
+
+. . . 
 
 Item Response Function: 
 

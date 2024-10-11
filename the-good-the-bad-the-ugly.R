@@ -605,7 +605,7 @@ for (i in 1:length(myfrank)) {
   temp = rbind(tempBruto, temp)
   g[[i]] = ggplot(temp, 
                   aes( x= theta, y = mean_tif, color = type)) + 
-    geom_line(linewidth=1.2) + 
+    geom_line(linewidth=1) + 
     ggtitle(paste("frank=", item_comparison[i, "nfrank"], 
                   "ila=", item_comparison[i, "nila"], 
                   paste("bruto=", resBruto[[i]]$best_selections_summary$cat[1]))) + 
