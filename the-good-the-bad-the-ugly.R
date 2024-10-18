@@ -342,7 +342,7 @@ bruto = function(parameters,
   all_iifs = data.frame(do.call("cbind", all_iifs))
   colnames(all_iifs) = rownames(parameters)
   all_iifs = cbind(theta, all_iifs)
-  # ora deve calcolare tutte le possibili forme brevi da 2 a nrow(parameters)-1 sui parametri iniziali 
+  # ora deve calcolare tutte le possibili forme brevi da 1 a nrow(parameters)-1 sui parametri iniziali 
   my_comb = 1:(nrow(parameters)-1)
   # ora estraggo le varie terzine cinquine eccetera 
   item = NULL
@@ -515,8 +515,8 @@ isa = function(TIF, parameters, print = FALSE) {
                  the_graphs = mygraphs)
   return(results)
 }
-b <- runif(6, -3, 3)
-a <- runif(6, 0.9, 2)
+b <- runif(10, -3, 3)
+a <- runif(10, 0.9, 2)
 parameters = data.frame(a,b)
 rownames(parameters) = paste("item", rownames(parameters), sep = "_")
 theta = seq(-4,4, length.out = 1000)
@@ -527,8 +527,8 @@ resBruto = list()
 
 for (i in 1:iterations) {
   set.seed(i)
-  parameters[[i]] = data.frame(b = runif(6, -3, 3), 
-                               a = runif(6, 0.9, 2))
+  parameters[[i]] = data.frame(b = runif(9, -3, 3), 
+                               a = runif(9, 0.9, 2))
   rownames(parameters[[i]]) = paste("item", rownames(parameters[[i]]), sep = "_")
   resBruto[[i]] = bruto(parameters[[i]], theta, 
                         add_difficulty = runif(nrow(parameters[[i]]), -.2, .2),
@@ -567,7 +567,7 @@ for (i in 1:length(myfrank)) {
   item_select[i, "iila"] = paste(rownames(myila[[i]]$end)[order(rownames(myila[[i]]$end), decreasing = T)], collapse = " ")
 }
 # I saved the enrivorment till here 
-
+load("gbu-comparison-10items.RData")
 x = item_select[1,-3]
 
 
@@ -632,7 +632,7 @@ ic = ic_long %>%
             sd = sd(value))
 
 ggplot(ic, 
-       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 6) + ylim(0,6) + 
+       aes(x = name, y = mean, color = name)) + geom_point(shape = 5, size = 6) + ylim(0,8) + 
   geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), width = .2)+ 
   geom_point(aes(x = name, y = min), shape = 19, size = 6) + geom_point(aes(x = name, y = max), 
                                                                        shape = 15, size = 6) + 
@@ -644,7 +644,7 @@ ggplot(ic,
         legend.position = "none")
 
 
-apply(item_comparison,2, min)apply(item_comparisiteron,2, min)
+apply(item_comparison,2, min)
 apply(item_comparison,2, max)
 apply(item_comparison,2, median)
 apply(item_comparison,2, mean)
@@ -737,7 +737,7 @@ ggplot(allalgo,
   scale_color_manual(values = c("royalblue","red",  "seagreen")) +
   theme(axis.title = element_text(size = 28), 
         axis.text = element_text(size = 26), 
-        legend.position = "none")
+        legend.position = "bottom")
 
 
 sum_algo = allalgo %>%  
@@ -751,11 +751,11 @@ ggplot(sum_algo,
   scale_color_manual(values = c("royalblue","red",  "seagreen")) +
   theme(axis.title = element_text(size = 28), 
         axis.text = element_text(size = 26), 
-        legend.position = "none") + 
+        legend.position = "bottom") + 
   scale_x_continuous(n.breaks = 6)
 
 
-
+library(patchwork)
 allBrutos = allBrutos[,-1]
 allFranks = allFranks[,-1]
 allIlas = allIlas[,-1]
@@ -801,7 +801,7 @@ item_comparison$bi_inter = sapply(bi, length)
 item_select[item_comparison$bf_inter == item_comparison$bi_inter, ]
 item_select[item_comparison$bi_inter == 0, ]
 
-
+# questo mi guarda i casi in cui bruto frank e ila hanno la stessa identica lunghezza
 item_comparison = item_comparison %>% 
   mutate(filter = if_all(nfrank:nila,  `==`, nbruto))
 table(item_comparison$filter)
@@ -829,7 +829,7 @@ for (i in 1:nrow(select_equal1)) {
 
 select_equal1 = select_equal1 %>% 
   mutate(is_equal_all = if_all(items:ifrank, `==`, iila))
-
+# questo invece guarda se hanno selezionato anche lo stesso numero di item
 table(select_equal1$is_equal_all)
 
 rownames(select_equal1[select_equal1$is_equal_all == TRUE, ])

@@ -1,0 +1,190 @@
+\documentclass[12pt, a4paper, titilepage]{article}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\graphicspath{{C:/Users/huawei/Desktop/imag es/}} \usepackage{easyReview}
+\usepackage{setspace}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{apacite}
+\usepackage{titlesec}
+\usepackage{dcolumn}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{dcolumn}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{lineno}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{regexpatch}
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{lineno}
+\usepackage{color, colortbl} %righe colorate
+\usepackage{lineno}
+\usepackage{easyReview}
+\usepackage{amssymb}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{decision} = [diamond, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+%opening
+\title{The good, the bad, and the ugly}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\newpage
+
+\doublespacing
+
+
+\section{Bruto}
+
+
+$ \theta = \{ x \in \mathbb{R} \,|\, \theta_{min} \leq x \leq \theta_{max} \}$: Latent trait levels, where $\theta_{min}$ is the minimum value of $\theta$ and $\theta_{max}$ is its maximum value \add{(non sono sicura della x)}
+
+$||\theta||$: cardinality of the latent trait
+
+
+
+$\forall Q \in\mathcal{Q} = 2^B \setminus \{\emptyset, B\}$, 
+
+\begin{enumerate}
+	\item $\mathbf{TIF}^{Q} =  \frac{\sum_{i \in Q} IIF_i}{||Q||}$
+	\item $\overline{\Delta}_{\mathbf{TIF}^{Q}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|)$  \add{ho dei dubbi su questa notazione. la media è calcolata attraverso i valori di theta}. In alternativa a questa notazione: $\overline{\Delta}_{\mathbf{TIF}^{Q}} = \frac{|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|}{||\theta||}$
+	
+\end{enumerate}
+
+
+
+$Q_{bruto} = \arg \min_{Q \in \mathcal{Q}} \overline{\Delta}_{\mathbf{TIF}^{Q}}$
+
+
+
+\section{Item Locating Algorithm}
+
+\add{Siccome la filosofia di ILA e ISA è molto simile sarebbe carino trovare loro un nome comune e poi declinarle nelle loro specificità. ci pensiamo}
+
+\textbf{Set up: }
+
+$B$: Item bank 
+
+
+$Q^k \subset B$: Set of item indexes selected for inclusion in the STF up to iteration $k$
+
+$\mathbf{TIF}^*$: TIF target 
+
+$D$: Item selected at each iteration
+
+$\mathbf{PIF}_D^k = \frac{\sum_{i\in Q^k \cup \{D^k\}} IIF_i}{||Q^k \cup \{D\}||}$, provisional mean tif at iteration $k$, including the item selected in $D^k$
+
+$||Q^k||$: cardinality of $Q^k$ at iteration $k$
+
+At $k = 0$: $\mathbf{PIF}_D^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, $D^0 = \emptyset$,
+
+\begin{enumerate}
+	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{PIF}_D^{k}|$
+	\item $D^k = \arg \min_{i \in B\setminus Q^k} |\theta_{target} - b_i|$
+	\item $\mathbf{PIF}_D^k = \frac{\sum_{i \in Q^k \cup \{D\}} IIF_i}{||Q^k \cup \{D\}||}$
+	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^k| < |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
+	\begin{itemize}
+		\item TRUE: $k := k +1$, $Q^{k} = Q^{k-1} \cup \{D\}$, iterates 1-5 (\add{Ho scritto $k-1$ perché siccome ho scritto all'inizio che $k$ si aggiorna e diventa $k+1$ mi sembrava sensato})
+		\item FALSE: The item in $D$ does not contribute to reduce the distance from the TIF target, hence: $Q_{ISA} = Q^k$
+	\end{itemize}
+\end{enumerate}
+
+
+\section{Item Selecting Algorithm}
+
+Same as ILA but based on the Item Information Functions. 
+
+\color{blue}
+
+Set up same as ILA: 
+$B$: Item bank 
+
+
+$Q^k \subset B$: Set of item indexes selected for inclusion in the STF up to iteration $k$
+
+$\mathbf{TIF}^*$: TIF target 
+
+$D$: Item selected at each iteration 
+
+$\theta_{target}$: theta target selected at each iteration
+
+$\mathbf{PIF}_D^k = \frac{\sum_{i\in Q^k \cup \{D\}} IIF_i}{||Q^k \cup \{D\}||}$, provisional mean tif at iteration $k$, including the item selected in $D$
+
+$||Q^k \cup \{D\}||$: cardinality of $Q^k \cup \{D\}$ at iteration $k$
+
+\normalcolor
+
+At $k = 0$: $\mathbf{PIF}_D^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, $D^0 = \emptyset$,
+
+\begin{enumerate}
+	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{PIF}_D^{k}|$
+	\item $IIF_{i \in B \setminus Q^k} = a_i^2P(\theta_{target}, a_i, b_i)[1-P(\theta_{target}, a_i, b_i)]$
+	\item $D := \arg \min_{i \in B\setminus Q^k} |\theta_{target} - IIF_i|$
+	\item $\mathbf{PIF}_{D^k} = \frac{\sum_{i \in Q^k \cup \{D\}} IIF_i}{||Q^k \cup \{D\}||}$
+	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^k| < |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
+	\begin{itemize}
+		\item TRUE: $k := k +1$, $Q^{k} = Q^{k-1} \cup \{D\}$, iterates 1-5 (\add{Ho scritto $k-1$ perché siccome ho scritto all'inizio che $k$ si aggiorna e diventa $k+1$ mi sembrava sensato})
+		\item FALSE: The item in $D$ does not contribute to reduce the distance from the TIF target, hence: $Q_{ISA} = Q^k$
+	\end{itemize}
+\end{enumerate}
+
+
+
+\section{Frank}
+
+
+The setup is like the one of ILA and ISA: 
+
+$B$: Item bank 
+
+$Q^k$: set of items selected at iteration $k$
+
+$D$: provisional item selected at each iteration
+
+\add{$\mathbf{PIF}$: provisional mean tif} 
+
+At $k =0$, $\mathbf{PIF}^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, iterate
+
+\begin{enumerate}
+	\item  $A^k = B \setminus Q^k$ (sets of available items at iteration $k$)
+	\item $\forall i \in A^k$, $\mathbf{PIF}_{i}^k = \frac{\mathbf{TIF}^k + \mathbf{IIF}_{i}}{||Q^k||+1}$
+	\item $D = \arg \min_{i \in A^k} |\mathbf{TIF}^* - \mathbf{PIF}_i^k|$
+	\item Termination criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| < |\mathbf{TIF}^* - \mathbf{TIF}^{k-1}|$: 
+	\begin{itemize}
+		\item  If true, $k := k + 1,$ $Q^{k} = Q^{k-1} \cup \{D\}$, restart from 1 \add{C'è il meno 1 per la stessa ragione scritta per ILA e ISA}
+		
+		\item  If false, stops, $Q_{Frank} = Q^k$
+		
+	\end{itemize}
+\end{enumerate}
+
+
+
+\end{document}
