@@ -56,7 +56,19 @@ tif_target = function(parameters,
   return(target_info)
 }
 
-bruto = function(parameters, tif_target){
-  
-}
+states<-expand.grid(rep(list(0:1),nrow(parameters)))
+states = states[-c(1,nrow(states)), ]
+states$sum = rowSums(states)
+states = states[order(states$sum), ]
+states$sum = NULL
 
+states[states == 0] <- NA 
+
+all_iifs = item_info(parameters, theta = theta)
+all_iifs = data.frame(do.call("cbind", all_iifs))
+colnames(all_iifs) = rownames(parameters)
+all_iifs = cbind(theta, all_iifs)
+
+# qui ci vuole il loop che prima itera nelle forme brevi per lunghezza (i) e poi si prende 
+# le j combinazioni dentro i 
+item_index = all_iifs[, which(!is.na(states[8,]))]
