@@ -150,7 +150,7 @@ bruto = function(parameters, target = NULL) {
     my_target$distance = abs(my_target$mean_tif - my_target$mean_tif_stf)
     
     differences[i, "n_item"] = unique(my_target$n_item) 
-    differences[i, "item"]  =  item = unique(my_target$item) 
+    differences[i, "item"]  =  unique(my_target$item) 
     differences[i, "mean_distance"] = mean(my_target$distance)
     all_targets = rbind(all_targets, my_target) 
   }
@@ -222,6 +222,7 @@ ila = function(parameters, target) {
       distances_pif =c(distances_pif, mean(abs(my_target$mean_tif - pif))) 
       names(distances_pif)[length(distances_pif)] = paste("temp", i, sep = "_")
       # qua testa il criterio di uscita
+   #   browser()
       if (mean(abs(my_target$mean_tif - pif)) < mean(abs(my_target$mean_tif - my_target$tif_stf))) {
         token = TRUE
       } else {
@@ -233,11 +234,19 @@ ila = function(parameters, target) {
   }
   all_stfs = all_stfs[-1, ]
   all_items = sel_item
-  sel_item = all_items[-length(all_items)]
-  sel_item = sel_item[order(sel_item)]
+  if (length(sel_item) == 1) {
+    sel_item = sel_item
+    warning("Apparetly there were no items able to minimize the distance")
+  } else {
+    sel_item = all_items[-length(all_items)] 
+  }
+  temp_item = sel_item
+  temp_item = as.numeric(gsub("item_", "", temp_item))
+  temp_item = temp_item[order(temp_item)]
+  sel_item = paste("item", temp_item, sep = "_")
   my_target$n_stf = length(sel_item)
   my_target$item_stf = paste(sel_item, collapse = " ")
-  results = list(q_ila = sel_item, 
+  results = list(q_ila = paste(sel_item, collapse = " "), 
                  all_items = all_items,
                  stf = my_target, 
                  distances_tif = distances_tif, 
@@ -257,6 +266,7 @@ isa = function(parameters, target) {
   token = TRUE
   distances_tif = NULL
   distances_pif = NULL
+ # browser()
   all_stfs = data.frame(matrix(nrow = 1, ncol = 3))
   colnames(all_stfs) = c("nitems", "items", "pif")
   for (i in 0:nrow(parameters)) {
@@ -273,7 +283,7 @@ isa = function(parameters, target) {
                                                  parameters$a, parameters$b) * (1-IRT(parameters$temp_theta, parameters$a, parameters$b)))
       # attenzione eprché facendo così rischio di prendere di nuovo lo stesso item
       # potrei sostituire gli item con na
-      index_item = which(parameters$temp_iif == max(parameters$temp_iif))
+      index_item = which(parameters$temp_iif == max(parameters$temp_iif, na.rm = TRUE))
       sel_item = c(sel_item, rownames(parameters)[index_item])
       if (i == 0) {
         selected_iifs = data.frame(all_iifs[, index_item])
@@ -300,7 +310,10 @@ isa = function(parameters, target) {
       distances_pif =c(distances_pif, mean(abs(my_target$mean_tif - pif))) 
       names(distances_pif)[length(distances_pif)] = paste("temp", i, sep = "_")
       # qua testa il criterio di uscita
-      if (mean(abs(my_target$mean_tif - pif)) < mean(abs(my_target$mean_tif - my_target$tif_stf))) {
+      if (i == (nrow(parameters) -1)) {
+        token = FALSE
+        warning("I ran out of items wwithout finding a STF")
+      } else if (mean(abs(my_target$mean_tif - pif)) < mean(abs(my_target$mean_tif - my_target$tif_stf))) {
         token = TRUE
       } else {
         token = FALSE
@@ -311,11 +324,19 @@ isa = function(parameters, target) {
   }
   all_stfs = all_stfs[-1, ]
   all_items = sel_item
-  sel_item = all_items[-length(all_items)]
-  sel_item = sel_item[order(sel_item)]
+  if (length(sel_item) == 1) {
+    sel_item = sel_item
+    warning("Apparetly there were no items able to minimize the distance")
+  } else {
+    sel_item = all_items[-length(all_items)] 
+  }
+  temp_item = sel_item
+  temp_item = as.numeric(gsub("item_", "", temp_item))
+  temp_item = temp_item[order(temp_item)]
+  sel_item = paste("item", temp_item, sep = "_")
   my_target$n_stf = length(sel_item)
   my_target$item_stf = paste(sel_item, collapse = " ")
-  results = list(q_ila = sel_item, 
+  results = list(q_isa = paste(sel_item, collapse = " "), 
                  all_items = all_items,
                  stf = my_target, 
                  distances_tif = distances_tif, 
@@ -373,15 +394,51 @@ frank = function(parameters, target) {
       parameters[d_index, ] = NA
     } else {
       token = FALSE
-      sel_items = colnames(iif_stf)[-ncol(iif_stf)]
-      sel_items = sel_items[order(sel_items)]
+      # sel_items = colnames(iif_stf)[-ncol(iif_stf)]
+      # sel_items = sel_items[order(sel_items)]
+      # sel_items = paste(sel_items, collapse = " ")
+      temp_item = colnames(iif_stf)[-ncol(iif_stf)]
+      temp_item = as.numeric(gsub("item_", "", temp_item))
+      temp_item = temp_item[order(temp_item)]
+      sel_items = paste("item", temp_item, sep = "_")
       sel_items = paste(sel_items, collapse = " ")
     }
   } 
+  iif_stf = data.frame(iif_stf[,-ncol(iif_stf)])
   results = list(q_frank = sel_items, 
-                 iif_stf = iif_stf[,-ncol(iif_stf)])
+                 iif_stf = iif_stf)
   
   return(results)
 }
-
+# questa va fatta meglio a partire dai risultati degli algoritmi, per ora va bene così 
+delta = function(all_q, nitems = NULL, replica = 1, 
+                 target = "item_target", 
+                 comparison = "item") {
+  if (is.null(nitems)) {
+    stop("Please tell how many items you have :)")
+  } else {
+    distance = data.frame(starting_items = paste("item", 1:nitems, sep ="_"), 
+                          target_items = numeric(nitems), 
+                          stf_items = numeric(nitems))
+    target_items = strsplit(all_q[replica, target], split = " ")[[1]]
+    recovered_items = strsplit(all_q[replica, comparison], split = " ")[[1]]
+    not_chosen_target = distance$starting_items[!distance$starting_items %in% target_items]
+    not_chosen_recovered = distance$starting_items[!distance$starting_items %in% recovered_items]
+    
+    distance[!distance$starting_items %in% not_chosen_target, "target_items"] = 1
+    distance[!distance$starting_items %in% not_chosen_recovered, "stf_items" ] = 1
+    distance$distance = distance$target_items == distance$stf_items
+  }
+return(distance)
+}
+performance = function(distance_data, target_items = "target_items", stf_items = "stf_items") {
+  myT = table(distance_data[, target_items], distance_data[,stf_items])
+  accuracy = (myT[1,1] + myT[2,2])/sum(myT)
+  sens = myT[1,1]/sum(myT[1,])
+  spec = myT[2,2]/sum(myT[2,])
+  performance = c(sensitivity00 = sens, specificity11 = spec, accuracy = accuracy)
+  results = list(table = myT, 
+                 performance = performance)
+  return(results)
+}
 

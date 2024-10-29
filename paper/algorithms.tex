@@ -64,25 +64,26 @@
 \section{Bruto}
 
 
-$ \theta = \{ x \in \mathbb{R} \,|\, \theta_{min} \leq x \leq \theta_{max} \}$: Latent trait levels, where $\theta_{min}$ is the minimum value of $\theta$ and $\theta_{max}$ is its maximum value \add{(non sono sicura della x)}
+%$ \theta = \{ x \in \mathbb{R} \,|\, \theta_{min} \leq x \leq \theta_{max} \}$: Latent trait levels, where $\theta_{min}$ is the minimum value of $\theta$ and $\theta_{max}$ is its maximum value \add{(non sono sicura della x)}
 
-$||\theta||$: cardinality of the latent trait
+%$||\theta||$: cardinality of the latent trait
+
+$||X||$: cardinality of $X$
 
 
 
 $\forall Q \in\mathcal{Q} = 2^B \setminus \{\emptyset, B\}$, 
 
 \begin{enumerate}
-	\item $\mathbf{TIF}^{Q} =  \frac{\sum_{i \in Q} IIF_i}{||Q||}$
-	\item $\overline{\Delta}_{\mathbf{TIF}^{Q}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|)$  \add{ho dei dubbi su questa notazione. la media è calcolata attraverso i valori di theta}. In alternativa a questa notazione: $\overline{\Delta}_{\mathbf{TIF}^{Q}} = \frac{|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|}{||\theta||}$
+	\item $\mathbf{TIF}^{Q} =  \frac{\sum_{i \in Q} IIF_i}{||Q||}$, where $||Q||$ is the cardinality of set $Q$
+	\item $\overline{\Delta}_{\mathbf{TIF}^{Q}} =  \mathit{mean}(|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|)$ %, that is the mean across all $\theta$ levels of the absolute difference between $TIF^*$ and $TIF^Q$ %\add{ho dei dubbi su questa notazione. la media è calcolata attraverso i valori di theta}. In alternativa a questa notazione: $\overline{\Delta}_{\mathbf{TIF}^{Q}} = \frac{|\mathbf{TIF}^* - \mathbf{TIF}^{Q}|}{||\theta||}$
 	
 \end{enumerate}
 
 
-
 $Q_{bruto} = \arg \min_{Q \in \mathcal{Q}} \overline{\Delta}_{\mathbf{TIF}^{Q}}$
 
-
+\add{spiegazione dell'algoritmo a parole}
 
 \section{Item Locating Algorithm}
 
@@ -97,22 +98,23 @@ $Q^k \subset B$: Set of item indexes selected for inclusion in the STF up to ite
 
 $\mathbf{TIF}^*$: TIF target 
 
-$D$: Item selected at each iteration
+$i^*$: Item selected at each iteration
 
-$\mathbf{PIF}_D^k = \frac{\sum_{i\in Q^k \cup \{D^k\}} IIF_i}{||Q^k \cup \{D\}||}$, provisional mean tif at iteration $k$, including the item selected in $D^k$
+%$\mathbf{pTIF}^k = \frac{\sum_{i\in Q^{k-1} \cup \{i^*\}} IIF_i}{||Q^{k-1}||+1}$, mean tif at iteration $k$, including the item selected in $D$
 
 $||Q^k||$: cardinality of $Q^k$ at iteration $k$
 
-At $k = 0$: $\mathbf{PIF}_D^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, $D^0 = \emptyset$,
+At $k = 0$: $\mathbf{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
 
 \begin{enumerate}
-	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{PIF}_D^{k}|$
-	\item $D^k = \arg \min_{i \in B\setminus Q^k} |\theta_{target} - b_i|$
-	\item $\mathbf{PIF}_D^k = \frac{\sum_{i \in Q^k \cup \{D\}} IIF_i}{||Q^k \cup \{D\}||}$
-	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^k| < |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
+	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$
+	\item $i^* = \arg \min_{i \in B\setminus Q^{k}} |\theta_{target} - b_i|$
+	\item $\mathbf{pTIF}_{i^*} = \frac{TIF^k + IIF_{i^*}}{||Q^{k}|| + 1}$ %$\mathbf{pTIF}_{i^*}= \frac{\sum_{i \in Q^{k} \cup \{i^*\}} IIF_i}{||Q^{k} \cup \{i^*\}||}$ $=$ 
+	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{pTIF}_{i^*}| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
 	\begin{itemize}
-		\item TRUE: $k := k +1$, $Q^{k} = Q^{k-1} \cup \{D\}$, iterates 1-5 (\add{Ho scritto $k-1$ perché siccome ho scritto all'inizio che $k$ si aggiorna e diventa $k+1$ mi sembrava sensato})
-		\item FALSE: The item in $D$ does not contribute to reduce the distance from the TIF target, hence: $Q_{ISA} = Q^k$
+		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $TIF^{k+1} = pTIF_{i^*}$, iterates 1-4 
+		\item TRUE: Stop, %The item in $i^*$ does not contribute to reduce the distance from the TIF target, hence: 
+		$Q_{ILA} = Q^k$
 	\end{itemize}
 \end{enumerate}
 
@@ -131,24 +133,23 @@ $Q^k \subset B$: Set of item indexes selected for inclusion in the STF up to ite
 
 $\mathbf{TIF}^*$: TIF target 
 
-$D$: Item selected at each iteration 
+$i^*$: Item selected at each iteration
 
-$\theta_{target}$: theta target selected at each iteration
+%$\mathbf{pTIF}^k = \frac{\sum_{i\in Q^{k-1} \cup \{i^*\}} IIF_i}{||Q^{k-1}||+1}$, mean tif at iteration $k$, including the item selected in $D$
 
-$\mathbf{PIF}_D^k = \frac{\sum_{i\in Q^k \cup \{D\}} IIF_i}{||Q^k \cup \{D\}||}$, provisional mean tif at iteration $k$, including the item selected in $D$
-
-$||Q^k \cup \{D\}||$: cardinality of $Q^k \cup \{D\}$ at iteration $k$
+$||Q^k||$: cardinality of $Q^k$ at iteration $k$
 
 \normalcolor
 
-At $k = 0$: $\mathbf{PIF}_D^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, $D^0 = \emptyset$,
+At $k = 0$: $\mathbf{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
+
 
 \begin{enumerate}
 	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{PIF}_D^{k}|$
-	\item $IIF_{i \in B \setminus Q^k} = a_i^2P(\theta_{target}, a_i, b_i)[1-P(\theta_{target}, a_i, b_i)]$
-	\item $D := \arg \min_{i \in B\setminus Q^k} |\theta_{target} - IIF_i|$
-	\item $\mathbf{PIF}_{D^k} = \frac{\sum_{i \in Q^k \cup \{D\}} IIF_i}{||Q^k \cup \{D\}||}$
-	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^k| < |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
+%	\item $IIF_{i \in B \setminus Q^k}(\theta_{target}) = a_i^2P(\theta_{target}, a_i, b_i)[1-P(\theta_{target}, a_i, b_i)]$
+	\item $i^* := \arg \max_{i \in B\setminus Q^k} IIF_i(\theta_{target})$
+	\item $\mathbf{pTIF}_{i^*} = \frac{TIF^k + IIF_{i^*}}{||Q^{k}|| + 1}$
+	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^k| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
 	\begin{itemize}
 		\item TRUE: $k := k +1$, $Q^{k} = Q^{k-1} \cup \{D\}$, iterates 1-5 (\add{Ho scritto $k-1$ perché siccome ho scritto all'inizio che $k$ si aggiorna e diventa $k+1$ mi sembrava sensato})
 		\item FALSE: The item in $D$ does not contribute to reduce the distance from the TIF target, hence: $Q_{ISA} = Q^k$
@@ -166,17 +167,17 @@ $B$: Item bank
 
 $Q^k$: set of items selected at iteration $k$
 
-$D$: provisional item selected at each iteration
+$i^*$: provisional item selected at each iteration
 
 \add{$\mathbf{PIF}$: provisional mean tif} 
 
 At $k =0$, $\mathbf{PIF}^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, iterate
-
+\alert{gira il cirterio di terminazione e uniforma con gli altri}
 \begin{enumerate}
 	\item  $A^k = B \setminus Q^k$ (sets of available items at iteration $k$)
 	\item $\forall i \in A^k$, $\mathbf{PIF}_{i}^k = \frac{\mathbf{TIF}^k + \mathbf{IIF}_{i}}{||Q^k||+1}$
-	\item $D = \arg \min_{i \in A^k} |\mathbf{TIF}^* - \mathbf{PIF}_i^k|$
-	\item Termination criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| < |\mathbf{TIF}^* - \mathbf{TIF}^{k-1}|$: 
+	\item $D = \arg \min_{i \in A^k} |\mathbf{TIF}^* - \mathbf{PIF}_i|$
+	\item Termination criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| < |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
 	\begin{itemize}
 		\item  If true, $k := k + 1,$ $Q^{k} = Q^{k-1} \cup \{D\}$, restart from 1 \add{C'è il meno 1 per la stessa ragione scritta per ILA e ISA}
 		
