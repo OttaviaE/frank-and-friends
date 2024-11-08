@@ -181,8 +181,9 @@ ila = function(parameters, target) {
   distances_pif = NULL
   all_stfs = data.frame(matrix(nrow = 1, ncol = 3))
   colnames(all_stfs) = c("nitems", "items", "pif")
+#  browser()
   for (i in 0:nrow(parameters)) {
-    if (token == TRUE) {
+    if (token == TRUE & i < nrow(parameters)) {
       if (i == 0) {
         my_target$tif_stf = 0
       } else {
@@ -223,27 +224,43 @@ ila = function(parameters, target) {
       names(distances_pif)[length(distances_pif)] = paste("temp", i, sep = "_")
       # qua testa il criterio di uscita
    #   browser()
-      if (mean(abs(my_target$mean_tif - pif)) < mean(abs(my_target$mean_tif - my_target$tif_stf))) {
+      if (i == 0) {
         token = TRUE
-      } else {
+      } else if (distances_pif[i+1] >= distances_tif[i+1]) {
         token = FALSE
+        warn_too_many = FALSE
+       } else {
+        token = TRUE
       }
-    }else {
+    } else {
+      if (all(is.na(parameters$b))) {
+        warn_too_many = TRUE
+      }
       sel_item = sel_item
+      all_items = sel_item
     } 
   }
-  all_stfs = all_stfs[-1, ]
-  all_items = sel_item
-  if (length(sel_item) == 1) {
-    sel_item = sel_item
-    warning("Apparetly there were no items able to minimize the distance")
+ # questo testa se ho selezionato tutti gli item, quindi non c'è la forma breve, ma comunque tutti gli item permettono 
+ # di far diminuire la distanza
+ if (warn_too_many == TRUE & distances_pif[length(distances_pif)] >= distances_tif[length(distances_pif)]) {
+   sel_item = sel_item
+   warning("I ran out of items wwithout finding a STF")
+ } else {
+   warn_too_many = FALSE
+   all_items = sel_item
+   sel_item = all_items[-length(all_items)] 
+ }
+  if (length(sel_item) == 0) {
+    warning("Apparently there were no items able to minimize the distance")
+    warn_not_found = TRUE
   } else {
-    sel_item = all_items[-length(all_items)] 
+    temp_item = sel_item
+    temp_item = as.numeric(gsub("item_", "", temp_item))
+    temp_item = temp_item[order(temp_item)]
+    sel_item = paste("item", temp_item, sep = "_")
+   # sel_item = paste(sel_item, collapse = " ")
+    warn_not_found = FALSE
   }
-  temp_item = sel_item
-  temp_item = as.numeric(gsub("item_", "", temp_item))
-  temp_item = temp_item[order(temp_item)]
-  sel_item = paste("item", temp_item, sep = "_")
   my_target$n_stf = length(sel_item)
   my_target$item_stf = paste(sel_item, collapse = " ")
   results = list(q_ila = paste(sel_item, collapse = " "), 
@@ -251,7 +268,8 @@ ila = function(parameters, target) {
                  stf = my_target, 
                  distances_tif = distances_tif, 
                  distances_pif = distances_pif, 
-                 all_stfs = all_stfs)
+                 all_stfs = all_stfs, 
+                 warning = c(item_not_found = warn_not_found, stf_not_found = warn_too_many))
   return(results)
 }
 # isa 
@@ -266,21 +284,24 @@ isa = function(parameters, target) {
   token = TRUE
   distances_tif = NULL
   distances_pif = NULL
- # browser()
+#   browser()
   all_stfs = data.frame(matrix(nrow = 1, ncol = 3))
   colnames(all_stfs) = c("nitems", "items", "pif")
   for (i in 0:nrow(parameters)) {
-    if (token == TRUE) {
+    if (token == TRUE & i < nrow(parameters)) {
       if (i == 0) {
         my_target$tif_stf = 0
       } else {
         my_target$tif_stf = pif
       }
+   #   browser()
       my_target$distance = abs(my_target$mean_tif - my_target$tif_stf) 
       
       parameters$temp_theta = my_target[which(my_target$distance == max(my_target$distance)), "theta"]
+      
       parameters$temp_iif = parameters$a^2 *(IRT(parameters$temp_theta,
-                                                 parameters$a, parameters$b) * (1-IRT(parameters$temp_theta, parameters$a, parameters$b)))
+                                                 parameters$a, parameters$b) * (1-IRT(parameters$temp_theta, 
+                                                                                      parameters$a, parameters$b)))
       # attenzione eprché facendo così rischio di prendere di nuovo lo stesso item
       # potrei sostituire gli item con na
       index_item = which(parameters$temp_iif == max(parameters$temp_iif, na.rm = TRUE))
@@ -310,38 +331,76 @@ isa = function(parameters, target) {
       distances_pif =c(distances_pif, mean(abs(my_target$mean_tif - pif))) 
       names(distances_pif)[length(distances_pif)] = paste("temp", i, sep = "_")
       # qua testa il criterio di uscita
-      if (i == (nrow(parameters) -1)) {
-        token = FALSE
-        warning("I ran out of items wwithout finding a STF")
-      } else if (mean(abs(my_target$mean_tif - pif)) < mean(abs(my_target$mean_tif - my_target$tif_stf))) {
+    if (i == 0) {
         token = TRUE
-      } else {
+      } else if (distances_pif[i+1] >= distances_tif[i+1]) {
         token = FALSE
+        warn_too_many = FALSE
+      } else {
+        token = TRUE
       }
-    }else {
+    } else {
+      if (all(is.na(parameters$b))) {
+        warn_too_many = TRUE
+      }
       sel_item = sel_item
+      all_items = sel_item
     } 
   }
-  all_stfs = all_stfs[-1, ]
-  all_items = sel_item
-  if (length(sel_item) == 1) {
+  # questo testa se ho selezionato tutti gli item, quindi non c'è la forma breve, ma comunque tutti gli item permettono
+  # di far diminuire la distanza
+  # if (warn_too_many == TRUE ) {
+  #   # sel_item = sel_item
+  #   keep_item = 1:length(all_items)
+  #   warning("I ran out of items before finding a STF, sorry :(")
+  # } else {
+  #   # all_items = sel_item
+  #   # sel_item = all_items[-length(all_items)]
+  #   keep_item = 1:(length(all_items) -1)
+  # }
+  # keep_item = 1:(length(all_items) -1)
+  # sel_item = all_items[keep_item] 
+  # all_stfs = all_stfs[-1, ]
+  # if (length(sel_item) == 0) {
+  #   warning("Apparently there were no items able to minimize the distance")
+  #   warn_not_found = TRUE
+  # } else {
+  #   temp_item = sel_item
+  #   temp_item = as.numeric(gsub("item_", "", temp_item))
+  #   temp_item = temp_item[order(temp_item)]
+  #   sel_item = paste("item", temp_item, sep = "_")
+  #  # sel_item = paste(sel_item, collapse = " ")
+  #   warn_not_found = FALSE
+  # }
+  if (warn_too_many == TRUE & distances_pif[length(distances_pif)] >= distances_tif[length(distances_pif)]) {
     sel_item = sel_item
-    warning("Apparetly there were no items able to minimize the distance")
+    warning("I ran out of items wwithout finding a STF")
   } else {
+    warn_too_many = FALSE
+    all_items = sel_item
     sel_item = all_items[-length(all_items)] 
   }
-  temp_item = sel_item
-  temp_item = as.numeric(gsub("item_", "", temp_item))
-  temp_item = temp_item[order(temp_item)]
-  sel_item = paste("item", temp_item, sep = "_")
-  my_target$n_stf = length(sel_item)
+  if (length(sel_item) == 0) {
+    warning("Apparently there were no items able to minimize the distance")
+    warn_not_found = TRUE
+  } else {
+    temp_item = sel_item
+    temp_item = as.numeric(gsub("item_", "", temp_item))
+    temp_item = temp_item[order(temp_item)]
+    sel_item = paste("item", temp_item, sep = "_")
+    # sel_item = paste(sel_item, collapse = " ")
+    warn_not_found = FALSE
+  }
+  my_target$n_stf = length(sel_item)  
   my_target$item_stf = paste(sel_item, collapse = " ")
-  results = list(q_isa = paste(sel_item, collapse = " "), 
+  results = list(q_isa =  paste(sel_item, collapse = " "), 
                  all_items = all_items,
                  stf = my_target, 
                  distances_tif = distances_tif, 
                  distances_pif = distances_pif, 
-                 all_stfs = all_stfs)
+                 all_stfs = all_stfs, 
+                 warning = c(item_not_found = warn_not_found, stf_not_found = warn_too_many)
+                 )
   return(results)
 }
 # Frank -------
@@ -389,10 +448,11 @@ frank = function(parameters, target) {
     # guardo le differenze 
     # effettivamente non c'è bisogno di mettere su tutto questo cinema mi dovrebbe 
     # bastare prendere la differenza già calcolata in difference 
-    if (difference[d_index] < distance_target_tif) {
-      token = TRUE
-      parameters[d_index, ] = NA
-    } else {
+    # if (difference[d_index] < distance_target_tif & all(which(is.na(parameters[, 1])) == FALSE) ) {
+    #   token = TRUE
+    #   parameters[d_index, ] = NA
+    # } else 
+      if (difference[d_index] >= distance_target_tif) {
       token = FALSE
       # sel_items = colnames(iif_stf)[-ncol(iif_stf)]
       # sel_items = sel_items[order(sel_items)]
@@ -402,6 +462,8 @@ frank = function(parameters, target) {
       temp_item = temp_item[order(temp_item)]
       sel_items = paste("item", temp_item, sep = "_")
       sel_items = paste(sel_items, collapse = " ")
+    } else {
+      parameters[d_index, ] = NA
     }
   } 
   iif_stf = data.frame(iif_stf[,-ncol(iif_stf)])
@@ -433,9 +495,16 @@ return(distance)
 }
 performance = function(distance_data, target_items = "target_items", stf_items = "stf_items") {
   myT = table(distance_data[, target_items], distance_data[,stf_items])
-  accuracy = (myT[1,1] + myT[2,2])/sum(myT)
-  sens = myT[1,1]/sum(myT[1,])
-  spec = myT[2,2]/sum(myT[2,])
+  if(sum(dim(myT)) < 4) {
+    accuracy = 0
+    sens = 0 
+    spec = 0
+    
+  } else {
+    accuracy = (myT[1,1] + myT[2,2])/sum(myT)
+    sens = myT[1,1]/sum(myT[1,])
+    spec = myT[2,2]/sum(myT[2,])
+  }
   performance = c(sensitivity00 = sens, specificity11 = spec, accuracy = accuracy)
   results = list(table = myT, 
                  performance = performance)

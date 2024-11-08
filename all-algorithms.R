@@ -1,3 +1,4 @@
+rm(list = ls())
 # carico bruto 
 load("bruto-10item.RData")
 source("functions-new.R")
@@ -6,35 +7,36 @@ parameters = list()
 replications = 100
 resFrank = list()
 frank_elapsed = NULL
-theta = seq(-4,4, length.out = 1500)
+theta = seq(-4,4, length.out = 1000)
 resIla = list()
 ila_elapsed = NULL
 resIsa = list()
 isa_elapsed = NULL
+target = list()
 for (i in 1:replications) {
   set.seed(i)
   parameters[[i]] = data.frame(b = runif(10, -3, 3), 
                                a = runif(10, 0.9, 2))
   rownames(parameters[[i]]) = paste("item", rownames(parameters[[i]]), sep = "_")
-  target = tif_target(parameters[[i]], theta, 
+  target[[i]] = tif_target(parameters[[i]], theta, 
                       add_difficulty = runif(nrow(parameters[[i]]), -.2, .2), 
                       add_discriminativity = runif(nrow(parameters[[i]]), -.2, .2), 
                       seed = i)
   # Frank
   frank_start = Sys.time()
-  resFrank[[i]] = frank(parameters[[i]], target)
+  resFrank[[i]] = frank(parameters[[i]], target[[i]])
   frank_end = Sys.time()
   temp_elapsed = frank_end - frank_start
   frank_elapsed = c(frank_elapsed, temp_elapsed)
   # ILA 
   ila_start = Sys.time()
-  resIla[[i]] = ila(parameters[[i]], target)
+  resIla[[i]] = ila(parameters[[i]], target[[i]])
   ila_end = Sys.time()
   temp_elapsed = ila_end - ila_start
   ila_elapsed = c(ila_elapsed, temp_elapsed)
   # ISA 
   isa_start = Sys.time()
-  resIsa[[i]] = isa(parameters[[i]], target)
+  resIsa[[i]] = isa(parameters[[i]], target[[i]])
   isa_end = Sys.time()
   temp_elapsed = isa_end - isa_start
   isa_elapsed = c(isa_elapsed, temp_elapsed)
@@ -54,32 +56,56 @@ for (i in 1:replications) {
   item_stf[i, "n_isa"] = unique(resIsa[[i]]$stf$n_stf)
   item_stf[i, "item_frank"] = resFrank[[i]]$q_frank
   item_stf[i, "n_frank"] = ncol(resFrank[[i]]$iif_stf)
+  item_stf[i, "item_not_found_ila"] = resIla[[i]]$warning[1]
+  item_stf[i, "stf_not_found_ila"] = resIla[[i]]$warning[2]
+  item_stf[i, "item_not_found_isa"] = resIsa[[i]]$warning[1]
+  item_stf[i, "stf_not_found_isa"] = resIsa[[i]]$warning[2]
   item_stf[i, "replication"]= i
 }
+table(item_stf$item_not_found_ila)
+table(item_stf$stf_not_found_ila)
+
+table(item_stf$item_not_found_isa)
+table(item_stf$stf_not_found_isa)
+item_stf[item_stf$stf_not_found_isa == TRUE, ]
+# 1, 6,13, 15, 27, 62, 66, 85, 88, 89
+item_stf[item_stf$item_not_found_ila %in% TRUE,]
+# 33, 47, 73, 98
+item_stf[item_stf$n_isa == 10,]
+item_stf[item_stf$n_ila == 10,]
+
+all_item_stf = item_stf
 # add rank to bruto: it means the distance of teh STF developed with Bruto from the target
 # io sarei dell'idea di arrontarder a 4 decimali
 for (i in 1:length(resBruto)) {
-  resBruto[[i]]$differences$rank = rank(resBruto[[i]]$differences$mean_distance, ties = "min")
+  resBruto[[i]]$differences$rank = rank(resBruto[[i]]$differences$mean_distance, 
+                                        ties = "min")
 }
+
+# faccio una sottoselezione solo di quelle forme brevi che sono effettivamnente riuscite 
+item_stf = all_item_stf[!all_item_stf$n_ila == 10,]
+item_stf = item_stf[!item_stf$n_isa == 10, ]
+
+apply(item_stf[, c("n_frank", "n_ila", "n_isa")], 2, max)
 
 rank_ila = NULL
 rank_isa = NULL
 rank_frank = NULL
 
-for (i in 1:replications) {
+for (i in item_stf$replication) {
   tempBruto = resBruto[[i]]$differences
-  tempFrank = tempBruto[tempBruto$item %in% item_stf[i, "item_frank"], ] 
+  tempFrank = tempBruto[tempBruto$item %in% item_stf[item_stf$replication == i, "item_frank"], ] 
   tempFrank$rp = (tempFrank$rank*100)/nrow(tempBruto)
   tempFrank$alorigthm = "frank"
-  tempFrank$iter = i
-  tempIla = tempBruto[tempBruto$item %in% item_stf[i, "item_ila"], ] 
+  tempFrank$iter = item_stf[item_stf$replication == i, "replication"]
+  tempIla = tempBruto[tempBruto$item %in% item_stf[item_stf$replication == i, "item_ila"], ] 
   tempIla$rp = (tempIla$rank*100)/nrow(tempBruto)
   tempIla$alorigthm = "ila"
-  tempIla$iter = i
-  tempIsa = tempBruto[tempBruto$item %in% item_stf[i, "item_isa"], ] 
+  tempIla$iter = item_stf[item_stf$replication == i, "replication"]
+  tempIsa = tempBruto[tempBruto$item %in% item_stf[item_stf$replication == i, "item_isa"], ] 
   tempIsa$rp = (tempIsa$rank*100)/nrow(tempBruto)
   tempIsa$alorigthm = "isa"
-  tempIsa$iter = i
+  tempIsa$iter = item_stf[item_stf$replication == i, "replication"]
   rank_ila = rbind(rank_ila, tempIla)
   rank_isa = rbind(rank_isa, tempIsa)
   rank_frank = rbind(rank_frank, tempFrank)
@@ -128,9 +154,10 @@ for (i in 1:length(resBruto)) {
 mydBruto = list()
 temp= NULL
 distance_bruto=NULL
-for (i in 1:nrow(all_q_bruto)) {
+for (i in item_stf$replication) {
   mydBruto[[i]] = delta(all_q_bruto, nitems = 10, replica = i)
   temp = 10- sum(mydBruto[[i]]$distance)
+  names(temp) = paste("replica", i, sep = "_")
   distance_bruto = c(distance_bruto, temp)
 }
 # voglio vedere la distanza degli item delle forme brevi ottenute con i vari algoritmi algoritmi 
@@ -140,11 +167,12 @@ all_stf[order(all_stf$replication, decreasing = F), ]
 d_ila  = list()
 d_isa  = list()
 d_frank = list()
-the_distances = data.frame(bruto_d = distance_bruto, 
+the_distances = data.frame(replica = as.numeric(gsub("replica_", "", names(distance_bruto))),  
+                           bruto_d = distance_bruto, 
                            ila_d = numeric(length(distance_bruto)), 
                            isa_d = numeric(length(distance_bruto)), 
                            frank_d = numeric(length(distance_bruto)))
-for (i in 1:nrow(the_distances)) {
+for (i in the_distances$replica) {
   d_ila[[i]] = delta(all_stf, nitems = 10, replica = i, 
                      target = "item", comparison = "item_ila")
   d_isa[[i]] = delta(all_stf, nitems = 10, replica = i, 
@@ -155,7 +183,7 @@ for (i in 1:nrow(the_distances)) {
   the_distances[i, "isa_d"] = 10- sum(d_isa[[i]]$distance)
   the_distances[i, "frank_d"] = 10- sum(d_frank[[i]]$distance)
 }
-
+the_distances = the_distances[!is.na(the_distances$replica), ]
 colMeans(the_distances)
 
 # ila_acc = data.frame(accuracy = numeric(100), 
@@ -179,21 +207,28 @@ ila_acc = NULL
 isa_acc = NULL
 frank_acc = NULL
 bruto_acc = NULL
-for (i in 1:replications) {
-  ila_acc = rbind(ila_acc, performance(d_ila[[i]])$performance)
-  isa_acc = rbind(isa_acc, performance(d_isa[[i]])$performance)
-  frank_acc = rbind(frank_acc, performance(d_frank[[i]])$performance)
-  bruto_acc = rbind(bruto_acc, performance(mydBruto[[i]])$performance)
+small_dila = d_ila[the_distances$replica]
+small_disa = d_isa[the_distances$replica]
+small_dfrank = d_frank[the_distances$replica]
+small_dbruto = mydBruto[the_distances$replica]
+for (i in 1:length(small_dila)) {
+  ila_acc = rbind(ila_acc, performance(small_dila[[i]])$performance)
+  isa_acc = rbind(isa_acc, performance(small_disa[[i]])$performance)
+  frank_acc = rbind(frank_acc, performance(small_dfrank[[i]])$performance)
+  bruto_acc = rbind(bruto_acc, performance(small_dbruto[[i]])$performance)
 }
 ila_acc = data.frame(ila_acc)
+ila_acc$algo = "ila"
 isa_acc = data.frame(isa_acc)
+isa_acc$algo = "isa"
 frank_acc = data.frame(frank_acc)
+frank_acc$algo = "frank"
 bruto_acc = data.frame(bruto_acc)
+bruto_acc$algo = "bruto"
 
 all_acc = rbind(ila_acc, isa_acc, frank_acc, bruto_acc)
-all_acc$algo = rep(c("ila", "isa", "frank", "bruto"), each = 100)
-all_acc$replication = 1:100
-
+#all_acc$algo = rep(c("ila", "isa", "frank", "bruto"), each = 100)
+all_acc$replication = the_distances$replica
 ggplot(all_acc, 
        aes(x = reorder(replication, accuracy), y = accuracy, 
            shape = algo, 
@@ -206,3 +241,8 @@ ggplot(all_acc,
        aes(x = reorder(replication, sensitivity00), y = sensitivity00, 
            shape = algo, 
            color = algo)) + geom_point()
+all_acc %>%  
+  group_by(algo) %>%  
+  summarise(mean_acc = mean(accuracy), sd_acc = sd(accuracy), 
+            min_acc = min(accuracy), max_acc = max(accuracy))
+aggregate(accuracy ~ algo, all_acc, quantile)
