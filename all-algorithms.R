@@ -229,18 +229,33 @@ bruto_acc$algo = "bruto"
 all_acc = rbind(ila_acc, isa_acc, frank_acc, bruto_acc)
 #all_acc$algo = rep(c("ila", "isa", "frank", "bruto"), each = 100)
 all_acc$replication = the_distances$replica
-ggplot(all_acc, 
+ggplot(all_acc[!all_acc$algo %in% "bruto",], 
        aes(x = reorder(replication, accuracy), y = accuracy, 
            shape = algo, 
-           color = algo)) + geom_point()
+           color = algo)) + geom_point(alpha = .8)
+
+ggplot(all_acc[!all_acc$algo %in% "bruto",], 
+       aes(x = algo, y = accuracy, 
+           shape = algo, 
+           color = algo)) +geom_boxplot()
 ggplot(all_acc, 
        aes(x = reorder(replication, specificity11), y = specificity11, 
            shape = algo, 
            color = algo)) + geom_point()
+ggplot(all_acc[!all_acc$algo %in% "bruto",], 
+       aes(x = algo, y = specificity11, 
+           shape = algo, 
+           color = algo)) +geom_boxplot()
+
 ggplot(all_acc, 
        aes(x = reorder(replication, sensitivity00), y = sensitivity00, 
            shape = algo, 
            color = algo)) + geom_point()
+ggplot(all_acc[!all_acc$algo %in% "bruto",], 
+       aes(x = algo, y = sensitivity00, 
+           shape = algo, 
+           color = algo)) +geom_boxplot()
+
 all_acc %>%  
   group_by(algo) %>%  
   summarise(mean_acc = mean(accuracy), sd_acc = sd(accuracy), 

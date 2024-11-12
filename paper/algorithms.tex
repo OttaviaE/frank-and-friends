@@ -83,7 +83,8 @@ $\forall Q \in\mathcal{Q} = 2^B \setminus \{\emptyset, B\}$,
 
 $Q_{bruto} = \arg \min_{Q \in \mathcal{Q}} \overline{\Delta}_{\mathbf{TIF}^{Q}}$
 
-\add{spiegazione dell'algoritmo a parole}
+
+Bruto is a brute force algorithm that aims at the selection of best combination of items to recreate a given TIF target by comparing the TIF target with the TIF obtained with all the possible combinations of items of different lengths that are obtainable from an item bank $B$. The total number of item combinations of different lengths $\mathcal{Q}$ is equal to the power set of the item bank minus the empty set and the full set of items. For each item combination $Q \in \mathcal{Q}$, the mean TIF $TIF^Q$ is computed, and is compared against the TIF target. Specifically, the average distance between the TIF target and $TIF^Q$ is computed and the item combination selected by Bruto is the one among all item combinations that allows fro minimizing the distance between $TIF^*$ and $TIF^Q$.
 
 \section{Item Locating Algorithm}
 
@@ -94,7 +95,7 @@ $Q_{bruto} = \arg \min_{Q \in \mathcal{Q}} \overline{\Delta}_{\mathbf{TIF}^{Q}}$
 $B$: Item bank 
 
 
-$Q^k \subset B$: Set of item indexes selected for inclusion in the STF up to iteration $k$
+$Q^k \subset B$: Set of items selected for inclusion in the STF up to iteration $k$
 
 $\mathbf{TIF}^*$: TIF target 
 
@@ -102,9 +103,9 @@ $i^*$: Item selected at each iteration
 
 %$\mathbf{pTIF}^k = \frac{\sum_{i\in Q^{k-1} \cup \{i^*\}} IIF_i}{||Q^{k-1}||+1}$, mean tif at iteration $k$, including the item selected in $D$
 
-$||Q^k||$: cardinality of $Q^k$ at iteration $k$
+%$||Q^k||$: cardinality of $Q^k$ at iteration $k$
 
-At $k = 0$: $\mathbf{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
+At $k = 0$: $TIF^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
 
 \begin{enumerate}
 	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$
@@ -118,6 +119,8 @@ At $k = 0$: $\mathbf{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. F
 	\end{itemize}
 \end{enumerate}
 
+ILA selects the best combination of items to approximate a pre-defined TIF target by iteratively and forwardly searching for the item that allows for minimizing the distance from a specific $\theta$ target. The $\theta$ target is updated at each iteration of the procedure as the point on the latent trait for which the greatest distance between the TIF target and the provisional TIF ($pTIF$) obtained with the last selected item is observed. 
+ILA iterates through $k$ until the termination criterion is met, that is, when the distance between the TIF target and the $pTIF$ with the last selected item is greater or equal to the distance between the TIF target and the TIF obtained from the items in $Q^k$. If the termination criterion is false, the last selected item can be added in $Q$ since it is useful to reduce the distance between the TIF target and the TIF of the STF. Otherwise, the procedure ends and the final item selection does not include the last selected item, since it does not contribute in reducing the distance from the TIF target.  
 
 \section{Item Selecting Algorithm}
 
@@ -137,22 +140,22 @@ $i^*$: Item selected at each iteration
 
 %$\mathbf{pTIF}^k = \frac{\sum_{i\in Q^{k-1} \cup \{i^*\}} IIF_i}{||Q^{k-1}||+1}$, mean tif at iteration $k$, including the item selected in $D$
 
-$||Q^k||$: cardinality of $Q^k$ at iteration $k$
+%$||Q^k||$: cardinality of $Q^k$ at iteration $k$
 
 \normalcolor
 
-At $k = 0$: $\mathbf{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
-
+At $k = 0$: $TIF^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
 
 \begin{enumerate}
-	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{PIF}_D^{k}|$
+	\item $\theta_{target} := \arg \max |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$
 %	\item $IIF_{i \in B \setminus Q^k}(\theta_{target}) = a_i^2P(\theta_{target}, a_i, b_i)[1-P(\theta_{target}, a_i, b_i)]$
 	\item $i^* := \arg \max_{i \in B\setminus Q^k} IIF_i(\theta_{target})$
 	\item $\mathbf{pTIF}_{i^*} = \frac{TIF^k + IIF_{i^*}}{||Q^{k}|| + 1}$
 	\item Termination Criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^k| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
 	\begin{itemize}
-		\item TRUE: $k := k +1$, $Q^{k} = Q^{k-1} \cup \{D\}$, iterates 1-5 (\add{Ho scritto $k-1$ perché siccome ho scritto all'inizio che $k$ si aggiorna e diventa $k+1$ mi sembrava sensato})
-		\item FALSE: The item in $D$ does not contribute to reduce the distance from the TIF target, hence: $Q_{ISA} = Q^k$
+		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $TIF^{k+1} = pTIF_{i^*}$, iterates 1-4 
+\item TRUE: Stop, %The item in $i^*$ does not contribute to reduce the distance from the TIF target, hence: 
+$Q_{ISA} = Q^k$
 	\end{itemize}
 \end{enumerate}
 
@@ -171,17 +174,17 @@ $i^*$: provisional item selected at each iteration
 
 \add{$\mathbf{PIF}$: provisional mean tif} 
 
-At $k =0$, $\mathbf{PIF}^0 = (0, 0, \ldots, 0)$, $Q^0 = \emptyset$, iterate
-\alert{gira il cirterio di terminazione e uniforma con gli altri}
+At $k = 0$: $TIF^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
+
 \begin{enumerate}
 	\item  $A^k = B \setminus Q^k$ (sets of available items at iteration $k$)
 	\item $\forall i \in A^k$, $\mathbf{PIF}_{i}^k = \frac{\mathbf{TIF}^k + \mathbf{IIF}_{i}}{||Q^k||+1}$
 	\item $D = \arg \min_{i \in A^k} |\mathbf{TIF}^* - \mathbf{PIF}_i|$
-	\item Termination criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| < |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
+	\item Termination criterion: $|\mathbf{TIF}^* - \mathbf{PIF}_D^{k}| \geq |\mathbf{TIF}^* - \mathbf{TIF}^{k}|$: 
 	\begin{itemize}
-		\item  If true, $k := k + 1,$ $Q^{k} = Q^{k-1} \cup \{D\}$, restart from 1 \add{C'è il meno 1 per la stessa ragione scritta per ILA e ISA}
-		
-		\item  If false, stops, $Q_{Frank} = Q^k$
+		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $TIF^{k+1} = pTIF_{i^*}$, iterates 1-4 
+\item TRUE: Stop, %The item in $i^*$ does not contribute to reduce the distance from the TIF target, hence: 
+$Q_{Frank} = Q^k$
 		
 	\end{itemize}
 \end{enumerate}

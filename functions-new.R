@@ -7,16 +7,22 @@ IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
   return(y)
 }
 # calcola l'IIF per un item specifico
-i_info <- function(b, a=1,c=0, theta = seq(-5,5,length.out=1000)){
-  Ii = a^2*IRT(theta, b = b, a = a )*(1- IRT(theta, b = b, a = a ))
+i_info <- function(b, a=1,c=0, e= 1,  theta = seq(-5,5,length.out=1000)){
+  Ii = (a^2)*IRT(theta, b = b, a = a, e = e )*(1- IRT(theta, b = b, a = a, e = e ))
   return(Ii)
 }
 # calcola l'IIF di tutti gli item e restituisce in una lista di lunghezza ugaule a tutti 
 # gli item per cui si è calcolata l'IIF
 item_info <- function(ipar, theta = seq(-5,5,length.out=1000)){
   item <- NULL
-  for(i in 1:nrow(ipar)){
-    item[[i]] <- i_info(ipar[i, "b"],ipar[i, "a"], theta = theta)
+  if (any(colnames(ipar) == "e")) {
+    for(i in 1:nrow(ipar)){
+      item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], e = ipar[i, "e"], theta = theta)
+    } 
+  } else {
+    for(i in 1:nrow(ipar)){
+      item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], theta = theta)
+    }
   }
   item = data.frame(do.call("cbind", item))
   colnames(item) = rownames(ipar)
@@ -493,7 +499,9 @@ delta = function(all_q, nitems = NULL, replica = 1,
   }
 return(distance)
 }
-performance = function(distance_data, target_items = "target_items", stf_items = "stf_items") {
+performance = function(distance_data, 
+                       target_items = "target_items", 
+                       stf_items = "stf_items") {
   myT = table(distance_data[, target_items], distance_data[,stf_items])
   if(sum(dim(myT)) < 4) {
     accuracy = 0
