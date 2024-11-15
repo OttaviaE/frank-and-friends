@@ -73,6 +73,17 @@ for (i in 2:nrow(q)) {
   lines(theta, IRT(theta, b= q[i, "b"], a = q[i, "a"], e = q[i, "e"],),  
         type = "l", ylim= c(0,1), col = i)
 }
+plot(theta, IRT(theta, b= q[1, "b"], a = q[1, "a"], e = 1), 
+     type = "l", ylim= c(0,1))
+mye = seq(95, 85, by = -1 )
+mye = mye/100
+for (i in 1:length(mye)) {
+  lines(theta, IRT(theta, b= q[1, "b"], a = q[1, "a"], e = mye[i],),  
+        type = "l", ylim= c(0,1), col = i)
+}
+abline(v = q[1, "b"])
+abline(h = .5)
+
 # ora calcolo la TIF con la stessa stanchezza su tutti gli item 
 tired_iif = item_info(q, theta)
 tired_tif = data.frame(theta, tired_tif = rowSums(tired_iif), 
@@ -80,7 +91,7 @@ tired_tif = data.frame(theta, tired_tif = rowSums(tired_iif),
 plot(theta, tif$tif, type = "l", ylim = c(0, 5))
 lines(theta, tired_tif$tired_tif, type = "l", col = "red")
 
-plot(theta, all_iif$item_12, type = "l")
+plot(theta, all_iif$item_12, type = "l", ylim = c(0,1))
 abline(v =q[12, "b"])
 lines(theta, tired_iif$item_12, type = "l", col = "red")
 # NON HA SENSO DIO PORCO DEVE SCENDERE NO SALIRE 
@@ -99,7 +110,53 @@ myinfo = (q[11, "a"]^2)*P1*Q1
 (q[11, "a"]^2)*(Q1/P1)*((P1 - 0)/(1 -0))^2
 (q[11, "a"]^2)*(Q/P)*((P - 0)/(.95 -0))^2
 
+IRT(1.5, a = 1, b = 1.5)
 
+# deve funzionare dio bestia 
+b = 1
+theta = 1
+a = 1.5
+c = 0
+e = .95
+
+IRT(theta, a =a, b = b, c =c, e = e)
+
+i_info(b, a, c,e, theta)
+
+theta = seq(-3,3, length.out = 1000)
+b = 1
+a = 1.5
+c = 0
+e = 1
+
+plot(theta, IRT(theta, a =a, b = b, c =c, e = e), type = "l", ylim = c(0,1))
+abline(v = 1)
+abline(h = .5)
+lines(theta, IRT(theta, a =a, b = b, c =0.20, e = e), type = "l", col ="red")
+abline(h = IRT(1, a =a, b = b, c =0.20, e = e), col = "red")
+lines(theta, IRT(theta, a =a, b = b, c =0.20, e = .95), type = "l", col ="green")
+abline(h = IRT(1, a =a, b = b, c =0.20, e = .95), col = "green")
+lines(theta, IRT(theta, a =a, b = b, c =0, e = .95), type = "l", col ="royalblue")
+abline(h = IRT(1, a =a, b = b, c =0.0, e = .95), col = "royalblue")
+o
+# IIF 
+plot(theta, i_info(theta = theta, a =a, b = b, c =0, e = 1), type = "l", ylim = c(0,1))
+abline(v = 1)
+abline(h = i_info(1, a =a, b = b, c =c, e = e))
+lines(theta, i_info(theta =theta, a =a, b = b, c =0.20, e = e), type = "l", col ="red")
+abline(h = i_info(1.2, a =a, b = b, c =0.20, e = e), col = "red")
+lines(theta, i_info(theta, a =a, b = b, c =0.20, e = .95), type = "l", col ="green")
+abline(h = i_info(1.2, a =a, b = b, c =0.20, e = .95), col = "green")
+lines(theta, i_info(theta, a =a, b = b, c =0, e = .95), type = "l", col ="royalblue")
+abline(h = i_info(1, a =a, b = b, c =0.0, e = .95), col = "royalblue")
+a
+b
+
+
+plot(theta, i_info(theta = theta, a =1, b = 1, c =0, e = 1), type = "l", ylim = c(0,1))
+lines(theta, 
+      i_info(theta = theta, a =1, b = 1, c =0, e = .95), 
+      type = "l", ylim = c(0,1), col ="blue")
 
 (1- IRT(1.5, b = q[11, "b"], a = q[11, "a"]))* IRT(1.5, b = q[11, "b"], a = q[11, "a"])
 (1- IRT(1.5, b = q[11, "b"], a = q[11, "a"], e = q[11, "e"]))*(IRT(1.5, b = q[11, "b"], a = q[11, "a"], e = q[11, "e"]))

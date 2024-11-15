@@ -14,7 +14,11 @@ IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
 i_info <- function(b, a=1,c=0, e= 1,  theta = seq(-5,5,length.out=1000)){
   P = IRT(theta, b = b, a = a, e = e, c=c)
   Q = 1 - P 
-  Ii = (a^2)*(Q/P)*((P-c)/(e-c))^2
+  # Ii = (a^2)*(Q/P)*((P-c)/(e-c))^2
+  # Ii = (a^2)*(Q*P/e^2)
+  num = (a^2)*((P-c)^2)*((e-P)^2)
+  den = ((e-c)^2)*P*Q
+  Ii = num/den
   return(Ii)
 }
 
