@@ -3,31 +3,50 @@ library(tidyverse)
 # funzioni forme brevi
 # funzione per stimare la probabilità dati i parametrid egli item e del soggetto
 IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
-  y <- c + (e - c) * exp(a * (theta - b)) / (1 + exp(a * (theta - b)))
+  y <- c + (e - c) * (exp(a * (theta - b)) / (1 + exp(a * (theta - b))))
   return(y)
 }
 # calcola l'IIF per un item specifico
+# i_info <- function(b, a=1,c=0, e= 1,  theta = seq(-5,5,length.out=1000)){
+#   Ii = (a^2)*IRT(theta, b = b, a = a, e = e, c=c)*(1- IRT(theta, b = b, a = a, e = e,c=c ))
+#   return(Ii)
+# }
 i_info <- function(b, a=1,c=0, e= 1,  theta = seq(-5,5,length.out=1000)){
-  Ii = (a^2)*IRT(theta, b = b, a = a, e = e )*(1- IRT(theta, b = b, a = a, e = e ))
+  P = IRT(theta, b = b, a = a, e = e, c=c)
+  Q = 1 - P 
+  Ii = (a^2)*(Q/P)*((P-c)/(e-c))^2
   return(Ii)
 }
+
+
 # calcola l'IIF di tutti gli item e restituisce in una lista di lunghezza ugaule a tutti 
 # gli item per cui si è calcolata l'IIF
+# item_info <- function(ipar, theta = seq(-5,5,length.out=1000)){
+#   item <- NULL
+#   if (any(colnames(ipar) == "e")) {
+#     for(i in 1:nrow(ipar)){
+#       item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], e = ipar[i, "e"], theta = theta)
+#     } 
+#   } else {
+#     for(i in 1:nrow(ipar)){
+#       item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], theta = theta)
+#     }
+#   }
+#   item = data.frame(do.call("cbind", item))
+#   colnames(item) = rownames(ipar)
+#   return(item)
+# }
+
 item_info <- function(ipar, theta = seq(-5,5,length.out=1000)){
   item <- NULL
-  if (any(colnames(ipar) == "e")) {
     for(i in 1:nrow(ipar)){
-      item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], e = ipar[i, "e"], theta = theta)
-    } 
-  } else {
-    for(i in 1:nrow(ipar)){
-      item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], theta = theta)
+      item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], c = ipar[i, "c"], e = ipar[i, "e"], theta = theta)
     }
-  }
   item = data.frame(do.call("cbind", item))
   colnames(item) = rownames(ipar)
   return(item)
 }
+
 
 tif_target = function(parameters, 
                       theta = seq(-3,3, legnth.out = 1000), 
@@ -239,7 +258,7 @@ ila = function(parameters, target) {
         token = TRUE
       }
     } else {
-      if (all(is.na(parameters$b))) {
+      if (all(is.na(parameters$b)) |length(sel_item) == nrow(parameters)) {
         warn_too_many = TRUE
       }
       sel_item = sel_item
@@ -248,7 +267,7 @@ ila = function(parameters, target) {
   }
  # questo testa se ho selezionato tutti gli item, quindi non c'è la forma breve, ma comunque tutti gli item permettono 
  # di far diminuire la distanza
- if (warn_too_many == TRUE & distances_pif[length(distances_pif)] >= distances_tif[length(distances_pif)]) {
+ if (warn_too_many == TRUE) {
    sel_item = sel_item
    warning("I ran out of items wwithout finding a STF")
  } else {
@@ -346,7 +365,7 @@ isa = function(parameters, target) {
         token = TRUE
       }
     } else {
-      if (all(is.na(parameters$b))) {
+      if (all(is.na(parameters$b)) |length(sel_item) == nrow(parameters)) {
         warn_too_many = TRUE
       }
       sel_item = sel_item
@@ -378,7 +397,7 @@ isa = function(parameters, target) {
   #  # sel_item = paste(sel_item, collapse = " ")
   #   warn_not_found = FALSE
   # }
-  if (warn_too_many == TRUE & distances_pif[length(distances_pif)] >= distances_tif[length(distances_pif)]) {
+  if (warn_too_many == TRUE) {
     sel_item = sel_item
     warning("I ran out of items wwithout finding a STF")
   } else {

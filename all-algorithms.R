@@ -1,27 +1,27 @@
 rm(list = ls())
 # carico bruto 
-load("bruto-10item.RData")
+load("bruto-sim11item.RData")
 source("functions-new.R")
 library(tidyverse)
-parameters = list()
+# parameters = list()
 replications = 100
 resFrank = list()
 frank_elapsed = NULL
-theta = seq(-4,4, length.out = 1000)
+# theta = seq(-4,4, length.out = 1000)
 resIla = list()
 ila_elapsed = NULL
 resIsa = list()
 isa_elapsed = NULL
-target = list()
+# target = list()
 for (i in 1:replications) {
   set.seed(i)
-  parameters[[i]] = data.frame(b = runif(10, -3, 3), 
-                               a = runif(10, 0.9, 2))
-  rownames(parameters[[i]]) = paste("item", rownames(parameters[[i]]), sep = "_")
-  target[[i]] = tif_target(parameters[[i]], theta, 
-                      add_difficulty = runif(nrow(parameters[[i]]), -.2, .2), 
-                      add_discriminativity = runif(nrow(parameters[[i]]), -.2, .2), 
-                      seed = i)
+  # parameters[[i]] = data.frame(b = runif(10, -3, 3), 
+  #                              a = runif(10, 0.9, 2))
+  # rownames(parameters[[i]]) = paste("item", rownames(parameters[[i]]), sep = "_")
+  # target[[i]] = tif_target(parameters[[i]], theta, 
+  #                     add_difficulty = runif(nrow(parameters[[i]]), -.2, .2), 
+  #                     add_discriminativity = runif(nrow(parameters[[i]]), -.2, .2), 
+  #                     seed = i)
   # Frank
   frank_start = Sys.time()
   resFrank[[i]] = frank(parameters[[i]], target[[i]])
@@ -42,6 +42,9 @@ for (i in 1:replications) {
   isa_elapsed = c(isa_elapsed, temp_elapsed)
 }
 
+mean(frank_elapsed)
+mean(ila_elapsed)
+mean(isa_elapsed)
 
 item_stf = data.frame(item_ila = character(replications), 
                       n_ila = numeric(replications), 
@@ -62,13 +65,14 @@ for (i in 1:replications) {
   item_stf[i, "stf_not_found_isa"] = resIsa[[i]]$warning[2]
   item_stf[i, "replication"]= i
 }
-table(item_stf$item_not_found_ila)
+# 7/100 ila finisce gli item
 table(item_stf$stf_not_found_ila)
-
-table(item_stf$item_not_found_isa)
+#18/100 non isa finisce gli item
 table(item_stf$stf_not_found_isa)
-item_stf[item_stf$stf_not_found_isa == TRUE, ]
-# 1, 6,13, 15, 27, 62, 66, 85, 88, 89
+# quelle di ila sono incluse in quelle di ila 
+item_stf[item_stf$stf_not_found_ila == TRUE, ]
+# le due non trovate da ila sono include in quelle non prese 
+# da isa 
 item_stf[item_stf$item_not_found_ila %in% TRUE,]
 # 33, 47, 73, 98
 item_stf[item_stf$n_isa == 10,]
@@ -83,10 +87,10 @@ for (i in 1:length(resBruto)) {
 }
 
 # faccio una sottoselezione solo di quelle forme brevi che sono effettivamnente riuscite 
-item_stf = all_item_stf[!all_item_stf$n_ila == 10,]
-item_stf = item_stf[!item_stf$n_isa == 10, ]
-
+item_stf = all_item_stf[all_item_stf$stf_not_found_isa == F,]
 apply(item_stf[, c("n_frank", "n_ila", "n_isa")], 2, max)
+apply(item_stf[, c("n_frank", "n_ila", "n_isa")], 2, min)
+apply(item_stf[, c("n_frank", "n_ila", "n_isa")], 2, mean)
 
 rank_ila = NULL
 rank_isa = NULL
@@ -113,13 +117,13 @@ for (i in item_stf$replication) {
 head(rank_ila)
 ggplot(rank_ila, 
        aes(x = reorder((iter), rp), 
-           y = rp, color = factor(n_item))) + geom_point()
+           y = rp, color = factor(n_item))) + geom_point() +ylim(0, 100)
 ggplot(rank_isa, 
        aes(x = reorder((iter), rp), 
-           y = rp, color = factor(n_item))) + geom_point()
+           y = rp, color = factor(n_item))) + geom_point() +ylim(0, 100)
 ggplot(rank_frank, 
        aes(x = reorder((iter), rp), 
-           y = rp, color = factor(n_item))) + geom_point()
+           y = rp, color = factor(n_item))) + geom_point() +ylim(0, 100)
 all_ranks = rbind(rank_ila, rank_isa, rank_frank)
 myrank = aggregate(rp ~  n_item, all_ranks, mean)
 colnames(myrank)[2] = "mean_rp"
@@ -155,8 +159,8 @@ mydBruto = list()
 temp= NULL
 distance_bruto=NULL
 for (i in item_stf$replication) {
-  mydBruto[[i]] = delta(all_q_bruto, nitems = 10, replica = i)
-  temp = 10- sum(mydBruto[[i]]$distance)
+  mydBruto[[i]] = delta(all_q_bruto, nitems = 11, replica = i)
+  temp = 11- sum(mydBruto[[i]]$distance)
   names(temp) = paste("replica", i, sep = "_")
   distance_bruto = c(distance_bruto, temp)
 }
@@ -173,18 +177,19 @@ the_distances = data.frame(replica = as.numeric(gsub("replica_", "", names(dista
                            isa_d = numeric(length(distance_bruto)), 
                            frank_d = numeric(length(distance_bruto)))
 for (i in the_distances$replica) {
-  d_ila[[i]] = delta(all_stf, nitems = 10, replica = i, 
+  d_ila[[i]] = delta(all_stf, nitems = 11, replica = i, 
                      target = "item", comparison = "item_ila")
-  d_isa[[i]] = delta(all_stf, nitems = 10, replica = i, 
+  d_isa[[i]] = delta(all_stf, nitems = 11, replica = i, 
                      target = "item", comparison = "item_isa")
-  d_frank[[i]] = delta(all_stf, nitems = 10, replica = i, 
+  d_frank[[i]] = delta(all_stf, nitems = 11, replica = i, 
                      target = "item", comparison = "item_frank")
-  the_distances[i, "ila_d"] = 10- sum(d_ila[[i]]$distance)
-  the_distances[i, "isa_d"] = 10- sum(d_isa[[i]]$distance)
-  the_distances[i, "frank_d"] = 10- sum(d_frank[[i]]$distance)
+  the_distances[i, "ila_d"] = 11- sum(d_ila[[i]]$distance)
+  the_distances[i, "isa_d"] = 11- sum(d_isa[[i]]$distance)
+  the_distances[i, "frank_d"] = 11- sum(d_frank[[i]]$distance)
 }
 the_distances = the_distances[!is.na(the_distances$replica), ]
 colMeans(the_distances)
+# frank è qyuello che si avvicina di più in assoluto 
 
 # ila_acc = data.frame(accuracy = numeric(100), 
 #                      sens00 = numeric(100), 
