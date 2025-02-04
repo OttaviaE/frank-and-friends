@@ -243,7 +243,7 @@ ila = function(parameters, target) {
         temp_pif = data.frame(nitems = ncol(selected_iifs), 
                               items = paste(colnames(selected_iifs), collapse = " "), 
                               pif = pif)
-        all_stfs = rbind(all_stfs, mypif)
+        all_stfs = rbind(all_stfs, temp_pif)
       }
       parameters[index_item, ] = NA
       # contiene le distanze tra la target e la tif stf (quelle che vanno confrontate con la pif)
@@ -351,7 +351,7 @@ isa = function(parameters, target) {
         temp_pif = data.frame(nitems = ncol(selected_iifs), 
                               items = paste(colnames(selected_iifs), collapse = " "), 
                               pif = pif)
-        all_stfs = rbind(all_stfs, mypif)
+        all_stfs = rbind(all_stfs, temp_pif)
       }
       parameters[index_item, ] = NA
       # contiene le distanze tra la target e la tif stf (quelle che vanno confrontate con la pif)
@@ -434,6 +434,7 @@ isa = function(parameters, target) {
 }
 # Frank -------
 frank = function(parameters, target) {
+  theta = target$theta
   all_iifs = item_info(parameters, theta)
   token = TRUE
   while (token == TRUE) {
