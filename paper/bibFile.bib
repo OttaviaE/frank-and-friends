@@ -1,0 +1,401 @@
+\RequirePackage{filecontents}
+\begin{filecontents}{bibFile.bib}
+@book{baker2017,
+  title={{The basics of Item Response Theory using R}},
+  author={Baker, Frank B and Kim, Seock-Ho},
+  year={2017},
+  publisher={Springer}
+}
+@article{van1987absolute,
+  title={{IRT-based test construction}},
+  author={van der Linden, Wim J and Theunissen, TJJM and Boekkooi-Timminga, Ellen and Kelderman, Henk},
+  year={1987},
+  publisher={University of Twente}
+}
+@article{van1989relative,
+  title={A maximin model for IRT-based test design with practical constraints},
+  author={van ver Linden, Wim J and Boekkooi-Timminga, Ellen},
+  journal={Psychometrika},
+  volume={54},
+  pages={237--247},
+  year={1989},
+  publisher={Springer}
+}
+@CONFERENCE{pauci,
+	author = {Epifania, Ottavia M. and Anselmi, Pasquale and Robusto, Egidio},
+	title = {Pauci sed boni: An Item Response Theory Approach for Shortening Tests},
+	year = {2023},
+	journal = {Springer Proceedings in Mathematics and Statistics},
+	volume = {422},
+	pages = {75 – 83},
+	doi = {10.1007/978-3-031-27781-8_7},
+	type = {Conference paper},
+	source = {Scopus}
+}
+@article{stocking,
+  title={{Automated item selection using Item Response Theory}},
+  author={Stocking, Martha L and Swanson, Len and Pearlman, Mari},
+  journal={ETS Research Report Series},
+  volume={1991},
+  number={1},
+  pages={i--31},
+  year={1991},
+  publisher={Wiley Online Library}
+}
+@incollection{birnbaum1968,
+  title={Some latent trait models and their use in inferring an examinee's ability},
+  author={Birnbaum, A},
+  booktitle={Statistical theories of mental test scores},
+  editor ={Lord, F M and Novick, R},
+  year={1968},
+  publisher={Addison-Wesley Publishing}, 
+  address = {Reading:MA}
+}
+@article{lordTif,
+  title={Practical applications of item characteristic curve theory},
+  author={Lord, Frederic M},
+  journal={{Journal of Educational Measurement}},
+  pages={117--138},
+  year={1977},
+  publisher={JSTOR}
+}
+@article{tasse2016,
+  title={Development and standardization of the diagnostic adaptive behavior scale: Application of item response theory to the assessment of adaptive behavior},
+  author={Tass{\'e}, Marc J and Schalock, Robert L and Thissen, David and Balboni, Giulia and Bersani Jr, Henry and Borthwick-Duffy, Sharon A and Spreat, Scott and Widaman, Keith F and Zhang, Dalun and Navas, Patricia},
+  journal={{American Journal on Intellectual and Developmental Disabilities}},
+  volume={121},
+  number={2},
+  pages={79--94},
+  year={2016},
+  publisher={The American Association on Intellectual and Developmental Disabilities}, 
+doi = {https://doi.org/10.1352/1944-7558-121.2.79}
+}
+@article{balboni,
+  title={Italian Diagnostic Adaptive Behavior Scale: reliability and diagnostic accuracy compared with the Vineland-II},
+  author={Balboni, Giulia and Bacherini, Alice and Anselmi, Pasquale and Brovedani, Paola and Buono, Serafino and Micheletti, Serena and Robusto, Egidio and Tass{\'e}, Marc J},
+  journal={{Research in Developmental Disabilities}},
+  volume={123},
+  pages={104185},
+  year={2022},
+  publisher={Elsevier}, 
+doi = {https://doi.org/10.1016/j.ridd.2022.104185}
+}
+@article{chiesi,
+  title={{A revised short version of the compassionate love scale for humanity (CLS-H-SF): Evidence from Item Response Theory analyses and validity testing}},
+  author={Chiesi, Francesca and Lau, Chloe and Saklofske, Donald H},
+  journal={BMC Psychology},
+  volume={8},
+  number={1},
+  pages={1--9},
+  year={2020},
+  publisher={BioMed Central}, 
+  doi = {https://doi.org/10.1186/s40359-020-0386-9}
+}
+@article{choi,
+  title={{Efficiency of static and computer adaptive short forms compared to full-length measures of depressive symptoms}},
+  author={Choi, Seung W and Reise, Steven P and Pilkonis, Paul A and Hays, Ron D and Cella, David},
+  journal={Quality of Life Research},
+  volume={19},
+  number={1},
+  pages={125--136},
+  year={2010},
+  publisher={Springer}, 
+  doi={https://doi.org/10.1007/s11136-009-9560-5}
+}
+@article{colledani2018,
+  title={{Development of a new abbreviated form of the Junior Eysenck Personality Questionnaire-Revised}},
+  author={Colledani, Daiana and Robusto, Egidio and Anselmi, Pasquale},
+  journal={Personality and Individual Differences},
+  volume={120},
+  pages={159--165},
+  year={2018},
+  publisher={Elsevier}, 
+  doi = {https://doi.org/10.1016/j.paid.2017.08.037}
+}
+@article{colledani2019,
+  title={{Using multidimensional item response theory to develop an abbreviated form of the Italian version of Eysenck's IVE questionnaire}},
+  author={Colledani, Daiana and Anselmi, Pasquale and Robusto, Egidio},
+  journal={Personality and Individual Differences},
+  volume={142},
+  pages={45--52},
+  year={2019},
+  publisher={Elsevier}, 
+  doi = {https://doi.org/10.1016/j.paid.2019.01.032}
+}
+@article{colledani2021,
+  title={{Cross-cultural validation of a new abbreviated version of the EPQ-R}},
+  author={Colledani, Daiana and Anselmi, Pasquale and Robusto, Egidio},
+  journal={TPM: Testing, Psychometrics, Methodology in Applied Psychology},
+  volume={28},
+  number={3},
+  pages = {363--370},
+  number={2021},
+  year={2021}, 
+  doi = {https://doi.org/10.4473/TPM28.3.6}
+}
+@book{drasgow,
+  title={Innovations in computerized assessment},
+  author={Drasgow, Fritz and Olson-Buchanan, Julie B},
+  year={1999},
+  publisher={Psychology Press}
+}
+@article{edelen,
+  title={{Applying item response theory (IRT) modeling to questionnaire development, evaluation, and refinement}},
+  author={Edelen, Maria Orlando and Reeve, Bryce B},
+  journal={Quality of Life Research},
+  volume={16},
+  number={1},
+  pages={5--18},
+  year={2007},
+  publisher={Springer}, 
+  doi={https://doi.org/10.1007/s11136-007-9198-0}
+}
+@inproceedings{pauci,
+  title={Pauci sed boni: An Item Response Theory Approach for Shortening Tests},
+  author={Epifania, Ottavia M and Anselmi, Pasquale and Robusto, Egidio},
+  booktitle={The Annual Meeting of the Psychometric Society},
+  pages={75--83},
+  year={2022},
+  organization={Springer}, 
+  doi={https://doi.org/10.1007/978-3-031-27781-8_7}
+}
+  @Manual{shortIRT,
+    title = {{shortIRT: Procedures Based on Item Response Theory Models for the
+Development of Short Test Forms}},
+    author = {Ottavia M. Epifania and Pasquale Anselmi and Egidio Robusto},
+    year = {2023},
+    note = {R package version 0.1.2},
+  }
+@book{lord,
+  title={{Applications of Item Response Theory to practical testing problems}},
+  author={Lord, Frederic M},
+  year={1980},
+  publisher={Routledge}, 
+  address = {New York, NY}
+}
+@article{mmpi,
+  title={MMPI-A: Manual for administration, scoring andinterpr{\'e}tation},
+  author={Butcher, James N and Williams, CL and Graham, JR and Archer, RP and Tellengen, A and Ben-Porath, JS and Kaemmer, B},
+  journal={Minneapolis (MN): University of Minnesota},
+  year={1992}
+}
+@article{neopi,
+  title={chapter 9: The revised neo personality inventory (neo-pi-r)},
+  author={Costa, PT and McCrae, RR},
+  journal={The SAGE handbook of personality theory and assessment},
+  volume={2},
+  pages={179--198},
+  year={2008}
+}
+@article{magis,
+  title={{Computerized adaptive testing with R: Recent updates of the package catR}},
+  author={Magis, David and Barrada, Juan Ramon},
+  journal={{Journal of Statistical Software}},
+  volume={76},
+  pages={1--19},
+  year={2017}, 
+  doi={https://doi.org/10.18637/jss.v076.c01}
+}
+@article{reise,
+  title={{Computerization and adaptive administration of the NEO PI-R}},
+  author={Reise, Steven P and Henson, James M},
+  journal={Assessment},
+  volume={7},
+  number={4},
+  pages={347--364},
+  year={2000},
+  publisher={Sage Publications Sage CA: Thousand Oaks, CA}
+}
+@article{sim2006,
+  title={Relationship between item difficulty and discrimination indices in true/false-type multiple choice questions of a para-clinical multidisciplinary paper},
+  author={Sim, Si-Mui and Rasiah, Raja Isaiah},
+  journal={Annals-Academy of Medicine Singapore},
+  volume={35},
+  number={2},
+  pages={67},
+  year={2006},
+  publisher={Citeseer}
+}
+@article{belov,
+  title={{A Monte Carlo approach to the design, assembly, and evaluation of multistage adaptive tests}},
+  author={Belov, Dmitry I and Armstrong, Ronald D},
+  journal={{Applied Psychological Measurement}},
+  volume={32},
+  number={2},
+  pages={119--137},
+  year={2008},
+  publisher={Sage Publications Sage CA: Los Angeles, CA}, 
+  doi={https://doi.org/10.1177/0146621606297308
+
+}
+}
+@article{azzopardirelationship,
+  title={Relationship between item difficulty level and item discrimination in biology final examinations},
+  author={Azzopardi, Marthese and Azzopardi, Carmel}, 
+  doi ={https://doi.org/10.36315/2019v2end001}, 
+  journal = {Education and New Developments }, 
+  year = {2019}
+}
+@article{smitsNormality,
+  title={{A study of alternative approaches to non-normal latent trait distributions in item response theory models used for health outcome measurement}},
+  author={Smits, Niels and {\"O}{\u{g}}reden, O{\u{g}}uzhan and Garnier-Villarreal, Mauricio and Terwee, Caroline B and Chalmers, R Philip},
+  journal={{Statistical Methods in Medical Research}},
+  volume={29},
+  number={4},
+  pages={1030--1048},
+  year={2020},
+  publisher={SAGE Publications Sage UK: London, England}, 
+  doi={https://doi.org/10.1177/09622802209076}
+}
+@article{irtError,
+  title={{Sources of error in IRT trait estimation}},
+  author={Feuerstahler, Leah M},
+  journal={Applied psychological measurement},
+  volume={42},
+  number={5},
+  pages={359--375},
+  year={2018},
+  publisher={SAGE Publications Sage CA: Los Angeles, CA}, 
+  doi={https://doi.org/10.1177/0146621617733955}
+}
+@article{police,
+title={{Minnesota Multiphasic Personality Inventory-2-Restructured Form (MMPI-2-RF) predictors of police officer problem behavior}},
+  author={Tarescavage, A. M., Corey, D. M., Ben-Porath, Y. S. }, 
+  doi ={10.1177/1073191114534885}, 
+  journal = {Assessment }, 
+  year = {2015}, 
+   volume={22},
+  number={1},
+  pages={116-132}
+}
+@article{pilots,
+  title={Clinical personality assessment: History, evolution, contemporary models, and practical applications},
+  author={Butcher, James N},
+  journal={Oxford Handbook of Personality Assessment},
+  pages={5--21},
+  year={2009},
+  publisher={Oxford University Press New York, NY}, 
+  doi = {https://doi.org/10.1093/oxfordhb/9780195366877.013.0030}
+}
+@article{length,
+  title={{Will the questions ever end? Person-level increases in careless responding during questionnaire completion}},
+  author={Bowling, Nathan A and Gibson, Anthony M and Houpt, Joseph W and Brower, Cheyna K},
+  journal={Organizational Research Methods},
+  volume={24},
+  number={4},
+  pages={718--738},
+  year={2021},
+  publisher={SAGE Publications Sage CA: Los Angeles, CA}, 
+  doi = {https://doi.org/10.1177/10944281209477}
+}
+@article{length1,
+  title={The impact of questionnaire length on the accuracy rate of online surveys},
+  author={Kato, Takumi and Miura, Taro},
+  journal={Journal of Marketing Analytics},
+  volume={9},
+  number={2},
+  pages={83--98},
+  year={2021},
+  publisher={Springer}, 
+   doi = {https://doi.org/10.1057/s41270-021-00105-y}
+}
+@article{silvia,
+  title={{The self-reflection and insight scale: Applying Item Response Theory to craft an efficient short form}},
+  author={Silvia, Paul J},
+  journal={Current Psychology},
+  pages={1--11},
+  year={2021},
+  publisher={Springer}, 
+  doi = {https://doi.org/10.1007/s12144-020-01299-7}
+}
+@article{anselmi2021item,
+  title={{An Item Response Theory-Based Scoring of the South Oaks Gambling Screen--Revised Adolescents}},
+  author={Anselmi, P. and Colledani, D. and Andreotti, A. and Robusto, E. and Fabbris, L. and Vian, P. and Genetti, B. and Mortali, C. and Minutillo, A. and Mastrobattista, L. and Pacifici, R.},
+  journal={Assessment},
+  year={2021},
+  publisher={SAGE Publications Sage CA: Los Angeles, CA}, 
+  doi = {https://doi.org/10.1177/10731911211017657}
+}
+@article{sellbom,
+  title={{The MMPI-2-Restructured Form (MMPI-2-RF): Assessment of personality and psychopathology in the twenty-first century}},
+  author={Sellbom, Martin},
+  journal={Annual Review of Clinical Psychology},
+  volume={15},
+  pages={149--177},
+  year={2019},
+  publisher={Annual Reviews}, 
+  doi = {https://doi.org/10.1146/annurev-clinpsy-050718-095701}
+}
+@article{raven,
+  title={{The relevance of the irrelevant: Attentional distractor-response binding predicts performance in the remote associates task}},
+  author={Zmigrod, Sharon and Zmigrod, Leor and Hommel, Bernhard},
+  journal={{Psychology of Aesthetics, Creativity, and the Arts}},
+  volume={13},
+  number={1},
+  pages={15},
+  year={2019},
+  doi={10.1037/aca0000162},
+  publisher={Educational Publishing Foundation}
+}
+  @Manual{TAM,
+    title = {TAM: Test Analysis Modules},
+    author = {Alexander Robitzsch and Thomas Kiefer and Margaret Wu},
+    year = {2022},
+    note = {R package version 4.0-16},
+    url = {https://CRAN.R-project.org/package=TAM},
+  }
+    @Manual{sirt,
+    title = {sirt: Supplementary Item Response Theory Models},
+    author = {Alexander Robitzsch},
+    year = {2022},
+    note = {R package version 3.12-66},
+    url = {https://CRAN.R-project.org/package=sirt},
+  }
+    @Book{ggplot,
+    author = {Hadley Wickham},
+    title = {ggplot2: Elegant Graphics for Data Analysis},
+    publisher = {Springer-Verlag New York},
+    year = {2016},
+    isbn = {978-3-319-24277-4},
+    url = {https://ggplot2.tidyverse.org},
+  }
+    @Manual{rsoft,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2022},
+    url = {https://www.R-project.org/},
+  }
+  
+@article{kmeans,
+  title={{Algorithm AS 136: A k-means clustering algorithm}},
+  author={Hartigan, John A and Wong, Manchek A},
+  journal={{Applied Statistics}},
+  volume={28},
+  number={1},
+  pages={100--108},
+  year={1979},
+  doi = {10.2307/2346830},
+  publisher={JSTOR}, 
+  doi = {https://doi.org/10.2307/2346830}
+}
+@book{van2005linear,
+  title={Linear models for optimal test design},
+  author={van der Linden, Wim J},
+  year={2005},
+  publisher={Springer}
+}
+@article{parallel,
+  title={{Creating parallel forms to support on-demand testing for undergraduate students in psychology}},
+  author={Gierl, Mark and Daniels, Lia and Zhang, Xinxin},
+  journal={{Journal of Measurement and Evaluation in Education and Psychology}},
+  volume={8},
+  number={3},
+  pages={288--302},
+  year={2017}, 
+  doi={https://doi.org/10.21031/epod.305350}
+}
+\end{filecontents}
+
+

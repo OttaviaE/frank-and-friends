@@ -1,0 +1,39 @@
+\documentclass[12pt, a4paper, titilepage]{article}
+
+\usepackage{amsmath}
+%opening
+\title{How much is too much? Item Response Theory procedures to shorten tests}
+\author{Ottavia M. Epifania\textsuperscript{1} \& Livio Finos\textsuperscript{2}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The horrors persist, but so do I
+\end{abstract}
+
+\section{Introduction}
+
+In Item Response Theory (IRT) models for dichotmous responses (e.g., correct vs. incorrect), the probability of observing a correct response on item $i$ by person $p$ depends on both the charcteristics of the respondent (as described by their latent trait level, $\theta_p$) and on the characteristics of the item, which can be described by different parameters. IRT models differentiate according to the number of parameters used for describing the characteristics of the items. According to the 4-parameter logistic model (4-PL), the probability of a correct can be formalized as: 
+
+\begin{equation}
+	P(x_{pi}= 1| \theta_p, b_i, a_i, c_i, d_i) = c_i + (d_i -c_i) + \dfrac{\exp[a_i(\theta_p - b_i)]}{1 + \exp[a_i(\theta_p - b_i)]},
+\end{equation}
+where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the location of the item on the latent trait (i.e., difficulty parameter, the higher the value, the higher the difficulty of the item), $a_i$ describes the ability of $i$ to discriminate between respondents with different latent trait levels (i.e.,discrimination parameter, the higher the value, the higher the discrimination ability of the item), and $c_i$ and $d_i$ describe the probability of observing a correct response when $\theta \rightarrow - \infty$ and $\theta \rightarrow +\infty$, respectively. 
+When $\theta \rightarrow - \infty$, the probability of observing a correct response should tend to 0. Likewise, when $\theta \rightarrow +\infty$, the probability of observing a correct response should tend to 1. 
+However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. The lucky guess parameter $c_i$ describes the probability of endorsing the item even if the $\theta$ level is below the difficulty of the item, such the probability of observing a correct response for $\theta \rightarrow - \infty$ tends to $c_i$ instead of 0. 
+The same but inverse consideration applies for the upper asymptote that describes the probability of giving the correct response for $\theta \rightarrow + \infty$. 
+
+Parameter $c_i$ is the probability of lucky guess (i.e., the probability of observing a correct response)
+
+
+\section{Simulation Study}
+
+\subsection{Simulation Design}
+
+\section{Results}
+
+\section{Final Remarks}
+
+\end{document}

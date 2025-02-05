@@ -187,6 +187,17 @@ for (i in 1:nrow(dataFixed)) {
                                       c = tired_q[j, "c"],tired_q[j, "e"]))
   }
 }
+library(lme4)
+dataFixed$sbj = 1:nrow(dataFixed)
+
+long = pivot_longer(dataFixed, 
+             cols = !sbj)
+
+m1 = glmer(value ~ (1|name) + (1|sbj), data = long, family = "binomial")
+summary(m1)
+plot( true_theta, ranef(m1)$sbj[,1])
+abline(0,1)
+
 prop = data.frame(item = c(names(colMeans(dataFixed)),names(colMeans(dataFixed))), 
            prop = c(colMeans(dataFixed), colMeans(data)), 
            data = c(rep("Fixed", n_item), rep("Clean", n_item)))

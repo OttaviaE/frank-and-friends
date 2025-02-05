@@ -1,0 +1,64 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: algorithms.aux
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+The style file: apacite.bst
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: bibFile.bib
+Repeated entry---line 305 of file bibFile.bib
+ : @inproceedings{pauci
+ :                     ,
+I'm skipping whatever remains of this entry
+apacite.bst [2013/07/21 v6.03 APA bibliography style]
+Warning--No journal in van1987absolute
+You've used 13 entries,
+            6951 wiz_defined-function locations,
+            1366 strings with 13697 characters,
+and the built_in function-call counts, 28355 in all, are:
+= -- 3493
+> -- 239
+< -- 1442
++ -- 1544
+- -- 26
+* -- 1879
+:= -- 5368
+add.period$ -- 54
+call.type$ -- 13
+change.case$ -- 222
+chr.to.int$ -- 0
+cite$ -- 27
+duplicate$ -- 746
+empty$ -- 1020
+format.name$ -- 405
+if$ -- 5219
+int.to.chr$ -- 0
+int.to.str$ -- 39
+missing$ -- 0
+newline$ -- 348
+num.names$ -- 106
+pop$ -- 404
+preamble$ -- 1
+purify$ -- 52
+quote$ -- 0
+skip$ -- 1787
+stack$ -- 0
+substring$ -- 1694
+swap$ -- 438
+text.length$ -- 39
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 1168
+warning$ -- 1
+while$ -- 142
+width$ -- 0
+write$ -- 438
+(There was 1 error message)

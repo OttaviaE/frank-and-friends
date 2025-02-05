@@ -1,0 +1,387 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Baker%
+\ \BBA {} Kim%
+}{%
+Baker%
+\ \BBA {} Kim%
+}{%
+{\protect \APACyear {2017}}%
+}]{%
+baker2017}
+\APACinsertmetastar {%
+baker2017}%
+\begin{APACrefauthors}%
+Baker, F\BPBI B.%
+\BCBT {}\ \BBA {} Kim, S\BHBI H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2017}.
+\newblock
+\APACrefbtitle {{The basics of Item Response Theory using R}} {{The basics of
+  Item Response Theory using R}}.
+\newblock
+\APACaddressPublisher{}{Springer}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Balboni%
+\ \protect \BOthers {.}}{%
+Balboni%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+balboni}
+\APACinsertmetastar {%
+balboni}%
+\begin{APACrefauthors}%
+Balboni, G.%
+, Bacherini, A.%
+, Anselmi, P.%
+, Brovedani, P.%
+, Buono, S.%
+, Micheletti, S.%
+\BDBL {}Tass{\'e}, M\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Italian Diagnostic Adaptive Behavior Scale: reliability
+  and diagnostic accuracy compared with the Vineland-II} {Italian diagnostic
+  adaptive behavior scale: reliability and diagnostic accuracy compared with
+  the vineland-ii}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{{Research in Developmental
+  Disabilities}}{123}{}{104185}.
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1016/j.ridd.2022.104185}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Birnbaum%
+}{%
+Birnbaum%
+}{%
+{\protect \APACyear {1968}}%
+}]{%
+birnbaum1968}
+\APACinsertmetastar {%
+birnbaum1968}%
+\begin{APACrefauthors}%
+Birnbaum, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1968}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Some latent trait models and their use in inferring an
+  examinee's ability} {Some latent trait models and their use in inferring an
+  examinee's ability}.{\BBCQ}
+\newblock
+\BIn{} F\BPBI M.~Lord\ \BBA {} R.~Novick\ (\BEDS), \APACrefbtitle {Statistical
+  theories of mental test scores.} {Statistical theories of mental test
+  scores.}
+\newblock
+\APACaddressPublisher{Reading:MA}{Addison-Wesley Publishing}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Chiesi%
+, Lau%
+\BCBL {}\ \BBA {} Saklofske%
+}{%
+Chiesi%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2020}}%
+}]{%
+chiesi}
+\APACinsertmetastar {%
+chiesi}%
+\begin{APACrefauthors}%
+Chiesi, F.%
+, Lau, C.%
+\BCBL {}\ \BBA {} Saklofske, D\BPBI H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{A revised short version of the compassionate love scale
+  for humanity (CLS-H-SF): Evidence from Item Response Theory analyses and
+  validity testing}} {{A revised short version of the compassionate love scale
+  for humanity (CLS-H-SF): Evidence from Item Response Theory analyses and
+  validity testing}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{BMC Psychology}{8}{1}{1--9}.
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1186/s40359-020-0386-9}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Colledani%
+, Robusto%
+\BCBL {}\ \BBA {} Anselmi%
+}{%
+Colledani%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2018}}%
+}]{%
+colledani2018}
+\APACinsertmetastar {%
+colledani2018}%
+\begin{APACrefauthors}%
+Colledani, D.%
+, Robusto, E.%
+\BCBL {}\ \BBA {} Anselmi, P.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{Development of a new abbreviated form of the Junior
+  Eysenck Personality Questionnaire-Revised}} {{Development of a new
+  abbreviated form of the Junior Eysenck Personality
+  Questionnaire-Revised}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Personality and Individual
+  Differences}{120}{}{159--165}.
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1016/j.paid.2017.08.037}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Epifania%
+, Anselmi%
+\BCBL {}\ \BBA {} Robusto%
+}{%
+Epifania%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+pauci}
+\APACinsertmetastar {%
+pauci}%
+\begin{APACrefauthors}%
+Epifania, O\BPBI M.%
+, Anselmi, P.%
+\BCBL {}\ \BBA {} Robusto, E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Pauci sed boni: An Item Response Theory Approach for
+  Shortening Tests} {Pauci sed boni: An item response theory approach for
+  shortening tests}{\BBCQ}\ [Conference paper].
+\newblock
+\BIn{} (\BVOL~422, \BPG~75 – 83).
+\newblock
+\begin{APACrefDOI} \doi{10.1007/978-3-031-27781-8_7} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Lord%
+}{%
+Lord%
+}{%
+{\protect \APACyear {1977}}%
+}]{%
+lordTif}
+\APACinsertmetastar {%
+lordTif}%
+\begin{APACrefauthors}%
+Lord, F\BPBI M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1977}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Practical applications of item characteristic curve
+  theory} {Practical applications of item characteristic curve theory}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{{Journal of Educational Measurement}}{}{}{117--138}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Magis%
+\ \BBA {} Barrada%
+}{%
+Magis%
+\ \BBA {} Barrada%
+}{%
+{\protect \APACyear {2017}}%
+}]{%
+magis}
+\APACinsertmetastar {%
+magis}%
+\begin{APACrefauthors}%
+Magis, D.%
+\BCBT {}\ \BBA {} Barrada, J\BPBI R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2017}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{Computerized adaptive testing with R: Recent updates of
+  the package catR}} {{Computerized adaptive testing with R: Recent updates of
+  the package catR}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{{Journal of Statistical Software}}{76}{}{1--19}.
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.18637/jss.v076.c01} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Silvia%
+}{%
+Silvia%
+}{%
+{\protect \APACyear {2021}}%
+}]{%
+silvia}
+\APACinsertmetastar {%
+silvia}%
+\begin{APACrefauthors}%
+Silvia, P\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{The self-reflection and insight scale: Applying Item
+  Response Theory to craft an efficient short form}} {{The self-reflection and
+  insight scale: Applying Item Response Theory to craft an efficient short
+  form}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Current Psychology}{}{}{1--11}.
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1007/s12144-020-01299-7}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Stocking%
+, Swanson%
+\BCBL {}\ \BBA {} Pearlman%
+}{%
+Stocking%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {1991}}%
+}]{%
+stocking}
+\APACinsertmetastar {%
+stocking}%
+\begin{APACrefauthors}%
+Stocking, M\BPBI L.%
+, Swanson, L.%
+\BCBL {}\ \BBA {} Pearlman, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1991}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{Automated item selection using Item Response Theory}}
+  {{Automated item selection using Item Response Theory}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{ETS Research Report Series}{1991}{1}{i--31}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Tass{\'e}%
+\ \protect \BOthers {.}}{%
+Tass{\'e}%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2016}}%
+}]{%
+tasse2016}
+\APACinsertmetastar {%
+tasse2016}%
+\begin{APACrefauthors}%
+Tass{\'e}, M\BPBI J.%
+, Schalock, R\BPBI L.%
+, Thissen, D.%
+, Balboni, G.%
+, Bersani~Jr, H.%
+, Borthwick-Duffy, S\BPBI A.%
+\BDBL {}Navas, P.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2016}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Development and standardization of the diagnostic
+  adaptive behavior scale: Application of item response theory to the
+  assessment of adaptive behavior} {Development and standardization of the
+  diagnostic adaptive behavior scale: Application of item response theory to
+  the assessment of adaptive behavior}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{{American Journal on Intellectual and Developmental
+  Disabilities}}{121}{2}{79--94}.
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1352/1944-7558-121.2.79}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+van~der Linden%
+, Theunissen%
+, Boekkooi-Timminga%
+\BCBL {}\ \BBA {} Kelderman%
+}{%
+van~der Linden%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {1987}}%
+}]{%
+van1987absolute}
+\APACinsertmetastar {%
+van1987absolute}%
+\begin{APACrefauthors}%
+van~der Linden, W\BPBI J.%
+, Theunissen, T.%
+, Boekkooi-Timminga, E.%
+\BCBL {}\ \BBA {} Kelderman, H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1987}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{IRT-based test construction}} {{IRT-based test
+  construction}}.{\BBCQ}
+\newblock
+
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+van~ver Linden%
+\ \BBA {} Boekkooi-Timminga%
+}{%
+van~ver Linden%
+\ \BBA {} Boekkooi-Timminga%
+}{%
+{\protect \APACyear {1989}}%
+}]{%
+van1989relative}
+\APACinsertmetastar {%
+van1989relative}%
+\begin{APACrefauthors}%
+van~ver Linden, W\BPBI J.%
+\BCBT {}\ \BBA {} Boekkooi-Timminga, E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1989}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A maximin model for IRT-based test design with practical
+  constraints} {A maximin model for irt-based test design with practical
+  constraints}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Psychometrika}{54}{}{237--247}.
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}
