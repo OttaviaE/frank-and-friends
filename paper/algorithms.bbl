@@ -238,6 +238,32 @@ Magis, D.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+{R Core Team}%
+}{%
+{R Core Team}%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+rsoft}
+\APACinsertmetastar {%
+rsoft}%
+\begin{APACrefauthors}%
+{R Core Team}.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {R: A Language and Environment for Statistical Computing}
+  {R: A language and environment for statistical computing}{\BBCQ}\
+  [\bibcomputersoftwaremanual].
+\newblock
+\APACaddressPublisher{Vienna, Austria}{}.
+\newblock
+\begin{APACrefURL} \url{https://www.R-project.org/} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Silvia%
 }{%
 Silvia%
@@ -330,6 +356,33 @@ Tass{\'e}, M\BPBI J.%
 
 \bibitem [\protect \citeauthoryear {%
 van~der Linden%
+\ \BBA {} Boekkooi-Timminga%
+}{%
+van~der Linden%
+\ \BBA {} Boekkooi-Timminga%
+}{%
+{\protect \APACyear {1989}}%
+}]{%
+van1989relative}
+\APACinsertmetastar {%
+van1989relative}%
+\begin{APACrefauthors}%
+van~der Linden, W\BPBI J.%
+\BCBT {}\ \BBA {} Boekkooi-Timminga, E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1989}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A maximin model for IRT-based test design with practical
+  constraints} {A maximin model for irt-based test design with practical
+  constraints}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Psychometrika}{54}{}{237--247}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+van~der Linden%
 , Theunissen%
 , Boekkooi-Timminga%
 \BCBL {}\ \BBA {} Kelderman%
@@ -355,33 +408,6 @@ van~der Linden, W\BPBI J.%
   construction}}.{\BBCQ}
 \newblock
 
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
-van~ver Linden%
-\ \BBA {} Boekkooi-Timminga%
-}{%
-van~ver Linden%
-\ \BBA {} Boekkooi-Timminga%
-}{%
-{\protect \APACyear {1989}}%
-}]{%
-van1989relative}
-\APACinsertmetastar {%
-van1989relative}%
-\begin{APACrefauthors}%
-van~ver Linden, W\BPBI J.%
-\BCBT {}\ \BBA {} Boekkooi-Timminga, E.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{1989}{}{}.
-\newblock
-{\BBOQ}\APACrefatitle {A maximin model for IRT-based test design with practical
-  constraints} {A maximin model for irt-based test design with practical
-  constraints}.{\BBCQ}
-\newblock
-\APACjournalVolNumPages{Psychometrika}{54}{}{237--247}.
 \PrintBackRefs{\CurrentBib}
 
 \end{thebibliography}

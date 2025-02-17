@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  13 FEB 2025 22:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  17 FEB 2025 18:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -365,44 +365,71 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 
 {C:/Users/Ottavia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 
+LaTeX Warning: Reference `eq:4pl' on page 2 undefined on input line 78.
+
+
+
 [2]
 
 [3]
 
-[4] (paper-sis-template.aux)
+[4]
+<img/points-alogirthms.pdf, id=29, 1011.78pt x 614.295pt>
+File: img/points-alogirthms.pdf Graphic file (type pdf)
+<use img/points-alogirthms.pdf>
+Package pdftex.def Info: img/points-alogirthms.pdf  used on input line 183.
+(pdftex.def)             Requested size: 347.12354pt x 210.75095pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+
+[5]
+
+[6 <./img/points-alogirthms.pdf>]
+
+[7] (paper-sis-template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 3726 strings out of 473650
- 58720 string characters out of 5716970
- 466227 words of memory out of 5000000
- 26791 multiletter control sequences out of 15000+600000
+ 3739 strings out of 473650
+ 59112 string characters out of 5716970
+ 470228 words of memory out of 5000000
+ 26804 multiletter control sequences out of 15000+600000
  563137 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,9n,67p,1236b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 59i,7n,67p,1063b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmbx10.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmbx12.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmbx9.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKT
 eX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Ottavia/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Ottavia/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/Otta
-via/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/
-Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6
-.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
-s/cm/cmr7.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/publi
-c/amsfonts/cm/cmr9.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Ottavia/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/Ottavia/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Otta
-via/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on paper-sis-template.pdf (4 pages, 197881 bytes).
+ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Ottavia/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Otta
+via/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/
+Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
+9.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmr6.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Ottavia/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Ottavia/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/Ottav
+ia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/U
+sers/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti1
+0.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmtt9.pfb>
+Output written on paper-sis-template.pdf (7 pages, 257097 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
+ 117 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

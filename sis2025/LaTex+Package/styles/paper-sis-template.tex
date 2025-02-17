@@ -26,7 +26,7 @@
 %
 \title{How much is too much? Item Response Theory procedures to shorten tests}
 %
-\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
+\titlerunning{IRT-based algorithms}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
@@ -58,207 +58,149 @@ There will be two blank lines before and after the Abstract. \dots
 %
 \section{Introduction}
 %
-As a general rule of thumb, the higher the number of items in a test, the better the measurement in terms of validity and reliability. However, there is a trade-off between the number of administered items and the response quality (giuro che ho della letteratura in merito). Quindi non torturiamo le persone che dopo di un po' non ne possono più. Item Response Theory (IRT) provides an ideal framework for shortening existing tests (or for developing tests from item banks) given the detailed information that they provide with respect to the measurement precision of each item considering different levels of the latent trait. In this contribution, we present a new algorithm for shortening tests that take into accounts the number of administered items by considering the ``tiredness'' of the respondents for each of the items included in the short test form (STF). The performance of the algorithm in retrieving an ideal target information function (i.e., the measurement precision that would be obtained by administering all the items in a test if the respondents would never get tired) is investigated in a simulation study. \color{red} il concetto c'è mancano le parole \normalcolor
+As a general rule of thumb, the higher the number of items in a test, the better the measurement in terms of validity and reliability. However, there is a trade-off between the number of administered items and the response quality. As such, the trade-off between the number of administered items and the tiredness of the respondents should be kept in mind to obtain reliable and precise measurement tools. Item Response Theory (IRT) provides an ideal framework for shortening existing tests (or for developing tests from item banks) given the detailed information that they provide of the measurement precision of each item with respect to different levels of the latent trait. 
+In this contribution, we present a new IRT-based algorithm for developing short test forms (STFs) from existing tests, denoted as Léon. This algorithm accounts for the tiredness of the respondents during the item inclusion process, such that it attempts at minimizing the number of selected items while accounting for the tiredness of the respondents in order to maximize the measurement precision (as expressed by the test information function, TIF) of the STF.
+The ability of Léon of developing STFs able to approximate the TIF that would be obtained by administering all the items under the assumption that respondents would never get tired is investigated in a simulation study. 
+Specifically, Léon's ability is compared against that of another algorithm for developing STFs, which does not account for the tiredness of the respondents. 
 
-\section{Item response theory e mortacci}  
+\section{Item Response Theory and Information Functions}  
 
-In Item Response Theory (IRT) models for dichotomous responses (e.g., correct vs. incorrect), the probability of observing a correct response on item $i$ by person $p$ depends on both the charcteristics of the respondent (as described by their latent trait level, $\theta_p$) and on the characteristics of the item, which can be described by different parameters. IRT models differentiate according to the number of parameters used for describing the characteristics of the items. According to the 4-parameter logistic model (4-PL), the probability of a correct can be formalized as: 
+In IRT models for dichotomous responses (e.g., correct vs. incorrect), the probability of observing a correct response on item $i$ by person $p$ depends on both the charcteristics of the respondent (as described by their latent trait level, $\theta_p$) and on the characteristics of the item, which can be described by different parameters. IRT models differentiate according to the number of parameters used for describing the characteristics of the items. According to the 4-parameter logistic model (4-PL), the probability of a correct response can be formalized as: 
 
-\begin{equation}
+\begin{equation}{eq:4pl}
 	P(x_{pi}= 1| \theta_p, b_i, a_i, c_i, d_i) = c_i + (d_i -c_i) + \dfrac{\exp[a_i(\theta_p - b_i)]}{1 + \exp[a_i(\theta_p - b_i)]},
 \end{equation}
 where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the location of the item on the latent trait (i.e., difficulty parameter, the higher the value, the higher the difficulty of the item), $a_i$ describes the ability of $i$ to discriminate between respondents with different latent trait levels (i.e.,discrimination parameter, the higher the value, the higher the discrimination ability of the item), and $c_i$ and $d_i$ describe the probability of observing a correct response when $\theta \to - \infty$ and $\theta \to +\infty$, respectively. 
 When $\theta \to - \infty$, the probability of observing a correct response should tend to 0. Likewise, when $\theta \rightarrow +\infty$, the probability of observing a correct response should tend to 1. 
-However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. The lucky guess parameter $c_i$ describes the probability of endorsing the item even if the $\theta$ level is below the difficulty of the item, such that the probability of observing a correct response for $\theta \to - \infty$ tends to $c_i$ instead of 0. 
-The same but inverse consideration applies for the upper asymptote that describes the probability of giving the correct response for $\theta \to + \infty$. The $d_i$ parameter describes the probability of not endorsing the item given that the latent trait is above the location of the item, such that the probability of observing a correct response for $\theta \to + \infty$ tends to $d_i$ instead of 1. 
+However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. The lucky guess parameter $c_i$ describes this probability, such that the probability of observing a correct response for $\theta \to - \infty$ tends to $c_i$ instead of 0. 
+The same but inverse consideration applies when $\theta \to + \infty$. The $d_i$ parameter describes the probability of not endorsing the item given that the latent trait is above the location of the item, such that the probability of observing a correct response for $\theta \to + \infty$ tends to $d_i$ instead of 1. 
 
-By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in a set), the 3-Parameter logistic (3-PL) model is obtained. From 3-PL, the 2-parameter logistic model (2-PL) is obtained by constraining $\forall i \in B, \, c_i = 0$, and the 1-parameter logistic model (1-PL, equivalent to the Rasch model) is obtained by constraining $\forall i \in B, \, a_i = 1$. 
+By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in a test) in equation \ref{eq:4pl}, the 3-Parameter logistic (3-PL) model is obtained. From the 3-PLmodel, the 2-Parameter logistic model (2-PL) is obtained by constraining $\forall i \in B, \, c_i = 0$, and the 1-parameter logistic model (1-PL, equivalent to the Rasch model) is obtained by constraining $\forall i \in B, \, a_i = 1$. 
 
 \subsection{Information Functions}
 
-The meausemrement precision of each item with respect to different levels of the latent trait can be expressed with the so-called \emph{item information functions} (IIFs), which for the 4-PL is formalized as: 
+The meausemrement precision of each item with respect to different levels of the latent trait can be expressed by the so-called \emph{item information functions} (IIFs), which for the 4-PL is formalized as: 
 
-\begin{center}
-	Formula del 4-PL
-\end{center}
+\begin{equation}{eq:iif}
+	IIF_i = \dfrac{a^2[P(\theta)-c_i]^2[d_i - P(\theta)]^2}{(d_i-c_i)^2 P(\theta)Q(\theta)}.
+\end{equation}
+The informativeness of each item is strongly influenced by the location of the item on the latent trait with respect to a specific latent trait level $\theta$, its discriminativity, and the probability of lucky guess and careless error. In absence of lucky guess and careless error, the IIF reaches its maximum when the location of the item $b_i$ matches the latent trait level $\theta$, and it decreases as the distance between $b_i$ and $\theta$ increases. Moreover, the higher the discrimination of the item $a_i$, the more informative the item. However, when the lucky guess and careless error are taken into account, the informativeness of the item decreases, and, most importantly, the maximum of the IIF does not corresponds to the item location on the latent trait and it is generally lower. 
 
-The informativeness of each item is strongly influenced by the location of the item on the latent trait with respect to a specific latent trait level $\theta$, its discirminativity, and the probability of lucky guess and careless error. In absence of lucky guess and careless error, the IIF reaches its maximum when the location of the item $b_i$ matches the latent trait level $\theta$, and it decreases as the distance between $b_i$ and $\theta$ increases. Moreover, the higher the discrimination of the item $a_i$, the more informative the item. However, when the lucky guess and careless error are taken into account, the informativeness of the item decreases, and, most importantly, the maximum of the IIF does not corresponds to the item location on the latent trait and it is generally lower. 
+The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different levels of the latent trait) and its height (i.e., the amount of information for different levels of the latent trait) depend on the distribution of the items along the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test would be informative of different regions. The more the items have lucky guesses and careless errors, the less the TIF. 
 
-The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different levels of the latent trait) and its height (i.e., the amount of information for different levels of the latent trait) depend on the distribution of the items on the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test would be informative of different regions. The more the items have lucky guesses and careless errors, the less the TIF. 
+\section{item Selection Algorithms}
+
+\subsection{Frank}
+
+%\color{red}
+%è qui che va detto che Frank calcola le iif di tutti gli item all'inizio e che poi vengono prese solo quelle degli item che sono disponibili in un dato momento, le IIF che sono in $A^k$
+%\normalcolor
+
+Frank considers the entire latent trait for the item selection, in that it selects the item whose IIF is best able to reduce the distance from the $\text{TIF}^*$ along the entire latent trait, as follows:
 
 
+At $k = 0$: $\forall i \in B$, $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
+
+\begin{enumerate}
+	\item  $A^k = B \setminus Q^k$ 
+	\item $\forall i \in A^k$, $pTIF_{i}^k = \frac{\text{TIF}^k + \text{IIF}_{i}}{||Q^k||+1}$
+	\item $i^* = \arg \min_{i \in A^k} |\text{TIF}^* - \text{pTIF}_i|$
+	\item Termination criterion: $|\text{TIF}^* - \text{pTIF}_{i^*}| \geq |\text{TIF}^* - \text{TIF}^{k}|$: 
+	\begin{itemize}
+		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $TIF^{k+1} = pTIF_{i^*}$, iterates 1-4 
+		\item TRUE: Stop, %The item in $i^*$ does not contribute to reduce the distance from the TIF-target, hence: 
+		$Q_{Frank} = Q^k$
+		
+	\end{itemize}
+\end{enumerate}
+
+The first operation done by Frank at the beginning ($k=0$) is to compute the IIFs of all the items in $B$, considering the available item parameters.
+At $k = 0$, the subset of items $Q^0$ is empty and the $\text{TIF}^0$ is 0 for all the $\theta$ levels. 
+At each iteration $k$: (1.) a set of available items is generated as the items in the item bank that have not been included in the STF yet, $A^k = B \setminus Q^k$; (2.)
+An average provisional TIF, $\text{pTIF}$, is computed by adding the IIF of each of the items in the set of the available items $A^k$, one at the time, to the TIF obtained from the items in $Q^k$ (The denominator is obtained by adding 1 to the cardinality of $Q^k$); (3.) Among all the items in $A^k$, the one that allows for minimizing the distance between $\text{pTIF}$ and $\text{TIF}^*$ is included in $i^*$; (4.) 
+The termination criterion is tested. 
+If the distance between the $\text{TIF}^*$ and the $\text{pTIF}_{i^*}$ is greater than or equal to the distance between the $\text{TIF}^*$ and the $\text{TIF}^k$ (i.e., the TIF obtained from the items in the subset $Q^k$, without item $i^*$) (TRUE), then the item $i^*$ does not contribute in the reduction of the distance from the $\text{TIF}^*$, the algorithm stops, and the final item selection is the one without the item in $i^*$, $Q_{frank} = Q^k$. Conversely (FALSE), the item in $i^*$ does contribute in the reduction of the distance from the $\text{TIF}^*$, hence it is included in the set of items and a new iteration starts, $Q^{k+1} = Q^k \cup \{i^*\}$.
 
 \section{Simulation study}
-In this study, we operationalized the tiredeness of the individuals as the probability of committing careless error ($1- d_i$ QUESTA è LA PROBABILITà DI NON CARELESS ERROR DEVO SPIEGARE MEGLIO, mi sto incansiandno basta che alla fine sia coerente), such that the more the items in a test, the higher the probability of careless error. 
-The careless error probability is instrinsically related to the rank of the item in the test, and it increases as the position of the item in the test increases. It increases exponentially with the function SCRIVERE LA FUNZIONE, such that the first administered item has $d_i = 1$ (i.e., does not have a probability of observing an incorrect response given the latent trait level $\theta$).
+
+\subsection{Simulation design}
+
+In this study, we operationalized the tiredeness of the individuals as the probability of committing careless error ($1- d_i$ QUESTA è LA PROBABILITà DI NON CARELESS ERROR DEVO SPIEGARE MEGLIO), such that the more the items in a test, the higher the probability of careless error. 
+The careless error probability is instrinsically related to the rank of the item in the test, and it increases as the position of the item in the test increases. It increases exponentially as a function of the number of administered items, such that the first administered item has $d_i = 1$ (i.e., does not have a probability of observing an incorrect response given the latent trait level $\theta$).
 
 The procedure is replicated 100 times. At each replica, a test of $B$ of 50 items with difficulty ($b_i \sim \mathcal{U}(-3, 3)$) discrimination ($a_i \sim \mathcal{U}(.90, 2)$) parameters drawn from uniform distributions is generated. Lucky 
 guess and careless error parameters are constant, $c_i = 0, \forall i \in B$ and $d_i = 0, \forall i \in B$.
 The $TIF^*$ is generated as the mean TIF of all items in $B$, which describes the ideal TIF that one would obtain if respondents are administered with all the items without getting tired. 
 
-A new test $B'$ is generated by keeping the item parameters equal to those in $B$, with the only exception of the careless error parameters, which are included as related to the rank of the item in the item bank with the function SCRIVERE LA FUNZIONE. 
-The assumption is that the first administered item does not have a careless error probability ($d_{\text{1st}} = 1$) and it increases as the administration goes on. As such, the careless error probabilities associated to the second and third administered items are, respectively, $.99$ and $.98$. In this application, the maximum careless error probability associated to the last administered item is $.61$.
+A new test $B'$ is generated by keeping the item parameters equal to those in $B$, with the only exception of the careless error parameters, which are included as related to the rank of the item in the item bank with an exponential function. 
+The assumption is that the first administered item does not have a careless error probability ($d_{1^{st}} = 1$), but it increases as the administration goes on. As such, the careless error probabilities associated to the second and third administered items are, respectively, $d_{2^{nd}} = .99$ and $d_{3^{rd}}.98$. In this application, the maximum careless error probability associated to the last administered item is $d_{50^{th}} = .61$.
 
-Frank and Léon are applied to generate a STF able to recreate the $TIF^*$. Both algorithm are applied considering the items in $B'$. While both algorithms are able to consider the careless error parameters in the computation of the IIFs, only Léon actually accounts for the number of items included in the STF. NON SO COSA STO DICENDO. devo controllare il codice perché ora non capisco. se anche frank calcola la iif considerando la careless error non capisco in che modo dovrebbe differenziarsi da leon ma effettivmente i risultati sono peggiori. 
+\color{blue}
+Frank and Léon are applied to generate a STF able to recreate the $TIF^*$. Both algorithm are applied considering the items in $B'$. While both algorithms are able to consider the careless error parameters in the computation of the IIFs, only Léon actually accounts for the number of items included in the STF.
 
-Va detto da qualche parte che: 
+La differenza è che Frank calcola tutte le iif degli tiem all'inizio, consdierando la careless error legata alla posizione dell'item così come viene generata inizialmente dalla funzione. 
+Léon invece calcola la iif ad ogni itereazione (per questo è più lento) mettendo dentro la careless error che è legata alla posizione dell'item. Nel senso, se Léon per ora ha selezionato 3 item e deve valutare se metterne un quarto, le iif degli item che sono rimasti verrà calcolata considerando la careless error in $B'$ dell'item somministrato per quarto.
+\normalcolor
 
-- La stanchezza dei soggetti viene operazionalizzata come probabilità di non careless error (va beh l'asintoto)
 
-- la tif target è definita come forma ideale dell'informatività che si avrebbe se le persone non si stancassero mai 
+\subsection{Comparison}
 
-- la funzione di stanchezza è quella che mi ha dato chatgpt
-
-- va descritto l'algoritmo e va descritto anche Frank (Frank ha solo un passaggio in meno rispetto a Leon perché non considera la stanchezza, basta descrivere leon e poi dire che Frank fa la stessa roba ma non mette la penalizzazione)
+The ability of Frank and Léon in reducing the distance from the $TIF^*$ (i.e., the TIF obtained from all the items in $B$) has been considered. 
+Moreover, the TIF of the items in $B'$ has been computed as well and compared against those of the STFs resulting from the application of Frank and Léon. 
+The rationale is as follows. The more the item in a test, the higher the information for different regions of the latent trait. 
+However, administering too many items might be an highly demanding task, such that the respondent might get tired and their response accuracy might decrease during the administration, such that the last administered items might include error variance not related to the construct under investigation. 
+In this light, it should be more convenient to administer less but highly informative items, able to approximate a specific TIF target, than to administer the entire test to obtain precise measurements of the latent trait.
+  
 
 \section{Results}
 
-\begin{table}
-	\centering
-	\caption{\label{tab:summary} questa è una tabella, cominciamo}
-	\begin{tabular}{l ccc}
-		\hline
-	Procedure	&	M			&	Min	&	Max	\\\hline
-	All items	& $	0.07\pm	0.03$ &	$< 0.005$	&	0.13	\\
-	Frank	& $	0.03	\pm	0.03	$ &	$<0.001$	&	0.14	\\
-	Léon	& $	0.03	\pm	0.02	$ &	$<0.001$	&	0.1	\\
-	\hline	
-	\end{tabular}
-\end{table}
-
+%Table \ref{tab:summary} illustrates the mean distance of $TIF_x$, $x \in \{B', Q_{\text{Frank}}, Q_{Leon}\}$ from $TIF^*$, computed across the 100 replications. 
+%
 %\begin{table}
-%\caption{This is the example table taken out of {\it The
-%\TeX{}book,} p.\,246}
-%\begin{center}
-%\begin{tabular}{r@{\quad}rl}
-%\hline
-%\multicolumn{1}{l}{\rule{0pt}{12pt}
-%                   Year}&\multicolumn{2}{l}{World population}\\[2pt]
-%\hline\rule{0pt}{12pt}
-%8000 B.C.  &     5,000,000& \\
-%  50 A.D.  &   200,000,000& \\
-%1650 A.D.  &   500,000,000& \\
-%1945 A.D.  & 2,300,000,000& \\
-%1980 A.D.  & 4,400,000,000& \\[2pt]
-%\hline
-%\end{tabular}
-%\end{center}
+%	\centering
+%	\caption{\label{tab:summary} Average distance from the $\text{TIF}^*$.}
+%	\begin{tabular}{l ccc}
+%		\hline
+%	Procedure	&	M			&	Min	&	Max	\\\hline
+%	All items	& $	0.07\pm	0.03$ &	$< 0.005$	&	0.13	\\
+%	Frank	& $	0.03	\pm	0.03	$ &	$<0.001$	&	0.14	\\
+%	Léon	& $	0.03	\pm	0.02	$ &	$<0.001$	&	0.10	\\
+%	\hline	
+%	\end{tabular}
+%	\flushleft \emph{Note:} All items: TIF obtained considering all the items in $B'$; Frank: STFs obtained without considering the tiredness of the respondents in the item selection; Léon: STFs obtained by considering the tiredness of the respondents in the item selection.
 %\end{table}
-%%
-%\begin{theorem} [Ghoussoub-Preiss]\label{ghou:pre}
-%Assume $H(t,x)$ is
-%$(0,\varepsilon )$-subquadratic at
-%infinity for all $\varepsilon > 0$, and $T$-periodic in $t$
-%\begin{equation}
-%  H (t,\cdot )\ \ \ \ \ {\rm is\ convex}\ \ \forall t
-%\end{equation}
-%\begin{equation}
-%  H (\cdot ,x)\ \ \ \ \ {\rm is}\ \ T{\rm -periodic}\ \ \forall x
-%\end{equation}
-%\begin{equation}
-%  H (t,x)\ge n\left(\left\|x\right\|\right)\ \ \ \ \
-%  {\rm with}\ \ n (s)s^{-1}\to \infty\ \ {\rm as}\ \ s\to \infty
-%\end{equation}
-%\begin{equation}
-%  \forall \varepsilon > 0\ ,\ \ \ \exists c\ :\
-%  H(t,x) \le \frac{\varepsilon}{2}\left\|x\right\|^{2} + c\ .
-%\end{equation}
-%
-%Assume also that $H$ is $C^{2}$, and $H'' (t,x)$ is positive definite
-%everywhere. Then there is a sequence $x_{k}$, $k\in \bbbn$, of
-%$kT$-periodic solutions of the system
-%\begin{equation}
-%  \dot{x} = JH' (t,x)
-%\end{equation}
-%such that, for every $k\in \bbbn$, there is some $p_{o}\in\bbbn$ with:
-%\begin{equation}
-%  p\ge p_{o}\Rightarrow x_{pk} \ne x_{k}\ .
-%\end{equation}
-%\qed
-%\end{theorem}
-%%
-%\begin{example} [{{\rm External forcing}}]
-%Consider the system:
-%\begin{equation}
-%  \dot{x} = JH' (x) + f(t)
-%\end{equation}
-%where the Hamiltonian $H$ is
-%$\left(0,b_{\infty}\right)$-subquadratic, and the
-%forcing term is a distribution on the circle:
-%\begin{equation}
-%  f = \frac{d}{dt} F + f_{o}\ \ \ \ \
-%  {\rm with}\ \ F\in L^{2} \left(\bbbr / T\bbbz; \bbbr^{2n}\right)\ ,
-%\end{equation}
-%where $f_{o} : = T^{-1}\int_{o}^{T} f (t) dt$. For instance,
-%\begin{equation}
-%  f (t) = \sum_{k\in \bbbn} \delta_{k} \xi\ ,
-%\end{equation}
-%where $\delta_{k}$ is the Dirac mass at $t= k$ and
-%$\xi \in \bbbr^{2n}$ is a
-%constant, fits the prescription. This means that the system
-%$\dot{x} = JH' (x)$ is being excited by a
-%series of identical shocks at interval $T$.
-%\end{example}
-%%
-%\begin{definition}
-%Let $A_{\infty} (t)$ and $B_{\infty} (t)$ be symmetric
-%operators in $\bbbr^{2n}$, depending continuously on
-%$t\in [0,T]$, such that
-%$A_{\infty} (t) \le B_{\infty} (t)$ for all $t$.
-%
-%A Borelian function
-%$H: [0,T]\times \bbbr^{2n} \to \bbbr$
-%is called
-%$\left(A_{\infty} ,B_{\infty}\right)$-{\it subquadratic at infinity}
-%if there exists a function $N(t,x)$ such that:
-%\begin{equation}
-%  H (t,x) = \frac{1}{2} \left(A_{\infty} (t) x,x\right) + N(t,x)
-%\end{equation}
-%\begin{equation}
-%  \forall t\ ,\ \ \ N(t,x)\ \ \ \ \
-%  {\rm is\ convex\ with\  respect\  to}\ \ x
-%\end{equation}
-%\begin{equation}
-%  N(t,x) \ge n\left(\left\|x\right\|\right)\ \ \ \ \
-%  {\rm with}\ \ n(s)s^{-1}\to +\infty\ \ {\rm as}\ \ s\to +\infty
-%\end{equation}
-%\begin{equation}
-%  \exists c\in \bbbr\ :\ \ \ H (t,x) \le
-%  \frac{1}{2} \left(B_{\infty} (t) x,x\right) + c\ \ \ \forall x\ .
-%\end{equation}
-%
-%If $A_{\infty} (t) = a_{\infty} I$ and
-%$B_{\infty} (t) = b_{\infty} I$, with
-%$a_{\infty} \le b_{\infty} \in \bbbr$,
-%we shall say that $H$ is
-%$\left(a_{\infty},b_{\infty}\right)$-subquadratic
-%at infinity. As an example, the function
-%$\left\|x\right\|^{\alpha}$, with
-%$1\le \alpha < 2$, is $(0,\varepsilon )$-subquadratic at infinity
-%for every $\varepsilon > 0$. Similarly, the Hamiltonian
-%\begin{equation}
-%H (t,x) = \frac{1}{2} k \left\|k\right\|^{2} +\left\|x\right\|^{\alpha}
-%\end{equation}
-%is $(k,k+\varepsilon )$-subquadratic for every $\varepsilon > 0$.
-%Note that, if $k<0$, it is not convex.
-%\end{definition}
-%%
-%
-%\paragraph{Notes and Comments.}
-%The first results on subharmonics were
-%obtained by Rabinowitz in \cite{fo:kes:nic:tue}, who showed the existence of
-%infinitely many subharmonics both in the subquadratic and superquadratic
-%case, with suitable growth conditions on $H'$. Again the duality
-%approach enabled Clarke and Ekeland in \cite{may:ehr:stein} to treat the
-%same problem in the convex-subquadratic case, with growth conditions on
-%$H$ only.
-%
-%Recently, Michalek and Tarantello (see \cite{fost:kes} and \cite{czaj:fitz})
-%have obtained lower bound on the number of subharmonics of period $kT$,
-%based on symmetry considerations and on pinching estimates, as in
-%Sect.~5.2 of this article.
 
-%
+On average, Léon included more items in the STF than Frank did, $M_{Leon} = 6.75 \pm 3.06$, $M_{Frank} = 5.29 \pm 2.92$, $t = 3.45$, $df = 197.57$, $p < .001$. 
+\color{red}
+scrivere meglio 
+Given that leon account for the tiredness of the respondents during the item selection, it also considers the measurement precision of the STF given that the respondents do get tired during the administration, while Frank does not. As such, while preventing the over inclusion of items in the STF, Léon is also able to account for the measurement prevision, in the attempt of balancing the number of items with the measurement precision.
+\normalcolor
+
+Figure \ref{fig:points-alogirthms} illustrates the distance from $TIF_B$ of  $TIF_{B'}$ (green dots), $TIF_{Frank}$ (yellow triangles), and $TIF_{Leon}$ (brown squares) in each of the 100 replications, along with the average distance across the 100 replications (the horizontal line of the corresponding color).
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\linewidth]{img/points-alogirthms}
+	\caption{Distance from $TIF_{B}$ of $TIF_{B'}$ (green dots), $TIF_{Frank}$ (yellow triangles), and $TIF_{Leon}$ (brown squares) in each of the 100 replications. The horizontal green, yellow, and brown lines are the average distance from $TIF_B$ of $TIF_{B'}$, $TIF_{Frank}$, and $TIF_{Leon}$, respectively}
+	\label{fig:points-alogirthms}
+\end{figure}
+
+Overall, $TIF_{B'}$s are the most distant from $TIF_B$, while $TIF_{Leon}$s are the closest ones. Interestingly, the latter ones present more variability around the mean ($\bar{\Delta}_{Leon} = 0.03	\pm	0.02$, $CV =0.67$) than the former ones ($\bar{\Delta}_{B'} = 0.07	\pm	0.03$, $CV =0.43$). Between $TIF_{B'}$ and $TIF_{Leon}$, $TIF_{Frank}$ is the less consistent in terms of distance from $TIF_{B}$, with ($\bar{\Delta}_{Frank} = 0.03	\pm	0.03$, $CV = 1.00$). 
+
+E che cazzo devo dire ancora? 
+
+\section{Final Remarks}
+
+This manuscript presented a first attempt at the development of an IRT-based algorithm, denoted as Léon, for the generation of informative and static STFs able to account for the tiredness of the respondents. In the item selection for inclusion in the STF, Léon considers the number of items included up to that iteration and adds a penalty in terms of higher probability of careless error, which increases as the number of items included in the STF increases. Its performance in approximating a TIF target, which is here conceptualized as the TIF that one would obtain considering the entire administration of the test if respondents would never get tired (i.e., without careless error) , is compared against that of another IRT-based algorithm, denoted as Frank. Differently from Léon, Frank does not add any penalization for the number of items included in the STF. Finally, the distance between the TIF obtained from the administration of the entire test with and without tiredness has been considered as well. 
+
+The results of a simulation study suggest that the administration of fewer items selected also considering the tiredness of the respondents might provide better measurement tools  than administering the entire test and tiring out the respondents. 
+
+Although the results are promising, there are several limitations that should be acknowledged. Firstly, this study is focused on the approximation of the TIF target. However, the final aim with which tests are administered is to estimate the latent trait of the respondents. The lack of the precision of estimation of the latent trait of the respondents represents the main limitation and future studies should focus on this issue. 
+Secondly, the operalization of the tiredness of the respondents as an increase of the probability of committing careless error as the administration goes on is an arbitrary choice.
+
+
+
+
 % ---- Bibliography ----
 %
 \begin{thebibliography}{6}

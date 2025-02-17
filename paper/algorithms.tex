@@ -63,35 +63,36 @@
 \vspace*{10mm}
 \begin{center}
 	\begin{LARGE}
-	The Good, the Bad, and the Ugly: \\ New Item Response Theory based algorithms for the development of short test forms
+ New Item Response Theory based algorithms for the development of short test forms
 	\end{LARGE}
 	
 	\vspace{5mm}
 	\begin{large}
-%		Ottavia M. Epifania, Pasquale Anselmi, and Egidio Robusto \\ 
-%		Department of Philosophy, Sociology, Education, and Applied Psychology, University of Padova
+		\doublespacing
+		Ottavia M. Epifania\textsuperscript{1}, Pasquale Anselmi\textsuperscript{2}, and Egidio Robusto\textsuperscript{2} \\ 	\vspace{1.5mm}
+		\textsuperscript{1} Department of Psychology and Cognitive Science, University of Trento, IT \\ \vspace{1.5mm}
+	\textsuperscript{2}	Department of Philosophy, Sociology, Education, and Applied Psychology, University of Padova, IT
 	\end{large}
 \end{center}
 \vspace{15mm}
 \begin{center}
 	\textbf{Author Note}
 \end{center}
-\begin{small}
 	
-%	Ottavia M. Epifania \includegraphics[width=0.06\linewidth]{orcid.png} https://orcid.org/0000-0001-8552-568X
-%	
-%	Pasquale Anselmi \includegraphics[width=0.06\linewidth]{orcid.png} https://orcid.org/0000-0003-2982-7178 
-%	
-%	Egidio Robusto \includegraphics[width=0.06\linewidth]{orcid.png} https://orcid.org/0000-0002-7583-2587
+	Ottavia M. Epifania \includegraphics[width=0.06\linewidth]{orcid.png} https://orcid.org/0000-0001-8552-568X
 	
+	Pasquale Anselmi \includegraphics[width=0.06\linewidth]{orcid.png} https://orcid.org/0000-0003-2982-7178 
 	
+	Egidio Robusto \includegraphics[width=0.06\linewidth]{orcid.png} https://orcid.org/0000-0002-7583-2587
+	
+	\vspace{5mm}
 	The authors have no conflict of interest to disclose.
 	
+	\vspace{5mm}
 	
-	
-	Correspondence concerning this article should be addressed to: Ottavia M. Epifania, Department of Philosophy, Sociology, Education, and Applied Psychology, Via Venezia 14, Padova, Italy.
-	E-Mail: ottavia.epifania@unipd.it \\
-\end{small}
+	Correspondence concerning this article should be addressed to: Ottavia M. Epifania, Department of Psychology and Cognitive Science, Corso Bettini 84, Rovereto, Trento, Italy. \\
+	E-Mail: ottavia.epifania@unitn.it \\
+
 
 
 \vfill
@@ -100,10 +101,15 @@
 
 \newpage
 
+\begin{center}
+	\textbf{ New Item Response Theory-Based Algorithms for the Development of Short Test Forms}
+\end{center}
+
+\vspace{5mm}
 
 \begin{abstract}
 	\onehalfspacing
-This manuscript presents Item Response Theory-based algorithms for the development of short test forms (STFs) from full-length tests. All algorithms aim at minimizing both the number of items included in the STF and the minimum average distance from a test information target that describes the desired characteristics of the STF, denoted as test information function target (TIF-target). The algorithms differ according to the method used for the item inclusion in the STF at each iteration, while they share the same termination criterion. 
+This manuscript presents Item Response Theory-based algorithms for the development of short test forms (STFs) from full-length tests. All algorithms aim at minimizing both the number of items included in the STF and the minimum average distance from a target test information target (TIF) that describes the desired characteristics of the STF, denoted as TIF-target. The algorithms differ according to the method used for including an item in the STF at each iteration, while they share the same termination criterion. 
 The item selection is based on the ability of each item to reduce the distance from the TIF-target considering either one specific latent trait level defined at each iteration or the entire latent trait level.
 The algorithms stop when the last selected item does not contribute in reducing the distance from the TIF-target. 
 The performance of the algorithms is compared against that of a brute force algorithm, which selects the item combination best able to reduce the distance from the TIF-target among all the possible item combinations.  Results of a simulation study show that the algorithm that selects the items according to their ability of reducing the distance from the TIF-target throughout the entire latent trait outperforms the other algorithms. Limitations of the study and future lines of research are discussed.
@@ -119,14 +125,14 @@ The performance of the algorithms is compared against that of a brute force algo
 
 \newpage
 \begin{center}
-	\textbf{The Good, the Bad, and the Ugly: New Item Response Theory-Based Algorithms for the Development of Short Test Forms}
+	\textbf{ New Item Response Theory-Based Algorithms for the Development of Short Test Forms}
 \end{center}
 
 
 %Since Item Response Theory (IRT) provides detailed information on the measurement precision of each item across different levels of the latent trait, it constitutes an ideal framework for test development \cite<e.g.,>{baker2017, van1987absolute}. Moreover, it allows for the development of tests or short test forms  (STFs) from an item bank or from an existing test, respectively.
-Item Response Theory (IRT) offers detailed insights into the measurement precision of individual items across varying levels of the latent trait, making it an ideal framework for test development \cite<e.g.,>{baker2017, van1987absolute}. By leveraging its robust analytical capabilities, IRT facilitates the construction of tailored assessments, such as tests designed from item banks or the derivation of short test forms (STFs) from existing assessments. This flexibility ensures that tests can be optimized for specific purposes, populations, or contexts while maintaining precision and validity.
+Item Response Theory (IRT) offers detailed insights into the measurement precision of individual items across varying levels of the latent trait, making it an ideal framework for test development \cite<e.g.,>{baker2017, van1987absolute}. By leveraging its robust analytical capabilities, IRT facilitates the construction of tests designed from item banks or the derivation of short test forms (STFs) from existing assessments. This flexibility ensures that tests can be optimized for specific purposes, populations, or contexts while maintaining precision and validity.
 The STFs developed from tests can be classified into two main types.
- On the one hand, there are the adaptive STFs developed within the computerized adaptive testing framework, which tailor the item administration to maximize measurement precision for each respondent \cite<e.g.,>{magis}. Therefore, the items may differ from one respondent to another. On the other hand, static STFs are composed of the same subset of items, which is chosen to maximize the measurement precision across all the administered respondents.   
+ On the one hand, there are the adaptive STFs developed within the computerized adaptive testing framework, which tailor the item administration to maximize measurement precision for each respondent \cite<e.g.,>{magis}. Therefore, the items may differ from one respondent to another. On the other hand, static STFs are composed of the same subset of items, which is chosen to maximize the measurement precision across all the respondents.   
 %The information on the measurement precision of each item can be exploited for the creation of ad-hoc STFs by selecting only those items that most precisely measure specific levels of the latent trait, in line with the aim of the assessment.  
 This article presents three new IRT-based algorithms for the development of STFs. 
 All algorithms attempt at recreating the desired characteristics of a test, as defined through a target information function, by iteratively selecting the items that reduce as much as possible the distance between the information function of the STF and the target one. In this application, the focus is on the development of static STFs from full-length tests, although the introduced algorithms also apply to the development of static tests from item banks.
@@ -134,8 +140,8 @@ All algorithms attempt at recreating the desired characteristics of a test, as d
 
 
 
-In common IRT procedures \cite<e.g.,>{chiesi, colledani2018, silvia}, the items  are selected for inclusion in the STF according to their measurement precision with respect to different levels of the latent trait that are of interest for the assessment. To pursue this aim, the information functions of all the items of the full-length test are inspected, and the items with the information functions best able to comply with the desired characteristics of the STF are selected for inclusion. 
-Although this procedure offers high degrees of freedom (e.g., the number of items in the STF can be not specified in advance), it strongly relies on the expertise and subjectivity of the researchers, which lead to issues related to 
+In common IRT procedures \cite<e.g.,>{chiesi, colledani2018, silvia}, the items  are selected for inclusion in the STF according to their measurement precision with respect to different levels of the latent trait that are of interest for the assessment. To pursue this aim, the information functions of all the items in the full-length test are inspected, and the items with the information functions best able to comply with the desired characteristics of the STF are selected for inclusion. 
+Although this procedure offers high degrees of freedom (e.g., the number of items in the STF does not need to be specified in advance), it strongly relies on the expertise and subjectivity of the researchers, which lead to issues related to 
 replicability.   
 Moreover, since this procedure is not automated, it might be particularly demanding, especially if the full-length test comprises many items. 
 Recently, \citeA{pauci} introduced a procedure, denoted as $\theta$-target procedure, which integrates the principles of computerized adaptive testing (i.e., tailoring the item administration to specific latent trait levels) for the development of static STFs from full-length tests, thus allowing for its automation. 
@@ -207,30 +213,31 @@ The manuscript is organized as follows. The next section illustrates the IRT mod
 
 
 \section*{Item Response Theory and Information Functions}
-Different IRT models are available for the analyses of dichotomous responses, which differentiate according to the characteristics of the items that they take into account. 
+Different IRT models are available for the analysis of dichotomous responses, which differentiate according to the characteristics of the items that they take into account. 
 In this application, 
-the 2-Parameter Logistic model \cite<2-PL;>{birnbaum1968} is used as a reference, which considers item difficulty and item discrimination. According to this model, the probability of observing a positive response by person $p$ on item $i$ is formalized as: 
+the 2-Parameter Logistic model \cite<2-PL;>{birnbaum1968} is used as a reference, which considers item difficulty and item discrimination. However, the presented approach can be applied to other IRT models that consider item discrimination. According to the 2-PL model, the probability of observing a positive response by person $p$ on item $i$ is formalized as: 
 
 \begin{equation}
 	P(x_{pi} = 1|\theta_p, b_i, a_i) = \dfrac{\exp [a_i(\theta_p - b_i)]}{1 + \exp [a_i(\theta_p - b_i)]},
 \end{equation}
-where $\theta_p$ is the ability parameter of person $p$ (i.e., the latent trait level of $p$), $b_i$ is the difficulty parameter of item $i$ (i.e., the location of $i$ on the latent trait), and $a_i$ is the discrimination parameter of item $i$ (i.e., the ability of $i$ to distinguish respondents with different levels of $\theta$). The probability of observing a positive response changes as the distance between the ability of the person $\theta_p$ and the location of the item on the latent trait $b_i$ changes, such as it is of the 50\% when the ability of person $p$ matches the difficulty of item $i$.
+where $\theta_p$ is the ability parameter of person $p$ (i.e., the latent trait level of $p$), $b_i$ is the difficulty parameter of item $i$ (i.e., the location of $i$ on the latent trait), and $a_i$ is the discrimination parameter of item $i$ (i.e., the ability of $i$ to distinguish between respondents with different levels of $\theta$). The probability of observing a positive response changes as the distance between the ability of the person $\theta_p$ and the location of the item on the latent trait $b_i$ changes. This probability is .50 when the ability of person $p$ matches the difficulty of item $i$.
 
-The precision with which each item measures different levels of the latent trait is described by the \emph{item information function}, $\text{IIF}_i = a_i^2P(\theta, b_i, a_i)[1- P(\theta, b_i, a_i)]$. In the 2-PL, the IIF reaches its maximum when $\theta_p = b_i$. The precision with which the test as a whole measures the entire latent trait is expressed by the \emph{test information function}, which is the sum of the IIFs of all the items in a test or item bank, $\text{TIF} = \sum_{i \in B} \text{IIF}_i$ (where $B$ is the set of items in a test or in an item bank). 
-Given the dependency between the location of the items on the latent trait, their discrimination parameters, and their informativeness with respect to different latent trait levels,  the shape and height of the TIF depends on the spread of the items along the latent trait continuum.
- Since the TIF is the sum of the IIFs, the higher the number of items in  test, the higher the TIF. Alternatively, a mean TIF can be computed by averaging for the number of items. As it will be further illustrated, the computation of the mean TIF might be more convenient when developing STFs.
+Let $B$ denote the set of items in a test or in an item bank. The precision with which each item $i \in B$ measures different levels of the latent trait is described by the \emph{item information function}, $\text{IIF}_i = a_i^2P(x_{pi} = 1|\theta, b_i, a_i)[1- P(x_{pi} = 1|\theta, b_i, a_i)]$. In the 2-PL model, the IIF reaches its maximum when $\theta_p = b_i$. The precision with which the test as a whole measures the entire latent trait is expressed by the \emph{test information function}, which is the sum of the IIFs of all the items in a test or item bank, $\text{TIF} = \sum_{i \in B} \text{IIF}_i$. 
+The shape and height of the TIF depends on the spread of the items along the latent
+trait continuum and on their discriminability.
+ Since the TIF is the sum of the IIFs, the higher the number of items in the test, the higher the TIF. Alternatively, a mean TIF can be computed by averaging for the number of items. As it will be further illustrated, the computation of the mean TIF might be more convenient when developing STFs.
 
 
 \normalcolor
 
 \section*{The Algorithms}
 
-The three introduced algorithms aim at approximating as best as possible the desired characteristics of a test, as expressed by a target information function (TIF-target), by selecting the items best able to reduce the distance between the information function of the STF and the target one. 
-Two of the algorithms (item locating algorithm -- ILA -- and item selecting algorithm -- ISA --) can be seen as the natural evolution of the $\theta$-target procedure in that they ground the item selection on the characteristics of each item with respect to a specific $\theta$ target, which is defined at each iteration as the latent trait level where the maximum distance between the two information functions is observed.
+The three introduced algorithms aim at approximating as best as possible the desired characteristics of a test, as expressed by a target information function (TIF-target), by selecting the items best able to reduce the distance between the information function of the provisional STF (pSTF) and the target one. 
+Two of the algorithms (denoted as item locating algorithm -- ILA -- and item selecting algorithm -- ISA --) can be seen as the natural evolution of the $\theta$-target procedure in that they ground the item selection on the characteristics of each item with respect to a specific $\theta$ target, which is defined at each iteration as the latent trait level where the distance between the two information functions is maximum.
 The third one (Frank) overcomes the definition of the $\theta$ targets altogether by considering the entire latent trait for the item inclusion at each iteration. As such, it accounts for the measurement precision of each item with respect to the entire latent trait and to the TIF-target. 
 All three algorithms attempt at bridging the gap between the TIF-target and the temporary information function obtained from the items selected up to that iteration. 
 By grounding the item selection on a specific $\theta$ target, ILA and ISA bring the two information functions closer considering only one latent trait level at the time. 
-On the other hand, by grounding the item selection on its contribution to the temporary information function, Frank bridges the gap between the two functions considering the entire latent trait. 
+On the other hand, by grounding the item selection on the contribution of each item to the temporary information function, Frank bridges the gap between the two functions considering the entire latent trait. 
 %However, ILA and ISA attempt at bridging the gap between the two information functions considering one discrete level at the time, the $\theta$ target, while Frank considers the entire latent trait. 
 %As such, ILA and ISA select the best item according to one specific point of the latent trait, while Frank  selects the item that allows for bridging the gap between the information functions throughout the entire latent trait. 
 %\color{red} Forse questa parte si può togliere 
@@ -524,7 +531,7 @@ Finally, McNemar tests were run to test the differences in the accuracy, sensiti
 
 \normalcolor
 
-The simulation study was run in \texttt{R}, version XX on a Windows 10 PC (DETTAGLI TECNICI SULLA RAM E ALTRE COSE). 
+The simulation study was run in \texttt{R} \cite<Version 4.4.1.;>{rsoft} on a computer with an Intel Core i3-7100 @ 3.90 GHz processor, 8 GB of RAM, and a 64-bit Windows operating system.
 
 \section*{Results}
 

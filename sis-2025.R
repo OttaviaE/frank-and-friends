@@ -209,8 +209,8 @@ myRes = merge(myRes, mean_difference)
 ggplot(myRes, 
        aes(x = reorder(factor(iteration), difference), 
            y = difference, color = type, shape = type)) + 
-  geom_point(size = 2)  + 
-  theme_light() + xlab("Replication") + ylab(expression(paste("|TIF", "* - ",TIF[x], "|"))) + 
+  geom_point(size = 4)  + 
+  theme_classic() + xlab("Replication") + ylab(expression(paste("|TIF", "* - ",TIF[x], "|"))) + 
   scale_x_discrete(labels = c("All items", "Frank", "Léon")) +
   theme(axis.text = element_text(size = 26), 
         axis.text.x = element_blank(),
@@ -220,9 +220,24 @@ ggplot(myRes,
   geom_hline(aes(yintercept  = meandiff, color = type), 
              linewidth=2, linetype = 2)
 
+ggsave("C:/Users/Ottavia/Documents/GitHub/frank-and-friends/sis2025/LaTex+Package/styles/img/points-alogirthms.pdf", 
+       device = "pdf", width = 14, height = 8.5, units = "in")
+
+
 res_tot %>%  
   group_by(type) %>%  
   summarise(mean = round(mean(difference),2), 
             sd = round(sd(difference),2), 
             min = round(min(difference), 8), 
             max = round(max(difference), 2))
+
+# mi prendo la cardnialità di q frank e q leon 
+numberItems = data.frame(iteration = 1:100, 
+                         q_frank = numeric(100), 
+                         q_leon = numeric(100))
+for (i in 1:100) {
+  numberItems[i, "q_frank"] = ncol(resFrank[[i]]$iif_stf)
+  numberItems[i, "q_leon"] = ncol(resLeon[[i]]$iif_stf)
+}
+colMeans(numberItems)
+t.test(numberItems$q_leon, numberItems$q_frank)

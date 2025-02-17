@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  31 JAN 2025 17:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  14 FEB 2025 17:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1648,8 +1648,33 @@ nslations-basic-dictionary')
 Package translations Info: loading dictionary `translations-basic-dictionary' f
 or `english'. on input line 61.
 \c@lstlisting=\count394
+LaTeX Font Info:    Trying to load font information for U+msa on input line 72.
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--95
+
+(C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 72.
+
+
+(C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+<orcid.png, id=10, 562.1pt x 308.352pt>
+File: orcid.png Graphic file (type png)
+<use orcid.png>
+Package pdftex.def Info: orcid.png  used on input line 82.
+(pdftex.def)             Requested size: 27.17696pt x 14.90564pt.
+File: orcid.png Graphic file (type png)
+<use orcid.png>
+Package pdftex.def Info: orcid.png  used on input line 84.
+(pdftex.def)             Requested size: 27.17696pt x 14.90564pt.
+File: orcid.png Graphic file (type png)
+<use orcid.png>
+Package pdftex.def Info: orcid.png  used on input line 86.
+(pdftex.def)             Requested size: 27.17696pt x 14.90564pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
 
  []
 
@@ -1658,28 +1683,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 92--95
 [1
 
 {C:/Users/Ottavia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Ot
-tavia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
+tavia/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./orcid.png>]
+
 
 [2]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 141
-.
- (C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 141
-.
-(C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-<img/target_n.pdf, id=37, 614.295pt x 1011.78pt>
+<img/target_n.pdf, id=40, 614.295pt x 1011.78pt>
 File: img/target_n.pdf Graphic file (type pdf)
 <use img/target_n.pdf>
-Package pdftex.def Info: img/target_n.pdf  used on input line 157.
+Package pdftex.def Info: img/target_n.pdf  used on input line 163.
 (pdftex.def)             Requested size: 203.83417pt x 335.72562pt.
-<img/target_sk.pdf, id=38, 614.295pt x 1011.78pt>
+<img/target_sk.pdf, id=41, 614.295pt x 1011.78pt>
 File: img/target_sk.pdf Graphic file (type pdf)
 <use img/target_sk.pdf>
-Package pdftex.def Info: img/target_sk.pdf  used on input line 162.
+Package pdftex.def Info: img/target_sk.pdf  used on input line 168.
 (pdftex.def)             Requested size: 203.83417pt x 335.72562pt.
 
 
@@ -1699,7 +1715,7 @@ Package pdftex.def Info: img/target_sk.pdf  used on input line 162.
 
 [10]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 3
-27.
+34.
  (C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
@@ -1716,16 +1732,16 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 
 [16]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 5
-27.
+34.
  (C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
 [17]
-<img/precentile-rank.pdf, id=187, 1011.78pt x 614.295pt>
+<img/precentile-rank.pdf, id=192, 1011.78pt x 614.295pt>
 File: img/precentile-rank.pdf Graphic file (type pdf)
 <use img/precentile-rank.pdf>
-Package pdftex.def Info: img/precentile-rank.pdf  used on input line 554.
+Package pdftex.def Info: img/precentile-rank.pdf  used on input line 561.
 (pdftex.def)             Requested size: 452.9679pt x 275.0148pt.
 
 
@@ -1746,11 +1762,11 @@ Package rerunfilecheck Info: File `algorithms.out' has not changed.
 (rerunfilecheck)             Checksum: 7CFEC754CE2720BA1CEDFCD850D6767A;99.
  ) 
 Here is how much of TeX's memory you used:
- 32879 strings out of 473650
- 663253 string characters out of 5716970
+ 32916 strings out of 473650
+ 663742 string characters out of 5716970
  1023412 words of memory out of 5000000
- 55375 multiletter control sequences out of 15000+600000
- 581041 words of font info for 87 fonts, out of 8000000 for 9000
+ 55405 multiletter control sequences out of 15000+600000
+ 589064 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  114i,14n,115p,1080b,1171s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
@@ -1772,9 +1788,9 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/Ottavia
 avia/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/O
 ttavia/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users
 /Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on algorithms.pdf (22 pages, 305782 bytes).
+Output written on algorithms.pdf (22 pages, 320692 bytes).
 PDF statistics:
- 302 PDF objects out of 1000 (max. 8388607)
- 56 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 308 PDF objects out of 1000 (max. 8388607)
+ 57 named destinations out of 1000 (max. 500000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
