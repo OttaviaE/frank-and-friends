@@ -88,7 +88,17 @@ The informativeness of each item is strongly influenced by the location of the i
 
 The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different levels of the latent trait) and its height (i.e., the amount of information for different levels of the latent trait) depend on the distribution of the items along the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test would be informative of different regions. The more the items have lucky guesses and careless errors, the less the TIF. 
 
-\section{item Selection Algorithms}
+\section{Item Selection Algorithms}
+
+The two algorithms are based on the same principle, that is to reduce as much as possible the distance from a TIF target and the provisional TIF obtained from the items selected up to that point. 
+At each iteration, the item is selected according to its ability of bridging the gap between the two TIFs. The algorithms stop when the last item considered for inclusion in the STF does not contribute to bring the provisional TIF closer to the TIF target, that is when the distance between the TIF target and the provisional TIF with the last considered item is equal to or greater than the distance between the TIF target and the provisional TIF without the last considered items (i.e., termination criterion). 
+
+In what follows, the TIF-target is represented by the TIF obtained on all the items in a test without careless error parameters, that is the TIF that would be obtained if respondents would never get tired during the administration. Given that the original set of items is denoted as $B$, the TIF-target obtained from this set is denoted as $\text{TIF}_B$.
+
+The parameters of the items in $B$ are defined through an $I \times 4$ matrix, where $I$ is the total number of items in $B$ ($||B||$) and the 4 columns contain the item parameters $b_i$, $a_i$, $c_i$, and $d_i$. 
+Given that $B$ is the set of item without the effect of the tiredness (i.e., without careless parameters), $d_i = 1$, $\forall i \in \{1, \ldots, I\}$. To include the tiredness of the respondents, the vector of careless error parameters $d_i$ is modified with an exponential function, $d_i' = \exp(-\lambda r_i)$ (where $\lambda$ is the speed parameter that determines the steepness of the function and $r$ is the rank of the $i$-th item in the administration).
+The set of items with $d_i'$ is denoted $B'$.
+
 
 \subsection{Frank}
 
@@ -96,16 +106,16 @@ The \emph{test information function} (TIF) is the sum of the IIFs, such that its
 %è qui che va detto che Frank calcola le iif di tutti gli item all'inizio e che poi vengono prese solo quelle degli item che sono disponibili in un dato momento, le IIF che sono in $A^k$
 %\normalcolor
 
-Frank considers the entire latent trait for the item selection, in that it selects the item whose IIF is best able to reduce the distance from the $\text{TIF}^*$ along the entire latent trait, as follows:
+Frank considers the entire latent trait for the item selection, in that it selects the item whose IIF is best able to reduce the distance from the $\text{TIF}_B$ along the entire latent trait, as follows:
 
 
 At $k = 0$: $\forall i \in B$, $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
 
 \begin{enumerate}
-	\item  $A^k = B \setminus Q^k$ 
+	\item  $A^k = B' \setminus Q^k$ 
 	\item $\forall i \in A^k$, $pTIF_{i}^k = \frac{\text{TIF}^k + \text{IIF}_{i}}{||Q^k||+1}$
-	\item $i^* = \arg \min_{i \in A^k} |\text{TIF}^* - \text{pTIF}_i|$
-	\item Termination criterion: $|\text{TIF}^* - \text{pTIF}_{i^*}| \geq |\text{TIF}^* - \text{TIF}^{k}|$: 
+	\item $i^* = \arg \min_{i \in A^k} |\text{TIF}_B - \text{pTIF}_i|$
+	\item Termination criterion: $|\text{TIF}_B - \text{pTIF}_{i^*}| \geq |\text{TIF}_B - \text{TIF}^{k}|$: 
 	\begin{itemize}
 		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $TIF^{k+1} = pTIF_{i^*}$, iterates 1-4 
 		\item TRUE: Stop, %The item in $i^*$ does not contribute to reduce the distance from the TIF-target, hence: 
@@ -114,12 +124,12 @@ At $k = 0$: $\forall i \in B$, $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \for
 	\end{itemize}
 \end{enumerate}
 
-The first operation done by Frank at the beginning ($k=0$) is to compute the IIFs of all the items in $B$, considering the available item parameters.
+%The first operation done by Frank at the beginning ($k=0$) is to compute the IIFs of all the items in $B$, considering the available item parameters.
 At $k = 0$, the subset of items $Q^0$ is empty and the $\text{TIF}^0$ is 0 for all the $\theta$ levels. 
 At each iteration $k$: (1.) a set of available items is generated as the items in the item bank that have not been included in the STF yet, $A^k = B \setminus Q^k$; (2.)
-An average provisional TIF, $\text{pTIF}$, is computed by adding the IIF of each of the items in the set of the available items $A^k$, one at the time, to the TIF obtained from the items in $Q^k$ (The denominator is obtained by adding 1 to the cardinality of $Q^k$); (3.) Among all the items in $A^k$, the one that allows for minimizing the distance between $\text{pTIF}$ and $\text{TIF}^*$ is included in $i^*$; (4.) 
+An average provisional TIF, $\text{pTIF}$, is computed by adding the IIF of each of the items in the set of the available items $A^k$, one at the time, to the TIF obtained from the items in $Q^k$ (The denominator is obtained by adding 1 to the cardinality of $Q^k$); (3.) Among all the items in $A^k$, the one that allows for minimizing the distance between $\text{pTIF}$ and $\text{TIF}_B$ is included in $i^*$; (4.) 
 The termination criterion is tested. 
-If the distance between the $\text{TIF}^*$ and the $\text{pTIF}_{i^*}$ is greater than or equal to the distance between the $\text{TIF}^*$ and the $\text{TIF}^k$ (i.e., the TIF obtained from the items in the subset $Q^k$, without item $i^*$) (TRUE), then the item $i^*$ does not contribute in the reduction of the distance from the $\text{TIF}^*$, the algorithm stops, and the final item selection is the one without the item in $i^*$, $Q_{frank} = Q^k$. Conversely (FALSE), the item in $i^*$ does contribute in the reduction of the distance from the $\text{TIF}^*$, hence it is included in the set of items and a new iteration starts, $Q^{k+1} = Q^k \cup \{i^*\}$.
+If the distance between the $\text{TIF}_B$ and the $\text{pTIF}_{i^*}$ is greater than or equal to the distance between the $\text{TIF}_B$ and the $\text{TIF}^k$ (i.e., the TIF obtained from the items in the subset $Q^k$, without item $i^*$) (TRUE), then the item $i^*$ does not contribute in the reduction of the distance from the $\text{TIF}_B$, the algorithm stops, and the final item selection is the one without the item in $i^*$, $Q_{frank} = Q^k$. Conversely (FALSE), the item in $i^*$ does contribute in the reduction of the distance from the $\text{TIF}_B$, hence it is included in the set of items and a new iteration starts, $Q^{k+1} = Q^k \cup \{i^*\}$.
 
 \section{Simulation study}
 
