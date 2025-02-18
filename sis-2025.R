@@ -97,15 +97,15 @@ tif = list()
 temp_iifs = NULL
 resFrank = list()
 resLeon = list()
+tempFrank = NULL
 # qui dentro devo mettere solo la TIF calcolata sui 50 item con stanchezza
 resAllitems = list()
-time = data.frame(iteration = 1:100, 
-                  start_all = numeric(100), 
-                  end_all = numeric(100), 
-                  start_frank = numeric(100), 
-                  end_frank = numeric(100), 
-                  start_leon = numeric(100), 
-                  end_leon = numeric(100))
+startAll = NULL
+endAll = NULL
+startFrank = NULL
+endFrank = NULL
+startLeon = NULL
+endLeon = NULL
 for (i in 1:100){
   set.seed(1312+i)
   q[[i]] = data.frame(b = runif(n_item, -3, 3), 
@@ -119,17 +119,30 @@ for (i in 1:100){
   q_tired[[i]] = q[[i]]
   q_tired[[i]]$e =  exp(-0.01*(0:(nrow(q_tired[[i]])-1)))
   temp_tired_iifs = item_info(q_tired[[i]], theta = theta)
-  time[i, "start_all"] = Sys.time()
+  # all items
+  startTemp = Sys.time()
   resAllitems[[i]] = data.frame(theta = theta, 
                                 tif_all = rowMeans(temp_tired_iifs))
-  time[i, "end_all"] = Sys.time()
-  # applico frank e leon 
-  time[i, "start_frank"] = Sys.time()
-  resFrank[[i]] = frank(q_tired[[i]], tif[[i]])
-  time[i, "end_frank"] = Sys.time()
-  time[i, "start_leon"] = Sys.time()
+  endTemp = Sys.time()
+  startAll = c(startAll, startTemp)
+  endAll = c(endAll, endTemp)
+  # Frank
+  startTemp = Sys.time()
+  resFrank[[i]] = frank(q[[i]], tif[[i]])
+  endTemp = Sys.time()
+  startFrank = c(startFrank, startTemp)
+  endFrank = c(endFrank, endTemp)
+  # ricalcola la tif mettendo la stanchezza degli item
+  tempIndex = as.numeric(gsub("item_", "", colnames(resFrank[[i]]$iif_stf)))
+  tempItem = q[[i]][tempIndex, ]
+  tempItem$e = exp(-0.01*(0:(nrow(tempItem)-1)))
+  tempIIFs = item_info(tempItem, theta = theta)
+  # Leon
+  startTemp = Sys.time()
   resLeon[[i]] = leon(q_tired[[i]], tif[[i]])
-  time[i, "end_leon"] = Sys.time()
+  endTemp = Sys.time()
+  startLeon = c(startLeon, startTemp)
+  endLeon = c(endLeon, endTemp)
   print(paste("Replication", i))
 }
 # cose che posso fare
@@ -191,8 +204,8 @@ mycolor = c(wes_palette("Chevalier1", n = 2), wes_palette("Chevalier1", n = 4)[4
 ggplot(res_tot, 
        aes(x = type, y = difference, color = type)) + 
   geom_boxplot(linewidth=1.2) + 
-  theme_light() + ylab(expression(paste("|TIF", "* - ",TIF[x], "|"))) + 
-  scale_x_discrete(labels = c("All items", "Frank", "Léon")) +
+  theme_light() + ylab(expression(paste("|", TIF[B], " - ",TIF[x], "|"))) + 
+  scale_x_discrete(labels = c(expression(paste("B","'")), "Frank", "Léon")) +
   theme(axis.text = element_text(size = 26), 
         axis.title.y = element_text(size = 28), 
         axis.title.x = element_blank(), 
@@ -200,7 +213,7 @@ ggplot(res_tot,
   scale_color_manual(values= mycolor)
 
 ggsave("C:/Users/Ottavia/Documents/GitHub/frank-and-friends/sis2025/LaTex+Package/styles/img/box-plot-alogirthms.pdf", 
-       device = "pdf", width = 8.5, height = 14, units = "in")
+       device = "pdf", width = 14, height = 8.5, units = "in")
 myRes = aggregate(difference ~ type + iteration, data = res_tot, mean)
 quantile(myRes$difference)
 mean_difference = aggregate(difference ~ type , data = res_tot, mean)

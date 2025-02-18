@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  18 FEB 2025 13:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  18 FEB 2025 16:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -365,48 +365,36 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 
 {C:/Users/Ottavia/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 
-LaTeX Warning: Reference `eq:4pl' on page 2 undefined on input line 78.
-
-
-
 [2]
 
 [3]
 
-LaTeX Warning: Reference `eq:iif' on page 4 undefined on input line 120.
-
-
-
 [4]
 
 [5]
-<img/points-alogirthms.pdf, id=32, 1011.78pt x 614.295pt>
-File: img/points-alogirthms.pdf Graphic file (type pdf)
-<use img/points-alogirthms.pdf>
-Package pdftex.def Info: img/points-alogirthms.pdf  used on input line 198.
+<img/box-plot-alogirthms.pdf, id=32, 1011.78pt x 614.295pt>
+File: img/box-plot-alogirthms.pdf Graphic file (type pdf)
+<use img/box-plot-alogirthms.pdf>
+Package pdftex.def Info: img/box-plot-alogirthms.pdf  used on input line 202.
 (pdftex.def)             Requested size: 347.12354pt x 210.75095pt.
 
 
-[6 <./img/points-alogirthms.pdf>]
+[6 <./img/box-plot-alogirthms.pdf>]
 
 [7] (paper-sis-template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 3740 strings out of 473650
- 59120 string characters out of 5716970
- 470228 words of memory out of 5000000
- 26805 multiletter control sequences out of 15000+600000
- 563137 words of font info for 54 fonts, out of 8000000 for 9000
+ 3746 strings out of 473650
+ 59195 string characters out of 5716970
+ 470276 words of memory out of 5000000
+ 26808 multiletter control sequences out of 15000+600000
+ 564068 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,6n,67p,1063b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 59i,7n,67p,1063b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmbx10.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmbx12.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/t
@@ -427,7 +415,7 @@ ia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/U
 sers/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti1
 0.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmtt9.pfb>
-Output written on paper-sis-template.pdf (7 pages, 259481 bytes).
+Output written on paper-sis-template.pdf (7 pages, 422073 bytes).
 PDF statistics:
  117 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
