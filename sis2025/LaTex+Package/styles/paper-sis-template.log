@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  18 FEB 2025 12:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  18 FEB 2025 13:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -373,15 +373,19 @@ LaTeX Warning: Reference `eq:4pl' on page 2 undefined on input line 78.
 
 [3]
 
-[4]
-<img/points-alogirthms.pdf, id=29, 1011.78pt x 614.295pt>
-File: img/points-alogirthms.pdf Graphic file (type pdf)
-<use img/points-alogirthms.pdf>
-Package pdftex.def Info: img/points-alogirthms.pdf  used on input line 193.
-(pdftex.def)             Requested size: 347.12354pt x 210.75095pt.
+LaTeX Warning: Reference `eq:iif' on page 4 undefined on input line 120.
 
+
+
+[4]
 
 [5]
+<img/points-alogirthms.pdf, id=32, 1011.78pt x 614.295pt>
+File: img/points-alogirthms.pdf Graphic file (type pdf)
+<use img/points-alogirthms.pdf>
+Package pdftex.def Info: img/points-alogirthms.pdf  used on input line 198.
+(pdftex.def)             Requested size: 347.12354pt x 210.75095pt.
+
 
 [6 <./img/points-alogirthms.pdf>]
 
@@ -396,10 +400,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3739 strings out of 473650
- 59112 string characters out of 5716970
+ 3740 strings out of 473650
+ 59120 string characters out of 5716970
  470228 words of memory out of 5000000
- 26804 multiletter control sequences out of 15000+600000
+ 26805 multiletter control sequences out of 15000+600000
  563137 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  59i,6n,67p,1063b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -423,7 +427,7 @@ ia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/U
 sers/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti1
 0.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmtt9.pfb>
-Output written on paper-sis-template.pdf (7 pages, 259266 bytes).
+Output written on paper-sis-template.pdf (7 pages, 259481 bytes).
 PDF statistics:
  117 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

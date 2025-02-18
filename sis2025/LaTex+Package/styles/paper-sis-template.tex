@@ -67,7 +67,7 @@ Specifically, Léon's ability is compared against that of another algorithm for 
 
 In IRT models for dichotomous responses (e.g., correct vs. incorrect), the probability of observing a correct response on item $i$ by person $p$ depends on both the charcteristics of the respondent (as described by their latent trait level, $\theta_p$) and on the characteristics of the item, which can be described by different parameters. IRT models differentiate according to the number of parameters used for describing the characteristics of the items. According to the 4-parameter logistic model (4-PL), the probability of a correct response can be formalized as: 
 
-\begin{equation}{eq:4pl}
+\begin{equation}[eq:4pl]
 	P(x_{pi}= 1| \theta_p, b_i, a_i, c_i, d_i) = c_i + (d_i -c_i) + \dfrac{\exp[a_i(\theta_p - b_i)]}{1 + \exp[a_i(\theta_p - b_i)]},
 \end{equation}
 where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the location of the item on the latent trait (i.e., difficulty parameter, the higher the value, the higher the difficulty of the item), $a_i$ describes the ability of $i$ to discriminate between respondents with different latent trait levels (i.e.,discrimination parameter, the higher the value, the higher the discrimination ability of the item), and $c_i$ and $d_i$ describe the probability of observing a correct response when $\theta \to - \infty$ and $\theta \to +\infty$, respectively. 
@@ -81,7 +81,7 @@ By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in 
 
 The meausemrement precision of each item with respect to different levels of the latent trait can be expressed by the so-called \emph{item information functions} (IIFs), which for the 4-PL is formalized as: 
 
-\begin{equation}{eq:iif}
+\begin{equation}[eq:iif]
 	IIF_i = \dfrac{a^2[P(\theta)-c_i]^2[d_i - P(\theta)]^2}{(d_i-c_i)^2 P(\theta)Q(\theta)}.
 \end{equation}
 The informativeness of each item is strongly influenced by the location of the item on the latent trait with respect to a specific latent trait level $\theta$, its discriminativity, and the probability of lucky guess and careless error. In absence of lucky guess and careless error, the IIF reaches its maximum when the location of the item $b_i$ matches the latent trait level $\theta$, and it decreases as the distance between $b_i$ and $\theta$ increases. Moreover, the higher the discrimination of the item $a_i$, the more informative the item. However, when the lucky guess and careless error are taken into account, the informativeness of the item decreases, and, most importantly, the maximum of the IIF does not corresponds to the item location on the latent trait and it is generally lower. 
@@ -90,7 +90,7 @@ The \emph{test information function} (TIF) is the sum of the IIFs, such that its
 
 \section{Item Selection Algorithms}
 
-The two algorithms are based on the same principle, that is to reduce as much as possible the distance from a TIF target and the provisional TIF obtained from the items selected up to that point. 
+The two algorithms are based on the same principle of reducing as much as possible the distance between a TIF target and a provisional TIF obtained from the items selected up to that point. 
 At each iteration, the item is selected according to its ability of bridging the gap between the two TIFs. The algorithms stop when the last item considered for inclusion in the STF does not contribute to bring the provisional TIF closer to the TIF target, that is when the distance between the TIF target and the provisional TIF with the last considered item is equal to or greater than the distance between the TIF target and the provisional TIF without the last considered items (i.e., termination criterion). 
 
 In what follows, the TIF-target is represented by the TIF obtained on all the items in a test without careless error parameters, that is the TIF that would be obtained if respondents would never get tired during the administration. Given that the original set of items is denoted as $B$, the TIF-target obtained from this set is denoted as $\text{TIF}_B$.
@@ -105,6 +105,9 @@ The set of items with $d_i'$ is denoted $B'$.
 %\color{red}
 %è qui che va detto che Frank calcola le iif di tutti gli item all'inizio e che poi vengono prese solo quelle degli item che sono disponibili in un dato momento, le IIF che sono in $A^k$
 %\normalcolor
+\color{red}
+SOno arrivata qui devo ancora rivedere gli algoritmi
+\normalcolor
 
 Frank considers the entire latent trait for the item selection, in that it selects the item whose IIF is best able to reduce the distance from the $\text{TIF}_B$ along the entire latent trait, as follows:
 
@@ -113,7 +116,9 @@ At $k = 0$: $\forall i \in B$, $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \for
 
 \begin{enumerate}
 	\item  $A^k = B' \setminus Q^k$ 
-	\item $\forall i \in A^k$, $pTIF_{i}^k = \frac{\text{TIF}^k + \text{IIF}_{i}}{||Q^k||+1}$
+		\color{red}
+	\item $\forall i \in A^k$, $IIF_i$ computed according to Equation \ref{eq:iif}, and $pTIF_{i}^k = \frac{\text{TIF}^k + \text{IIF}_{i}}{||Q^k||+1}$
+	\normalcolor
 	\item $i^* = \arg \min_{i \in A^k} |\text{TIF}_B - \text{pTIF}_i|$
 	\item Termination criterion: $|\text{TIF}_B - \text{pTIF}_{i^*}| \geq |\text{TIF}_B - \text{TIF}^{k}|$: 
 	\begin{itemize}
