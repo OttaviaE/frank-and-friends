@@ -133,10 +133,15 @@ for (i in 1:100){
   startFrank = c(startFrank, startTemp)
   endFrank = c(endFrank, endTemp)
   # ricalcola la tif mettendo la stanchezza degli item
-  tempIndex = as.numeric(gsub("item_", "", colnames(resFrank[[i]]$iif_stf)))
+  if (ncol(resFrank[[i]]$iif_stf) > 1) {
+    tempIndex = as.numeric(gsub("item_", "", colnames(resFrank[[i]]$iif_stf)))
+  } else {
+    tempIndex =  as.numeric(gsub("item_", "", resFrank[[i]]$q_frank))
+  }
   tempItem = q[[i]][tempIndex, ]
   tempItem$e = exp(-0.01*(0:(nrow(tempItem)-1)))
   tempIIFs = item_info(tempItem, theta = theta)
+  resFrank[[i]]$iif_stf = tempIIFs
   # Leon
   startTemp = Sys.time()
   resLeon[[i]] = leon(q_tired[[i]], tif[[i]])
