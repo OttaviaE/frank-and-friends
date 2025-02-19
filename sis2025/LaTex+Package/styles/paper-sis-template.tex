@@ -72,14 +72,21 @@ In IRT models for dichotomous responses (e.g., correct vs. incorrect), the proba
 \end{equation}
 where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the location of the item on the latent trait (i.e., difficulty parameter, the higher the value, the higher the difficulty of the item), $a_i$ describes the ability of $i$ to discriminate between respondents with different latent trait levels (i.e.,discrimination parameter, the higher the value, the higher the discrimination ability of the item), and $c_i$ and $d_i$ describe the probability of observing a correct response when $\theta \to - \infty$ and $\theta \to +\infty$, respectively. 
 When $\theta \to - \infty$, the probability of observing a correct response should tend to 0. Likewise, when $\theta \rightarrow +\infty$, the probability of observing a correct response should tend to 1. 
-However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. The lucky guess parameter $c_i$ describes this probability, such that the probability of observing a correct response for $\theta \to - \infty$ tends to $c_i$ instead of 0. 
-The same but inverse consideration applies when $\theta \to + \infty$. The $d_i$ parameter describes the probability of not endorsing the item given that the latent trait is above the location of the item, such that the probability of observing a correct response for $\theta \to + \infty$ tends to $d_i$ instead of 1. 
+However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. The pseudoguessing parameter $c_i$ describes this probability, such that the probability of observing a correct response on $i$ for $\theta \to - \infty$ tends to $c_i$ instead of 0. 
+The same but inverse consideration applies when $\theta \to + \infty$. The $d_i$ parameter describes the probability of endorsing the item given that the latent trait is above the location of the item, such that the probability of observing a correct response on $i$ for $\theta \to + \infty$ tends to $d_i$ instead of 1. 
 
 By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in a test) in equation \ref{eq:4pl}, the 3-Parameter logistic (3-PL) model is obtained. From the 3-PLmodel, the 2-Parameter logistic model (2-PL) is obtained by constraining $\forall i \in B, \, c_i = 0$, and the 1-parameter logistic model (1-PL, equivalent to the Rasch model) is obtained by constraining $\forall i \in B, \, a_i = 1$. 
 
+\color{blue}
+In this study, we operationalized the tiredeness of the individuals as the probability of committing careless error as the administration goes on, hence as a function of the number of items in a test and their relative position. 
+This probability is instrinsically related to the rank of the item in the test, and it increases exponentially as a function of the number of administered items. As such, the  the careless error parameter in Equation \ref{eq:4pl}, which usually a property of the item per se expressed as $d_i$, in this case becomes a property of the item rank $r = \{1, \ldots, R\}$ in the test, $d_r$. 
+\color{red}
+devo andare a prendere le robe per scrivere la relazione d'ordine perché c'è il vincolo che $d_{r-1} < d_r$
+\normalcolor
+
 \subsection{Information Functions}
 
-The meausemrement precision of each item with respect to different levels of the latent trait can be expressed by the so-called \emph{item information functions} (IIFs), which for the 4-PL is formalized as: 
+The meausemrement precision of each item with respect to different levels of the latent trait can be expressed by the so-called \emph{item information functions} (IIFs), which for the 4-PL is typically formalized as: 
 
 \begin{equation}\label{eq:iif}
 	IIF_i = \dfrac{a^2[P(\theta)-c_i]^2[d_i - P(\theta)]^2}{(d_i-c_i)^2 P(\theta)Q(\theta)}.
@@ -88,10 +95,13 @@ The informativeness of each item is strongly influenced by the location of the i
 
 The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different levels of the latent trait) and its height (i.e., the amount of information for different levels of the latent trait) depend on the distribution of the items along the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test would be informative of different regions. The more the items have lucky guesses and careless errors, the less the TIF. 
 
+\color{blue}
+Again, given that in this application the tiredness of the respondents has been conceptualized as the probability of observing careless errors as the administration goes on, the $d$ parameter in Equation \ref{eq:iif} is a property related to its order of presnetation in the test $r$, and it is hence denoted as $d_r$ with $r = \{1, \ldots, R\}$.
+\normalcolor
+
 \section{Item Selection Algorithms}
 
-In this study, we operationalized the tiredeness of the individuals as the probability of committing careless error, such that the more the items in a test, the higher the probability of careless error on the $i$-th item. 
-The careless error probability is instrinsically related to the rank of the item in the test, and it increases exponentially as a function of the number of administered items. 
+
 
 The two algorithms are based on the same principle of reducing as much as possible the distance between a TIF-target and a provisional TIF (pTIF) obtained from the items selected up to that point. 
 At each iteration, the item is included in the STF according to its ability of bridging the gap between the two TIFs. 
