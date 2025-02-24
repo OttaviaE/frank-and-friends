@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  19 FEB 2025 16:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.12.30)  24 FEB 2025 15:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -280,20 +280,20 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (paper-sis-template.aux)
 \openout1 = `paper-sis-template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
 
 (C:\Users\Ottavia\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.
 mkii
@@ -375,7 +375,7 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 <img/box-plot-alogirthms.pdf, id=32, 1011.78pt x 614.295pt>
 File: img/box-plot-alogirthms.pdf Graphic file (type pdf)
 <use img/box-plot-alogirthms.pdf>
-Package pdftex.def Info: img/box-plot-alogirthms.pdf  used on input line 212.
+Package pdftex.def Info: img/box-plot-alogirthms.pdf  used on input line 208.
 (pdftex.def)             Requested size: 347.12354pt x 210.75095pt.
 
 
@@ -388,13 +388,13 @@ L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3746 strings out of 473650
- 59195 string characters out of 5716970
- 471276 words of memory out of 5000000
- 26808 multiletter control sequences out of 15000+600000
+ 3744 strings out of 473650
+ 59167 string characters out of 5716970
+ 472301 words of memory out of 5000000
+ 26806 multiletter control sequences out of 15000+600000
  564068 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,7n,67p,1063b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 59i,9n,67p,1067b,352s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmbx10.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmbx12.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/t
@@ -403,21 +403,20 @@ eX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Ottavia/AppData/Local/Pr
 ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Ottavia/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Otta
 via/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/
-Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
-9.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmr6.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Ottavia/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Ottavia/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/Ottav
-ia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/U
-sers/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti1
+Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr1
 0.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmtt9.pfb>
-Output written on paper-sis-template.pdf (7 pages, 401623 bytes).
+ts/cm/cmr6.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/publ
+ic/amsfonts/cm/cmr7.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmr9.pfb><C:/Users/Ottavia/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Ottavia/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/Ottavia/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Ottav
+ia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/
+Users/Ottavia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt
+9.pfb>
+Output written on paper-sis-template.pdf (7 pages, 393329 bytes).
 PDF statistics:
- 117 PDF objects out of 1000 (max. 8388607)
+ 112 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
