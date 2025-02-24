@@ -242,13 +242,25 @@ ggsave("C:/Users/Ottavia/Documents/GitHub/frank-and-friends/sis2025/LaTex+Packag
        device = "pdf", width = 14, height = 8.5, units = "in")
 
 
-res_tot %>%  
+myres = res_tot %>%  
   group_by(type) %>%  
   summarise(mean = round(mean(difference),2), 
             sd = round(sd(difference),2), 
             min = round(min(difference), 8), 
-            max = round(max(difference), 2))
+            max = round(max(difference), 2)) %>% 
+  mutate(cv = sd/mean)
 
+library(lme4)
+
+model = lmer(difference ~ type + (1|iteration) + (1|theta), data = res_tot)
+summary(model)
+
+
+m = aov(difference ~ type, data = res_tot)
+summary(m)
+coefficients(m)
+library(effects)
+plot(allEffects(m))
 # mi prendo la cardnialità di q frank e q leon 
 numberItems = data.frame(iteration = 1:100, 
                          q_frank = numeric(100), 
@@ -259,3 +271,4 @@ for (i in 1:100) {
 }
 colMeans(numberItems)
 t.test(numberItems$q_leon, numberItems$q_frank)
+apply(numberItems, 2, sd)
