@@ -25,7 +25,7 @@
 \begin{document}
 \mainmatter              % start of a contribution
 %
-\title{How much is too much? Item Response Theory procedures to shorten tests}
+\title{Nothing lasts forever -- only item administration: Item Response Theory procedures to shorten tests}
 %
 \titlerunning{IRT-based algorithms}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
@@ -63,53 +63,59 @@ In this contribution, we present a new IRT-based algorithm for developing short 
 
 \section{Item Response Theory and Information Functions}  
 
-In IRT models for dichotomous responses (e.g., correct vs. incorrect), the probability of observing a correct response on item $i$ by person $p$ depends on both the charcteristics of the respondent (as described by their latent trait level, $\theta_p$) and on the characteristics of the item, which can be described by different parameters. IRT models differentiate according to the number of parameters used for describing the characteristics of the items. According to the 4-parameter logistic model (4-PL, \cite{barton:4pl}), the probability of a correct response can be formalized as: 
+In IRT models for dichotomous responses (e.g., correct vs. incorrect), the probability of observing a correct response on item $i$ by person $p$ depends on both the charcteristics of the respondent (as described by their latent trait level, $\theta_p$) and on the characteristics of the item, which can be described by different parameters. IRT models differentiate according to the number of parameters used for describing the characteristics of the items. According to the 4-Parameter logistic model (4-PL, \cite{barton:4pl}), the probability of a correct response can be formalized as: 
 
 \begin{equation}\label{eq:4pl}
 	P(x_{pi}= 1| \theta_p, b_i, a_i, c_i, d_i) = c_i + (d_i -c_i) + \dfrac{\exp[a_i(\theta_p - b_i)]}{1 + \exp[a_i(\theta_p - b_i)]},
 \end{equation}
-where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the location of the item on the latent trait (i.e., difficulty parameter, the higher the value, the higher the difficulty of the item), $a_i$ describes the ability of $i$ to discriminate between respondents with different latent trait levels (i.e., discrimination parameter, the higher the value, the higher the discrimination ability of the item), and $c_i$ and $d_i$ describe the probability of observing a correct response when $\theta \to - \infty$ and $\theta \to +\infty$, respectively. 
-When $\theta \to - \infty$, the probability of observing a correct response should tend to 0. Likewise, when $\theta \rightarrow +\infty$, the probability of observing a correct response should tend to 1. 
-However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. The pseudoguessing parameter $c_i$ describes this probability, such that the probability of observing a correct response on $i$ for $\theta \to - \infty$ tends to $c_i$ instead of 0. 
-The same but inverse consideration applies when $\theta \to + \infty$. The $d_i$ parameter describes the probability of endorsing the item given that the latent trait is above the location of the item, such that the probability of observing a correct response on $i$ for $\theta \to + \infty$ tends to $d_i$ instead of 1. \ottavia{In other words, $d_i$ represents the upper asymptote for each item. The careless error probability is $1 - d_i$.}
+where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the location of the item on the latent trait (i.e., difficulty parameter, the higher the value, the higher the difficulty of the item), and $a_i$ describes the ability of $i$ to discriminate between respondents with different latent trait levels (i.e., discrimination parameter, the higher the value, the higher the discrimination ability of the item). Parameters $c_i$ and $d_i$ represent the lower and upper asymptotes of the probability, which should naturally tend to 0 and 1 when $\theta \to - \infty$ and $\theta \to +\infty$, respectively. 
+%However, there might instances where respondents with $\theta_p \to -\infty$ provide the correct response and respondents with $\theta_p \to + \infty$ do not provide the correct response.
+%However, there might be instances where respondents with $\theta$ levels below the difficulty of the item, whom are hence expected not to respond correctly, might provide the correct response out of luck. 
+The pseudoguessing parameter $c_i$ describes the probability of observing a correct response on $i$ for $\theta \to - \infty$, such that the probability tends to $c_i$ instead of 0. 
+%The same but inverse consideration applies when $\theta \to + \infty$. 
+The $d_i$ parameter describes the probability of observing a correct response on $i$ for $\theta \to + \infty$, such that this probability tends to $d_i$ instead of 1. The careless error probability is $1 - d_i$ (i.e., the probability of not endorsing the item given that the $\theta_p > b_i$).
 
-By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in a test) in equation \ref{eq:4pl}, the 3-Parameter logistic (3-PL, \cite{lord:3pl}) model is obtained. From the 3-PL model, the 2-Parameter logistic model (2-PL, \cite{birnbaum}) is obtained by constraining $\forall i \in B, \, c_i = 0$, and the 1-parameter logistic model (1-PL, equivalent to the Rasch model) is obtained by constraining $\forall i \in B, \, a_i = 1$. 
+%By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in a test) in equation \ref{eq:4pl}, the 3-Parameter logistic (3-PL, \cite{lord:3pl}) model is obtained. From the 3-PL model, the 2-Parameter logistic model (2-PL, \cite{birnbaum}) is obtained by constraining $\forall i \in B, \, c_i = 0$, and the 1-parameter logistic model (1-PL, equivalent to the Rasch model) is obtained by constraining $\forall i \in B, \, a_i = 1$. 
 
 \color{blue}
 In this study, we operationalized the tiredness of the individuals as the careless error probability $1 - d_i$, which increases as the administration goes on. As $1 - d_i$ increases, the upper aymptote $d_i$ decreases.
-This probability is instrinsically related to the rank of the item in the test. As such, the careless error parameter in Equation (\ref{eq:4pl}), which usually a property of the item per se expressed as $d_i$, in this case becomes a property of the item rank $r = \{1, \ldots, R\}$ in the test, $d_r$, with the constraint $d_{r-1} < d_r$.
+This probability is instrinsically related to the rank of the item in the test, hence the careless error parameter in Equation (\ref{eq:4pl}), which is usually a property of the item ($d_i$), becomes a property of the item rank $r = \{1, \ldots, R\}$ in the test, $d_r$, with the constraint $d_{r-1} > d_r$.
 \normalcolor
 
 \subsection{Information Functions}
 
-The measurement precision of each item with respect to different levels of the latent trait can be expressed by the so-called \emph{item information functions} (IIFs), which for the 4-PL is typically formalized as \cite{magis:iif}: 
+The measurement precision of each item with respect to different levels of the latent trait can be expressed by the \emph{item information functions} (IIFs). 
+\color{blue}
+Given that in this application the tiredness of the respondents has been conceptualized as the careless errors observed as the administration goes on, the typical formalization of the IIF for the 4-PL \cite{magis:iif} has been modified to account for the rank of presentation $r$ of item $i$, as follows:
+\normalcolor
+
 
 \begin{equation}\label{eq:iif}
-	\text{IIF}_i = \dfrac{a^2[P(\theta)-c_i]^2[d_i - P(\theta)]^2}{(d_i-c_i)^2 P(\theta)Q(\theta)}.
+	\text{IIF}_{i}(r) = \dfrac{a^2[P(\theta)-c_i]^2[d_r - P(\theta)]^2}{(d_{r}-c_i)^2 P(\theta)Q(\theta)}, 
 \end{equation}
-The informativeness of each item is strongly influenced by the location of the item on the latent trait with respect to a specific latent trait level $\theta$, its discriminativity, and the probability of lucky guess and careless error. In absence of lucky guess and careless error, the IIF reaches its maximum when the location of the item $b_i$ matches the latent trait level $\theta$, and it decreases as the distance between $b_i$ and $\theta$ increases. Moreover, the higher the discrimination of the item $a_i$, the more informative the item. When the lucky guess and careless error are taken into account, the informativeness of the item decreases, and, most importantly, the maximum of the IIF does not corresponds to the item location on the latent trait and it is generally lower. 
+whereas in the typical formalization $d_r = d_i$.
+%the $d$ parameter in Equation (\ref{eq:iif}) is a property related to its order of presentation in the test $r$, and it is hence denoted as $d_r$ with $r = \{1, \ldots, R\}$.
+The informativeness of each item is strongly influenced by the location of the item on the latent trait with respect to a specific latent trait level $\theta$, its discriminativity, and the probability of lucky guess and careless error. In absence of lucky guess and careless error, the IIF is maximum when  $\theta_p = b_i$, and it decreases as the distance between $b_i$ and $\theta_p$ increases. Moreover, the higher the discrimination of the item $a_i$, the more informative the item. When the lucky guess and careless error are taken into account, the informativeness of the item decreases, the IIF is lower, and it maximum is shifted. 
 
-The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different levels of the latent trait) and its height (i.e., the amount of information for different levels of the latent trait) depend on the distribution of the items along the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test would be informative of different regions. The more the items have lucky guesses and careless errors, the lower the TIF. 
+The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different latent trait levels) and its height (i.e., the amount of information for different latent trait levels) depend on the items distribution along the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test is informative of different regions. 
 
-\color{blue}
-Again, given that in this application the tiredness of the respondents has been conceptualized as the probability of observing careless errors as the administration goes on, the $d$ parameter in Equation \ref{eq:iif} is a property related to its order of presentation in the test $r$, and it is hence denoted as $d_r$ with $r = \{1, \ldots, R\}$.
-\normalcolor
 
 \section{Item Selection Algorithms}
 
 
 
-The two algorithms are based on the same principle of reducing as much as possible the distance between a target TIF (TIF-target, describes the desired characteristics of the STFs in terms of measurement precision) and a provisional TIF (pTIF) obtained from the items selected up to that point. 
-At each iteration, the item is included in the STF according to its ability of bridging the gap between the two TIFs. 
-The algorithms stop when the last item considered for inclusion does not contribute to bring the pTIF closer to the TIF-target, that is when the distance between the TIF-target and the pTIF with the last considered item is equal to or greater than the distance between the TIF-target and the pTIF without the last considered items (i.e., termination criterion). 
+The two algorithms aim at reducing the distance between a target TIF (TIF-target, describes the desired measurement precision of the STFs) and a provisional TIF (pTIF) obtained from the items included in the STF. 
+At each iteration, an item is included in the STF according to its ability of bridging the gap between the two TIFs. 
+The algorithms stop when the distance between the TIF-target and the pTIF with the last considered item is equal to or greater than the distance between the TIF-target and the pTIF without the last considered items (i.e., termination criterion). 
 
-In what follows, the TIF-target is represented by the TIF obtained on all the items in a test without careless error parameters, that is the TIF that would be obtained if respondents would never get tired during the administration. Given that the original set of items is denoted as $B$, the TIF-target obtained from this set is denoted as $\text{TIF}_B$.
+In what follows, the TIF-target is represented by the TIF that would be obtained if respondents would never get tired during the administration of all the items in a test $B$. Therefore, the TIF-target is denoted as  $\text{TIF}_B$.
 
-The parameters of the items in $B$ are defined through an $I \times 4$ matrix, where $I$ is the total number of items in $B$ ($||B||$, where $||X||$ denotes the cardinality of set $X$) and the 4 columns contain the item parameters $b_i$, $a_i$, $c_i$, and $d_i$. 
-Given that $B$ is the set of item without the effect of the tiredness, $d_i = 1$, $\forall i \in \{1, \ldots, I\}$. To include the tiredness of the respondents, the vector of careless error parameters $d_i$ is modified with an exponential function, $d_i' = \exp(-\lambda r_i)$ (where $\lambda$ is the speed parameter that determines the steepness of the function and $r$ is the rank of the $i$-th item in the administration).
-The set of items with $d_i'$ is denoted $B'$.
+%The parameters of the items in $B$ are defined through an $I \times 4$ matrix, where $I$ is the total number of items in $B$ ($||B||$, where $||X||$ denotes the cardinality of set $X$) and the 4 columns contain the item parameters $b_i$, $a_i$, $c_i$, and $d_i$. 
+Given that $B$ is the set of item without the effect of the tiredness, $d_i = 1$, $\forall i \in \{1, \ldots, I\}$. To include the tiredness of the respondents, the vector of careless error parameters $d_r$ should be modified considering the item rank of presentation. In this application, $d_r$ is modified with an exponential function, $d_r = \exp(-\lambda r)$ (where $\lambda$ is the non-negative speed parameter that determines the steepness of the function and $r$ is the rank of the $r$-th item in the administration). of the i-th item in the administration).
+The set of items with $d'$
+i is denoted $B'$.
 
-Since the TIF increases as the number of items in a test increases, the comparison between $\text{TIF}_B$ and the TIF of the STF obtained by the item selections provided by the two algorithms is based on the mean TIF (i.e., the TIF divided by the number of items in the STF). Nonetheless, in what follows the mean TIF will be simply referred to as $\text{TIF}_{Q_x}$, with $x \in \{B, B', \text{Frank}, \text{\text{Léon}}\}$.
+Since the TIF increases as the number of items in a test increases, the comparison between $\text{TIF}_B$ and the TIF of the STFs is based on the mean TIF (i.e., the TIF divided by the number of items). Nonetheless, in what follows the mean TIF will be simply referred to as $\text{TIF}_{Q_x}$, with $x \in \{B, B', \text{Frank}, \text{\text{Léon}}\}$ and $Q$ is the set of items in the tests $B$ or $B'$ or the subset of items included in the STFs generated by Frank and Léon.
 
 \subsection{Frank}
 
@@ -125,18 +131,16 @@ At $k = 0$: $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 =
 
 \begin{enumerate}
 	\item  $A^k = B \setminus Q^k$ 
-	\item $\forall i \in A^k$, $p\text{TIF}_{i}^k = \frac{\text{TIF}^k + \text{IIF}_{i}}{||Q^k||+1}$
-	\item $i^* = \arg \min_{i \in A^k} |\text{TIF}_B - \text{pTIF}_i|$, with $c_i = 0$ and $d_i$, $\forall i \in B$
-	\item Termination criterion: $|\text{TIF}_B - \text{pTIF}_{i^*}| \geq |\text{TIF}_B - \text{TIF}^{k}|$: 
+	\item $\forall i \in A^k$, $p\text{TIF}_{i}^k = \frac{\text{TIF}^k + \text{IIF}_{i}}{||Q^k||+1}$, with $c_i = 0$ and $d_i = 1$, $\forall i \in B$
+	\item $i^* = \arg \min_{i \in A^k} |\text{TIF}_B - \text{pTIF}_i^k|$
+	\item Termination criterion: $|\text{TIF}_B - \text{pTIF}_{i^*}^k| \geq |\text{TIF}_B - \text{TIF}^{k}|$: 
 	\begin{itemize}
-		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $TIF^{k+1} = p\text{TIF}_{i^*}$, iterates 1-4 
+		\item FALSE:  $Q^{k+1} = Q^{k} \cup \{i^*\}$, $\text{TIF}^{k+1} = p\text{TIF}_{i^*}$, iterates 1-4 
 		\item TRUE: Stop, %The item in $i^*$ does not contribute to reduce the distance from the TIF-target, hence: 
-		$Q_{Frank} = Q^k$
+		$Q_{\text{Frank}} = Q^k$
 		
 	\end{itemize}
 \end{enumerate}
-
-%The first operation done by Frank at the beginning ($k=0$) is to compute the IIFs of all the items in $B$, considering the available item parameters.
 At $k = 0$, the subset of items $Q^0$ is empty and the $\text{TIF}^0$ is 0 for all the $\theta$ levels. 
 At each iteration $k$: (1.) a set of available items is generated as the items in the item bank that have not been included in the STF yet, $A^k = B \setminus Q^k$; (2.)
 An average provisional TIF, $\text{pTIF}$, is computed by adding the IIF of each of the items in the set of the available items $A^k$, one at the time, to the TIF obtained from the items in $Q^k$ (The denominator is obtained by adding 1 to the cardinality of $Q^k$); (3.) Among all the items in $A^k$, the one that allows for minimizing the distance between $\text{pTIF}$ and $\text{TIF}_B$ is included in $i^*$; (4.) 
@@ -155,15 +159,15 @@ Differently from Frank, at step (2.) Léon computes the $\text{IIF}_i$ by consid
 
 
 
-The procedure is replicated 100 times. At each replica, a test of $B$ of 50 items with difficulty ($b_i \sim \mathcal{U}(-3, 3)$) discrimination ($a_i \sim \mathcal{U}(.90, 2)$) parameters drawn from uniform distributions is generated. Lucky 
-guess and careless error parameters are constant, $c_i = 0, \forall i \in B$ and $d_i = \, \forall i \in B$.
+The procedure is replicated 100 times. At each replication, a test $B$ of 50 items with difficulty ($b_i \sim \mathcal{U}(-3, 3)$) discrimination ($a_i \sim \mathcal{U}(.90, 2)$) parameters drawn from uniform distributions is generated. Lucky 
+guess and careless error parameters are constant, $c_i = 0$ and $d_i = 1$, $\forall i \in B$.
 The $\text{TIF}_B$ (i.e., the TIF-target) is obtained as the average TIF  from the items in $B$, and describes the measurement precision that would be obtained if respondents were administered with all the items without getting tired. 
 
 \color{blue}
-A new test, $B'$, is generated at each replication, where $b_i' = b_i$, $a_i' = a_i$, $c_i = 0$, $\forall i \in B'$, and $d_i' = \exp(-\lambda r_i)$, with $\lambda = 0.01$ and $r = \{0, \ldots I -1\}$.
+At each replication, a new test, $B'$, is generated, where $b_i' = b_i$, $a_i' = a_i$, $c_i = 0$, $\forall i \in B'$, and $d_r = \exp(-\lambda r_i)$, with $\lambda = 0.01$ and $r = \{0, \ldots, ||B|| -1\}$.
 
-At each replication, Frank and Léon generate a STF for approximating the $\text{TIF}_B$. Moreover, the average TIF is computed considering the item with the tiredness effect in $B'$, denoted as $\text{TIF}_{B'}$.
-Although Frank grounds the item selection on $B$ (i.e., without considering the tiredness), the final TIF is computed by considering the vector $d_r$ associated to the rank of the items in $Q_{\text{Frank}}$.
+At each replication, Frank and Léon generate a STF for approximating the $\text{TIF}_B$. An average TIF is computed considering the item in $B'$, denoted as $\text{TIF}_{B'}$.
+Although Frank grounds the item selection on the set $B$, the final TIF is computed by considering the vector $d_r$ associated to the rank of the items in $Q_{\text{Frank}}$.
 %La differenza è che Frank calcola tutte le iif degli tiem all'inizio, consdierando la careless error legata alla posizione dell'item così come viene generata inizialmente dalla funzione. 
 %Léon invece calcola la iif ad ogni itereazione (per questo è più lento) mettendo dentro la careless error che è legata alla posizione dell'item. Nel senso, se Léon per ora ha selezionato 3 item e deve valutare se metterne un quarto, le iif degli item che sono rimasti verrà calcolata considerando la careless error in $B'$ dell'item somministrato per quarto.
 \normalcolor
@@ -171,7 +175,7 @@ Although Frank grounds the item selection on $B$ (i.e., without considering the 
 
 \subsection{Comparison}
 
-The average distance from $\text{TIF}_B$ of the STFs generated by Frank and Léon at each iteration, as well as of the test obtained from $B'$ has been considered as a criterion for evaluating the ability of Léon of generating informative STFs while accounting for the tiredness of the respondents, $\Delta_x = |\text{TIF}_B - \text{TIF}_{Q_x}|$, with $x \in \{B', \text{Frank}, \text{Léon}\}$.  Trivially, when the $\text{TIF}_\{B'\}$ is considered, $Q = B'$.
+The average distance from $\text{TIF}_B$ of the STFs generated by Frank and Léon at each iteration, as well as of the test obtained from $B'$ has been considered as a criterion for evaluating the ability of Léon of generating informative STFs while accounting for the tiredness of the respondents, $\Delta_x = |\text{TIF}_B - \text{TIF}_{Q_x}|$, with $x \in \{B', \text{Frank}, \text{Léon}\}$.  Trivially, when the $\text{TIF}_{B'}$ is considered, $Q = B'$.
 
 To better understand whether acknowledging the tiredness of the respondents influences the number of items included in $Q$, the cardinalities of the STFs generated by Frank and Léon, $||Q_{\text{Frank}}||$ and $||Q_{\text{Léon}}||$, respectively, have been compared. 
 
@@ -209,7 +213,7 @@ Figure \ref{fig:points-alogirthms} illustrates the distributions of the distance
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\linewidth]{img/box-plot-alogirthms}
-	\caption{Distance from $\text{TIF}_{B}$ of $\text{TIF}_{B'}$ (green dots), $\text{TIF}_{Frank}$ (yellow triangles), and $\text{TIF}_{\text{Léon}}$ (brown squares) in each of the 100 replications. The horizontal green, yellow, and brown lines are the average distance from $\text{TIF}_B$ of $\text{TIF}_{B'}$, $\text{TIF}_{Frank}$, and $\text{TIF}_{\text{Léon}}$, respectively}
+	\caption{Distance from $\text{TIF}_{B}$ of $\text{TIF}_{B'}$, $\text{TIF}_{\text{Frank}}$, and $\text{TIF}_{\text{Léon}}$  across the 100 replications.} 
 	\label{fig:points-alogirthms}
 \end{figure}
 
@@ -217,12 +221,14 @@ Overall, $\text{TIF}_{B'}$s are the most distant from $\text{TIF}_B$, while $\te
 
 \section{Final Remarks}
 
-This manuscript presented a first attempt at the development of an IRT-based algorithm, denoted as Léon, for the generation of informative and static STFs able to account for the tiredness of the respondents. In the item selection for inclusion in the STF, Léon considers the number of items included up to that iteration and adds a penalty in terms of higher probability of careless error, which increases as the number of items included in the STF increases. Its performance in approximating a TIF target, which is here conceptualized as the TIF that one would obtain considering the entire administration of the test if respondents would never get tired (i.e., without careless error) , is compared against that of another IRT-based algorithm, denoted as Frank. Differently from Léon, Frank does not add any penalization for the number of items included in the STF. Finally, the distance between the TIF obtained from the administration of the entire test with and without tiredness has been considered as well. 
+This manuscript presented an IRT-based algorithm, denoted as Léon, for the generation of  STFs. 
+Léon grounds the item selection by concurrently considering the number of items included in the STF and the measurement precision with respect to an ideal target where all the items are administered in absence of careless error (i.e., TIF-target). The ability of Léon of approximating the TIF-target has been compared against that of another algorithm (Frank) not accounting for the tiredness of the respondents during item selection and with the measurement precision obtained from the administration of the entire test, including the careless mistakes due to the response fatigue.
+ 
 
-The results of a simulation study suggest that the administration of fewer items selected also considering the tiredness of the respondents might provide better measurement tools  than administering the entire test and tiring out the respondents. 
+Generally, the results suggest that the administration of fewer items provide better measurement tools than administering the entire test, especially if the selection process accounts for the effect of the response fatigue.
 
-Although the results are promising, there are several limitations that should be acknowledged. Firstly, this study is focused on the approximation of the TIF target. However, the final aim with which tests are administered is to estimate the latent trait of the respondents. The lack of the precision of estimation of the latent trait of the respondents represents the main limitation and future studies should focus on this issue. 
-Secondly, the operalization of the tiredness of the respondents as an increase of the probability of committing careless error as the administration goes on is an arbitrary choice.
+Although the results are promising, several limitations must be acknowledged. Firstly, while this study primarily focuses on approximating ideal measurement precision as expressed by the TIF-target, no investigations on the precision with which the latent trait is estimated with the STF are presented. Future studies should further investigate this issue to understand whether administering less items brings actual benefits in the estimation of the latent trait.
+Secondly, the operalization of the tiredness of the respondents as an increase of the probability of committing careless error as the administration goes on is an arbitrary choice, and other possibilities should be investigated.
 
 
 
@@ -239,22 +245,22 @@ Secondly, the operalization of the tiredness of the respondents as an increase o
 Barton, M. A., Lord, F. M. (1981). An upper asymptote for the three-parameter logistic item-response
 model. Princeton, NJ: Educational Testing Service.
 
-\bibitem {birnbaum}
-Birnbaum, A. (1968). Some latent trait models and their use in inferring an examinee’s ability. In F. M.
-Lord, M. R. Novick (Eds.), Statistical theories of mental test scores (pp. 397-479). Reading, MA:
-Addison-Wesley
+%\bibitem {birnbaum}
+%Birnbaum, A. (1968). Some latent trait models and their use in inferring an examinee’s ability. In F. M.
+%Lord, M. R. Novick (Eds.), Statistical theories of mental test scores (pp. 397-479). Reading, MA:
+%Addison-Wesley
 
-\bibitem {lord:3pl}
-Lord, F. M. (1980). Applications of item response theory to practical testing problems. Hillsdale, NJ:
-Lawrence Erlbaum
+%\bibitem {lord:3pl}
+%Lord, F. M. (1980). Applications of item response theory to practical testing problems. Hillsdale, NJ:
+%Lawrence Erlbaum
 
 \bibitem {magis:iif}
 Magis, D. (2013). A note on the item information function of the four-parameter logistic model. Applied Psychological Measurement, 37(4), 304-315.
 
 
-\bibitem {rsoft}
-R Development Core Team. (2012). R: A language and environment for statistical computing [Computer
-software]. Vienna, Austria: R Foundation for Statistical Computing.
+%\bibitem {rsoft}
+%R Development Core Team. (2012). R: A language and environment for statistical computing [Computer
+%software]. Vienna, Austria: R Foundation for Statistical Computing.
 
 
 
