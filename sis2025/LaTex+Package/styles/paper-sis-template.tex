@@ -41,13 +41,13 @@
 \institute{Department of Psychology and Cognitive Science, University of Trento, IT\\
 \email{ottavia.epifania@unitn.it}
 \and
-{\color{red}Department of Statistics, University of Padova, IT} \livio{devi vedere se è giusto} \\}
+ Department of Statistical Sciences, University of Padova, IT \\}
 
 \maketitle              % typeset the title of the contribution
 
-\begin{abstract}
-\ottavia{da rivedere}
-Although a larger number of test items improves measurement validity, the effect of respondents’ fatigue on the response quality should be acknowledged for developing reliable measurement tools.  This contribution presents an item response theory-based algorithm (denoted as Léon) able to shorten existing tests by concurrently accounting for the measurement precision of the abbreviated test and the tiredness of the respondents, which is here conceptualized as the probability of observing careless errors as the number of administered items increases. A simulation study compares the performance of Léon of approximating the measurement precision that would be obtained from the full-length test without the effect of the tiredness against that of another algorithm that does not account for the tiredness of the respondents. Although on average the two algorithms select the same number of items, Léon provides a better approximation to the measurement precision of the full-length test than the other algorithm.  
+\begin{abstract} 
+	\ottavia{The responses to the items composing psychometrics tests are often used to estimate the respondents' latent trait levels.}
+Although a larger number of items improves measurement validity, the effect of respondents’ fatigue on the response quality should be acknowledged for developing reliable measurement tools.  This contribution presents an item response theory-based algorithm (denoted as Léon) able to shorten existing tests by concurrently accounting for the measurement precision of the abbreviated test and the tiredness of the respondents. A simulation study compares the performance of Léon of approximating the measurement precision that would be obtained from the full-length test without the effect of the tiredness against that of another algorithm that does not account for the tiredness of the respondents. Although, on average, the two algorithms select the same number of items, Léon provides a better approximation to the measurement precision of the full-length test than the other algorithm.  
 % We would like to encourage you to list your keywords within
 % the abstract section using the \keywords{...} command.
 \keywords{Item response theory, careless error, information functions, short test forms}
@@ -59,7 +59,7 @@ As a general rule of thumb, the higher the number of items in a test, the better
 In this contribution, we present a new IRT-based algorithm for developing short test forms (STFs) from existing tests, denoted as Léon. This algorithm considers the response fatigue during the item selection process, such that it attempts at minimizing the number of selected items to maximize the measurement precision (as expressed by the test information function, TIF) of the STF.
 %The ability of Léon of developing STFs able to approximate the TIF that would be obtained by administering all the items under the assumption that respondents would never get tired is investigated in a simulation study. 
 %Specifically, Léon's ability is compared against that of another algorithm for developing STFs, which does not account for the tiredness of the respondents. 
-The response fatigue has been here conceptualized as the careless error related to the item rank during the administration. 
+%The response fatigue has been here conceptualized as the careless error related to the item rank during the administration. 
 
 \section{Item Response Theory and Information Functions}  
 
@@ -74,11 +74,12 @@ where $\theta_p$ is the latent trait level of person $p$, $b_i$ is the item loca
 The pseudoguessing parameter $c_i$ is the probability of observing a correct response on $i$ for $\theta \to - \infty$, such that the probability tends to $c_i$ instead of 0. 
 %The same but inverse consideration applies when $\theta \to + \infty$. 
 The $d_i$ parameter is the probability of observing a correct response on $i$ for $\theta \to + \infty$, such that this probability tends to $d_i$ instead of 1. The careless error probability is $1 - d_i$ (i.e., the probability of not endorsing the item given that the $\theta_p > b_i$).
+\ottavia{Item parameters are summarized in vector $\varphi = (b_i, a_i, c_i, d_r)$.}
 
 %By constraining $\forall i \in B, \, d_i = 1$ (where $B$ is the set of items in a test) in equation \ref{eq:4pl}, the 3-Parameter logistic (3-PL, \cite{lord:3pl}) model is obtained. From the 3-PL model, the 2-Parameter logistic model (2-PL, \cite{birnbaum}) is obtained by constraining $\forall i \in B, \, c_i = 0$, and the 1-parameter logistic model (1-PL, equivalent to the Rasch model) is obtained by constraining $\forall i \in B, \, a_i = 1$. 
 
 \ottavia{In this study, the response fatigue has been conceptualized as the careless error probability $1 - d_i$, which increases as the administration goes on. As $1 - d_i$ increases, the upper aymptote $d_i$ decreases.}
-This probability is instrinsically related to the item rank in the test, hence the careless error parameter in Equation (\ref{eq:4pl}), which is usually a property of the item ($d_i$), becomes a property of the item rank $r = \{1, \ldots, R\}$ in the test, $d_r$, with the constraint $d_{r-1} > d_r$.
+This probability is instrinsically related to the item rank in the test, hence the careless error parameter in Equation (\ref{eq:4pl}), which is usually a property of the item ($d_i$), becomes a property of the item rank $r = \{1, \ldots, R\}$ in the test, $d_r$, with the constraint $d_{r-1} > d_r$. \ottavia{per come l'ho scritto non uò essere maggiore uguale. credo che a livello teorico non abbia senso}
 \normalcolor
 
 \subsection{Information Functions}
@@ -90,11 +91,11 @@ Given that in this application the response fatigue has been conceptualized as t
 
 
 \begin{equation}\label{eq:iif}
-	\text{IIF}_{i}(r) = \dfrac{a^2[P(\theta)-c_i]^2[d_r - P(\theta)]^2}{(d_{r}-c_i)^2 P(\theta)Q(\theta)}, 
+	\text{IIF}_{i}(r) = \dfrac{a^2[P(x_{pi}=1|\theta, \varphi)-c_i]^2[d_r - P(x_{pi}=1|\theta, \varphi)]^2}{(d_{r}-c_i)^2 P(x_{pi}=1|\theta, \varphi)P(x_{pi}=0|\theta, \varphi)}, 
 \end{equation}
 whereas in the typical formalization $d_r = d_i$.
 %the $d$ parameter in Equation (\ref{eq:iif}) is a property related to its order of presentation in the test $r$, and it is hence denoted as $d_r$ with $r = \{1, \ldots, R\}$.
-The $\text{IIF}_i$ is strongly influenced by the item location on the latent trait with respect to a specific $\theta_p$, its discriminativity, and its lucky guess and careless error. In absence of lucky guess and careless error, the IIF is maximum when  $\theta_p = b_i$, and it decreases as the distance between $b_i$ and $\theta_p$ increases. When the lucky guess and careless error are taken into account, the informativeness of the item decreases, the IIF is lower, and it maximum is shifted. 
+The $\text{IIF}_i$ is strongly influenced by the item location on the latent trait with respect to a specific $\theta_p$, its discriminativity, and its lucky guess and careless error. In absence of lucky guess and careless error (i.e., $c = 0$, $d = 1$), the IIF is maximum when  $\theta_p = b_i$, and it decreases as the distance between $b_i$ and $\theta_p$ increases. When the lucky guess and careless error are taken into account, the informativeness of the item decreases, the IIF is lower, and it maximum is shifted. 
 
 The \emph{test information function} (TIF) is the sum of the IIFs, such that its shape (i.e., its informativeness with respect to different latent trait levels) and its height (i.e., the amount of information for different latent trait levels) depend on the items distribution along the latent trait. The more the items with high discrimination and low lucky guess and careless error parameters are spread throughout the latent trait, the more the test is informative of different regions. 
 
@@ -113,19 +114,19 @@ In what follows, the TIF-target is represented by the TIF that would be obtained
 Given that $B$ is the set of item without the effect of the tiredness, $d_i = 1$, $\forall i \in B$. To include the response fatigue, the vector of careless error parameters $d_r$ should be modified considering the item rank of presentation. In this application, $d_r$ is modified with an exponential function, $d_r = \exp(-\lambda r)$ (where $\lambda$ is the non-negative speed parameter determining the steepness of the function and $r$ is the rank of the $r$-th item in the administration). 
 The items set with $d'$ is $B'$.
 
-Since the TIF increases as the number of test items increases, the comparison between $\text{TIF}_B$ and the TIF of the STFs is based on the mean TIF (i.e., the TIF divided by the number of items). In what follows, the mean TIF  is simply referred to as $\text{TIF}_{Q_x}$, with $x \in \{B, B', \text{Frank}, \text{\text{Léon}}\}$ and $Q$ is the items set in the tests $B$ or $B'$ or the items subset in the STFs generated by the algorithms.
+Since the TIF increases as the number of test items increases, the comparison between $\text{TIF}_B$ and the TIF of the STFs is based on the mean TIF (i.e., the TIF divided by the number of items). 
+\ottavia{In what follows, the mean TIF  is referred to as $\text{TIF}_{x}$, with $x \in \{B, B', \text{Frank}, \text{\text{Léon}}\}$, $Q_x \subset B$ is the item subsets selected by Frank and Léon, and $||X||$ denotes the cardinality of set $X$.} 
 
-\subsection{Frank}
 
 %\color{red}
 %è qui che va detto che Frank calcola le iif di tutti gli item all'inizio e che poi vengono prese solo quelle degli item che sono disponibili in un dato momento, le IIF che sono in $A^k$
 %\normalcolor
 
 
-Frank selects the item whose IIF is best able to reduce the distance from the $\text{TIF}_B$ along the entire latent trait, as follows:
+Frank selects the item whose IIF is best able to reduce the distance from the $\text{TIF}_B$ along the entire latent trait, without considering the respondents' fatigue, as follows:
 
 
-At $k = 0$: $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
+At $k = 0$: $\text{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 = \emptyset$. For $k \geq 0$,
 
 \begin{enumerate}
 	\item  $A^k = B \setminus Q^k$ 
@@ -141,13 +142,11 @@ At $k = 0$: $\text{IIF}_i$, $\text{TIF}^0(\theta) = 0 \, \forall \theta$, $Q^0 =
 \end{enumerate}
 At $k = 0$, the subset of items $Q^0$ is empty and the $\text{TIF}^0$ is 0 for all the $\theta$ levels. 
 At each iteration $k$: (1.) a set of available items is generated as the items in the item bank that have not been included in the STF yet, $A^k = B \setminus Q^k$; (2.)
-An average provisional TIF, $\text{pTIF}$, is computed by adding the IIF of each of the items in the set of the available items $A^k$, one at the time, to the TIF obtained from the items in $Q^k$ (The denominator is obtained by adding 1 to the cardinality of $Q^k$); (3.) Among all the items in $A^k$, the one that allows for minimizing the distance between $\text{pTIF}$ and $\text{TIF}_B$ is included in $i^*$; (4.) 
+An average provisional TIF, $\text{pTIF}$, is computed by adding the IIF of each of the items in the set of the available items $A^k$, one at the time, to the TIF obtained from the items in $Q^k$ (the denominator is obtained by adding 1 to the cardinality of $Q^k$); (3.) Among all the items in $A^k$, the one that allows for minimizing the distance between $\text{pTIF}$ and $\text{TIF}_B$ is included in $i^*$; (4.) 
 The termination criterion is tested. 
 If the distance between the $\text{TIF}_B$ and the $\text{pTIF}_{i^*}$ is greater than or equal to the distance between the $\text{TIF}_B$ and the $\text{TIF}^k$ (i.e., the TIF obtained from the items in the subset $Q^k$, without item $i^*$) (TRUE), then the item $i^*$ does not contribute in the reduction of the distance from the $\text{TIF}_B$, the algorithm stops, and the final item selection is the one without the item in $i^*$, $Q_{frank} = Q^k$. Conversely (FALSE), the item in $i^*$ does contribute in the reduction of the distance from the $\text{TIF}_B$, hence it is included in the set of items and a new iteration starts, $Q^{k+1} = Q^k \cup \{i^*\}$.
 
-\color{blue}
-\subsection{Léon}
-Differently from Frank, at step (2.) Léon computes the $\text{IIF}_i$ by considering the $d_r$ related to the number of items included in the STF up to that point.  
+To account for the respondents' fatigue, at step (2.) Léon computes the $\text{IIF}_i$ by considering the $d_r$ related to the number of items included in the STF up to that point.  
 \normalcolor
 
 
@@ -157,13 +156,12 @@ Differently from Frank, at step (2.) Léon computes the $\text{IIF}_i$ by consid
 
 
 
-The procedure is replicated 100 times. At each replication, a test $B$ of 50 items with difficulty ($b_i \sim \mathcal{U}(-3, 3)$) discrimination ($a_i \sim \mathcal{U}(.90, 2)$) parameters drawn from uniform distributions is generated. Lucky 
+The following procedure is replicated 100 times. At each replication, a test $B$ of 50 items with difficulty ($b_i \sim \mathcal{U}(-3, 3)$) discrimination ($a_i \sim \mathcal{U}(.90, 2)$) parameters drawn from uniform distributions is generated. Lucky 
 guess and careless error parameters are constant, $c_i = 0$ and $d_i = 1$, $\forall i \in B$.
 The $\text{TIF}_B$ (i.e., the TIF-target) is obtained as the average TIF  from the items in $B$, and describes the measurement precision that would be obtained if respondents were administered with all the items without getting tired. 
 
-At each replication, a new test, $B'$, is generated, where $b_i' = b_i$, $a_i' = a_i$, $c_i = 0$, $\forall i \in B'$, and $d_r = \exp(-\lambda r_i)$, with $\lambda = 0.01$ and $r = \{0, \ldots, ||B|| -1\}$.
-
-At each replication, Frank and Léon generate a STF for approximating the $\text{TIF}_B$. An average TIF is computed considering the item in $B'$, denoted as $\text{TIF}_{B'}$.
+At each replication, a new test, $B'$, is generated, where $b_i' = b_i$, $a_i' = a_i$, $c_i = 0$, $\forall i \in B'$, and $d_r = \exp(-\lambda r)$, with $\lambda = 0.01$ and $r = \{0, \ldots, ||B|| -1\}$, the $\text{TIF}_B$ is computed, and Frank and Léon generate a STF for approximating it. 
+An average TIF is computed considering the item in $B'$ ($\text{TIF}_{B'}$), as well as the TIFs from the STFs generated by Frank and Léon, $\text{TIF}_{\text{Frank}}$ and $\text{TIF}_{\text{Léon}}$, respectively.
 Although Frank grounds the item selection on the set $B$, the final TIF is computed by considering the vector $d_r$ associated to the rank of the items in $Q_{\text{Frank}}$.
 %La differenza è che Frank calcola tutte le iif degli tiem all'inizio, consdierando la careless error legata alla posizione dell'item così come viene generata inizialmente dalla funzione. 
 %Léon invece calcola la iif ad ogni itereazione (per questo è più lento) mettendo dentro la careless error che è legata alla posizione dell'item. Nel senso, se Léon per ora ha selezionato 3 item e deve valutare se metterne un quarto, le iif degli item che sono rimasti verrà calcolata considerando la careless error in $B'$ dell'item somministrato per quarto.
@@ -172,8 +170,7 @@ Although Frank grounds the item selection on the set $B$, the final TIF is compu
 
 \subsection{Comparison}
 
-The average distance from $\text{TIF}_B$ of the STFs generated by Frank and Léon at each iteration, as well as of the test obtained from $B'$ has been considered as a criterion for evaluating the ability of Léon of generating informative STFs while accounting for the tiredness of the respondents, $\Delta_x = |\text{TIF}_B - \text{TIF}_{Q_x}|$, with $x \in \{B', \text{Frank}, \text{Léon}\}$.  Trivially, when the $\text{TIF}_{B'}$ is considered, $Q = B'$.
-
+The average distance between $\text{TIF}_B$ and $\text{TIF}_{\text{Frank}}$ and $\text{TIF}_B$ and $\text{TIF}_{\text{Léon}}$ at each iteration, as well as the  distance between $\text{TIF}_B$ and $\text{TIF}_{B'}$, have been considered as a criterion for evaluating the ability of Léon of generating informative STFs while accounting for the tiredness of the respondents, $\Delta_x = |\text{TIF}_B - \text{TIF}_{x}|$, with $x \in \{B', \text{Frank}, \text{Léon}\}$.  
 To better understand whether acknowledging the tiredness of the respondents influences the number of items included in $Q$, the cardinalities of the STFs generated by Frank and Léon, $||Q_{\text{Frank}}||$ and $||Q_{\text{Léon}}||$, respectively, have been compared. 
 
 %Moreover, the TIF of the items in $B'$ has been computed as well and compared against those of the STFs resulting from the application of Frank and Léon. 
@@ -200,12 +197,12 @@ To better understand whether acknowledging the tiredness of the respondents infl
 %	\flushleft \emph{Note:} All items: TIF obtained considering all the items in $B'$; Frank: STFs obtained without considering the tiredness of the respondents in the item selection; Léon: STFs obtained by considering the tiredness of the respondents in the item selection.
 %\end{table}
 
-On average, Léon and Frank included the same number of items in the STF, $M_{\text{Léon}} = 6.75 \pm 3.06$, $M_{\text{Frank}} = 6.31 \pm 2.40$, $t = 1.13$, $df = 187.59$, $p = .26$, suggesting that accounting for the tiredness of the respondents does not influence the number of items included in the STF.
+On average, Léon and Frank included the same number of items in the STF, $M_{\text{Léon}} = 6.75 \pm 3.06$, $M_{\text{Frank}} = 6.31 \pm 2.40$, suggesting that accounting for the tiredness of the respondents does not influence the number of items included in the STF.
 %\color{red}
 %Given that leon account for the tiredness of the respondents during the item selection, it also considers the measurement precision of the STF given that the respondents do get tired during the administration, while Frank does not. As such, while preventing the over inclusion of items in the STF, Léon is also able to account for the measurement precision, in the attempt of balancing the number of items with the measurement precision.
 %\normalcolor
 
-Figure \ref{fig:points-alogirthms} illustrates the distributions of the distances from $\text{TIF}_B$ ($y$-axis) of $Q_x$ ($x$-axis).
+Figure \ref{fig:points-alogirthms} illustrates the distributions of the distances from $\text{TIF}_B$ ($y$-axis) of $B'$, Frank, and Léon ($x$-axis).
 
 \begin{figure}[!h]
 	\centering
