@@ -189,15 +189,18 @@ for (i in 1:length(resAllitems)) {
                        target = tif[[i]]$mean_tif, 
                        type = "all", 
                        value = resAllitems[[i]]$tif_all, 
+                       n = 50,
                        iteration = i)
   tempFrank = data.frame(theta = theta, 
                        target = tif[[i]]$mean_tif, 
                        type = "frank", 
+                       n = ncol(resFrank[[i]]$iif_stf), 
                        value =rowMeans(resFrank[[i]]$iif_stf), 
                        iteration = i)
   tempLeon = data.frame(theta = theta, 
                          target = tif[[i]]$mean_tif, 
                          type = "leon", 
+                        n =  ncol(resLeon[[i]]$iif_stf), 
                          value =rowMeans(resLeon[[i]]$iif_stf), 
                          iteration = i)
   res_tot = rbind(res_tot, tempAll, tempFrank, tempLeon)
@@ -241,6 +244,12 @@ ggplot(myRes,
 ggsave("C:/Users/Ottavia/Documents/GitHub/frank-and-friends/sis2025/LaTex+Package/styles/img/points-alogirthms.pdf", 
        device = "pdf", width = 14, height = 8.5, units = "in")
 
+temp_res = res_tot%>%  
+  group_by(type, n) %>%  
+  summarise(m = mean(difference))
+
+ggplot(res_tot, 
+       aes(y = difference, x = factor(n), color = type)) + geom_boxplot()
 
 myres = res_tot %>%  
   group_by(type) %>%  
