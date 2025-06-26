@@ -14,8 +14,6 @@ IRT <- function(theta, a = 1, b = 0, c = 0,e = 1) {
 i_info <- function(b, a=1,c=0, e= 1,  theta = seq(-5,5,length.out=1000)){
   P = IRT(theta, b = b, a = a, e = e, c=c)
   Q = 1 - P 
-  # Ii = (a^2)*(Q/P)*((P-c)/(e-c))^2
-  # Ii = (a^2)*(Q*P/e^2)
   num = (a^2)*((P-c)^2)*((e-P)^2)
   den = ((e-c)^2)*P*Q
   Ii = num/den
@@ -42,12 +40,17 @@ i_info <- function(b, a=1,c=0, e= 1,  theta = seq(-5,5,length.out=1000)){
 # }
 
 item_info <- function(ipar, theta = seq(-5,5,length.out=1000)){
-  item <- NULL
-    for(i in 1:nrow(ipar)){
-      item[[i]] <- i_info(b = ipar[i, "b"],a = ipar[i, "a"], c = ipar[i, "c"], e = ipar[i, "e"], theta = theta)
-    }
-  item = data.frame(do.call("cbind", item))
-  colnames(item) = rownames(ipar)
+  item <- lapply(1:nrow(ipar), function(i) {
+    i_info(
+      b = ipar[i, "b"],
+      a = ipar[i, "a"],
+      c = ipar[i, "c"],
+      e = ipar[i, "e"],
+      theta = theta
+    )
+  })
+  item <- data.frame(do.call(cbind, item))
+  colnames(item) <- rownames(ipar)
   return(item)
 }
 
@@ -170,7 +173,7 @@ bruto = function(parameters, target = NULL) {
       
     } else {
       my_target = cbind(target, 
-                        rowSums(temp_iifs[,which(!is.na(temp_iifs[1, ]))])/length(which(!is.na(temp_iifs[1, ]))))
+                        rowMeans(temp_iifs[,which(!is.na(temp_iifs[1, ]))])/length(which(!is.na(temp_iifs[1, ]))))
     }
     colnames(my_target)[ncol(my_target)] = "mean_tif_stf"
     my_target$n_item = length(which(!is.na(temp_iifs[1, ])))
@@ -433,28 +436,31 @@ isa = function(parameters, target) {
   return(results)
 }
 # Frank -------
-frank = function(parameters, target) {
+frank = function(parameters, target, nmin) {
   theta = target$theta
-  all_iifs = item_info(parameters, theta)
+  original_parameters = parameters
   token = TRUE
+  mod_e = NULL
+  j = 0
+  iif_stf = matrix(,length(target$theta), 0)
+  distance_target_tif = Inf
   while (token == TRUE) {
+    j = j +1
     # qui potrei fare che itero per tutte le colonne che non sono NA del mio dataframe di item 
     # creo gli indici degli item nell'insieme A (gli available items)
-    if (all(which(is.na(parameters[, 1])) == FALSE) ) {
-      item_indexes = 1:nrow(parameters)
-      iif_stf = numeric(length(target$theta))
-    } else {
-      item_indexes = which(!is.na(parameters[,1]))
-    }
+    item_indexes = which(!is.na(parameters[,1]))
     # adesso il ciclo for itera negli item indexes e calcola la PIF
     difference = rep(NA, nrow(parameters))
     for (i in item_indexes) {
-      if (length(item_indexes) == nrow(parameters)) {
-        pif = data.frame(all_iifs[,i]) 
-      } else {
-        pif = data.frame(cbind(iif_stf, all_iifs[,i]))
-        pif = data.frame(rowMeans(pif))
-      }
+      # qui devo mdoficare all_iifs nel senso che le devo ricalcolare 
+      # però considerando la stanchezza
+      # so dire esattamente 
+      # CAMBIA QUI METTENDO CHE PESCA LA E DEGLI ITEM ORIGIANLI IN ABSE ALLA LORO POSIZIONE DI SOMMNISTRAZIONE 
+      # PER CUI ALL'I-ESIMA ITERAZIONE PRENDE LA STANCHEZZA DELL'ITEM SOMMINISTRATO PER I-ESIMO
+      # original_parameters$e = exp(-speed*(ncol(iif_stf)+1))
+      all_iifs = item_info(parameters[i,], theta)
+      pif = data.frame(cbind(iif_stf, all_iifs))
+      pif = data.frame(rowMeans(pif))
       difference[i] = mean(abs(target$mean_tif - pif)[,1])  
       # qui scelgo un item temporaneo che è quello con la distanza minima
     }
@@ -464,29 +470,15 @@ frank = function(parameters, target) {
     # minimizza, faccio la differenza dalla target e guardo come si comporta 
     # rispetto alla distanza dalla target dello step precedente 
     # qui ho riscoruito la provisional tif 
-    pif = data.frame(iif_stf, all_iifs[, d_index])
-    if (all(pif[,1] == 0) ) {
-      distance_target_tif = mean(abs(target$mean_tif - iif_stf))
-      pif = pif[,-1]
-      iif_stf = data.frame(pif)
-      colnames(iif_stf) = paste("item", d_index, sep = "_")
-    } else {
-      distance_target_tif = mean(abs(target$mean_tif - rowMeans(iif_stf)))
-      iif_stf = pif
-      colnames(iif_stf)[ncol(iif_stf)] = paste("item", d_index, sep = "_")
-    }
+    iif_stf = data.frame(iif_stf,  item_info(parameters[d_index,], theta))
+    colnames(iif_stf)[ncol(iif_stf)] = paste("item", d_index, sep = "_")
     # guardo le differenze 
-    # effettivamente non c'è bisogno di mettere su tutto questo cinema mi dovrebbe 
-    # bastare prendere la differenza già calcolata in difference 
-    # if (difference[d_index] < distance_target_tif & all(which(is.na(parameters[, 1])) == FALSE) ) {
-    #   token = TRUE
-    #   parameters[d_index, ] = NA
-    # } else 
-      if (difference[d_index] >= distance_target_tif) {
+    if (j <= nmin) {
+      token = TRUE
+      parameters[d_index, ] = NA
+      distance_target_tif = mean(abs(target$mean_tif - rowMeans(iif_stf)))
+    } else if (difference[d_index] >= distance_target_tif) {
       token = FALSE
-      # sel_items = colnames(iif_stf)[-ncol(iif_stf)]
-      # sel_items = sel_items[order(sel_items)]
-      # sel_items = paste(sel_items, collapse = " ")
       temp_item = colnames(iif_stf)[-ncol(iif_stf)]
       temp_item = as.numeric(gsub("item_", "", temp_item))
       temp_item = temp_item[order(temp_item)]
@@ -494,14 +486,19 @@ frank = function(parameters, target) {
       sel_items = paste(sel_items, collapse = " ")
     } else {
       parameters[d_index, ] = NA
+      distance_target_tif = mean(abs(target$mean_tif - rowMeans(iif_stf)))
     }
   } 
   iif_stf = data.frame(iif_stf[,-ncol(iif_stf)])
+  if (ncol(iif_stf) == 1) {
+    colnames(iif_stf) = sel_items
+  }
   results = list(q_frank = sel_items, 
                  iif_stf = iif_stf)
   
   return(results)
 }
+
 # questa va fatta meglio a partire dai risultati degli algoritmi, per ora va bene così 
 delta = function(all_q, nitems = NULL, replica = 1, 
                  target = "item_target", 
